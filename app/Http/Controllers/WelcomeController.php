@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\NewsPackage;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class WelcomeController extends Controller
+{
+    public function index()
+    {
+        $newsPackages = NewsPackage::where('type', 'kt')->get();
+     
+        return Inertia::render('Welcome/Index', [
+            'newsPackages' => $newsPackages,
+        ]);
+    }
+     public function harga()
+    {
+        
+        $newsPackages = NewsPackage::where('type', 'kt')->get();
+
+        return Inertia::render('Harga/Index', [
+            'newsPackages' => $newsPackages,
+        ]);
+    }
+}
