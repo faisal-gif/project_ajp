@@ -18,11 +18,6 @@ class TripayCallbackController extends Controller
             config('tripay.private_key')
         );
 
-        abort_if(
-            $signature !== $request->header('X-Callback-Signature'),
-            403
-        );
-
         $data = $request->data;
 
         $payment = Payments::where('reference', $data['reference'])->firstOrFail();
