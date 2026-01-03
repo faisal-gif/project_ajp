@@ -35,7 +35,7 @@ Route::middleware(['auth', 'active'])->group(function () {
 });
 
 
-Route::post('/tripay/callback', [TripayCallbackController::class, 'handle']);
+Route::post('/tripay/callback', [TripayCallbackController::class, 'handle'])->name('tripay.callback');
 
 Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
 
