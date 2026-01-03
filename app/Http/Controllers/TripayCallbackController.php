@@ -19,7 +19,7 @@ class TripayCallbackController extends Controller
         );
 
         abort_if(
-            $signature !== $request->header('X-Tripay-Signature'),
+            $signature !== $request->header('X-Callback-Signature'),
             403
         );
 
