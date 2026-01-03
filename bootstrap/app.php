@@ -17,9 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
         $middleware->validateCsrfTokens(except: [
-            'tripay/callback',
-            'account-pending/payment',
-            'stripe/*',
+            '/tripay/callback',
+            '/account-pending/payment',
+            '/stripe/*',
         ]);
         $middleware->alias([
             'active' => \App\Http\Middleware\EnsureUserIsActive::class,
