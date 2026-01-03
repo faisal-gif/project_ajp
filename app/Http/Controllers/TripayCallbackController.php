@@ -15,10 +15,9 @@ class TripayCallbackController extends Controller
         $signature = hash_hmac(
             'sha256',
             $request->getContent(),
-            config('tripay.private_key')
+            config('services.tripay.private_key')
         );
       
-dd( $signature , $request->header('X-Callback-Signature'));
         abort_if(
             $signature !== $request->header('X-Callback-Signature'),
             403
