@@ -45,7 +45,7 @@ class TripayService
                 'price'       => $amount,
                 'quantity'    => 1,
             ]],
-            'callback_url'   => route('tripay.callback'),
+            'callback_url'   => route('api.tripay.callback'),
             'return_url'     => route('dashboard'),
             'expired_time'   => now()->addHours(24)->timestamp,
             'signature'      => hash_hmac('sha256', $this->merchantCode . $merchant_ref . $amount, $this->privateKey)
