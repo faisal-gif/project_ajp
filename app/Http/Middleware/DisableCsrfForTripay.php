@@ -12,5 +12,6 @@ class DisableCsrfForTripay extends Middleware
 {
     protected $except = [
         'tripay/callback',
+        'account-pending/payment',
     ];
 }

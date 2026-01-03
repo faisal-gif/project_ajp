@@ -47,6 +47,7 @@ class TripayCallbackController extends Controller
                     $user->dateexp = $user->dateexp->addMonth($newsPackage->perioid);
                 }
                 $user->package_id = $newsPackage->id;
+                $user->type = $newsPackage->type;
                 $user->save();
             });
         }

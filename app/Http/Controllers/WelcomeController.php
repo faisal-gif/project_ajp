@@ -10,7 +10,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $newsPackages = NewsPackage::where('type', 'kt')->get();
+        $newsPackages = NewsPackage::where('type', '4')->get();
      
         return Inertia::render('Welcome/Index', [
             'newsPackages' => $newsPackages,
@@ -19,7 +19,7 @@ class WelcomeController extends Controller
      public function harga()
     {
         
-        $newsPackages = NewsPackage::where('type', 'kt')->get();
+        $newsPackages = NewsPackage::where('type', '4')->get();
 
         return Inertia::render('Harga/Index', [
             'newsPackages' => $newsPackages,
