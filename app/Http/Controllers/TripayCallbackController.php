@@ -17,7 +17,7 @@ class TripayCallbackController extends Controller
             $request->getContent(),
             config('tripay.private_key')
         );
-        dd($request->all());
+        dd($request->data);
 
         abort_if(
             $signature !== $request->header('X-Callback-Signature'),
@@ -26,7 +26,7 @@ class TripayCallbackController extends Controller
 
         $data = $request->data;
 
-        $payment = Payments::where('reference', $data['reference'])->firstOrFail();
+        $payment = Payments::where('reference', $request->reference)->firstOrFail();
 
         if ($data['status'] === 'PAID') {
             DB::transaction(function () use ($payment, $data) {
