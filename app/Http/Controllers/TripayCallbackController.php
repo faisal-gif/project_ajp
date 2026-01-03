@@ -18,7 +18,7 @@ class TripayCallbackController extends Controller
             config('tripay.private_key')
         );
       
-
+dd( $signature , $request->header('X-Callback-Signature'));
         abort_if(
             $signature !== $request->header('X-Callback-Signature'),
             403
