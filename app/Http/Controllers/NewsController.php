@@ -145,6 +145,30 @@ class NewsController extends Controller
         ]);
     }
 
+
+    public function apiShow($id)
+{
+    $news = News::with('writer:id,nama')->find($id);
+
+    if (!$news) {
+        return response()->json([
+            'error' => true
+        ], 404);
+    }
+
+    return response()->json([
+        'error' => false,
+        'data' => [
+            'datetime' => $news->datetime,
+            'title'    => $news->title,
+            'caption'  => $news->caption,
+            'content'  => $news->content,
+            'city'     => $news->city,
+            'writer'   => optional($news->writer)->nama,
+        ]
+    ]);
+}
+
     /**
      * Show the form for editing the specified resource.
      */

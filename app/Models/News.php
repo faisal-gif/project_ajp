@@ -13,4 +13,9 @@ class News extends Model
 
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
+
+    public function writer()
+    {
+        return $this->belongsTo(User::class, 'pewarta_id');
+    }
 }
