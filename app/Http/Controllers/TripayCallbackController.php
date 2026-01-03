@@ -32,7 +32,7 @@ class TripayCallbackController extends Controller
                 $payment->update([
                     'status' => 'paid',
                     'paid_at' => now(),
-                    'payload' => $data,
+                  
                 ]);
 
 
