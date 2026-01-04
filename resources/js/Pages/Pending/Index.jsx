@@ -92,7 +92,7 @@ export default function Index({ channel, newsPackage }) {
                             </div>
                             <form
                                 method="POST"
-                                action={route('account.pending.payment')}
+                                action={route('checkout.payment')}
                             >
                                 <input
                                     type="hidden"

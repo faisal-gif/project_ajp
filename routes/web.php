@@ -26,8 +26,8 @@ Route::get('/syarat-ketentuan', function () {
 
 
 
-Route::get('/account-pending', [PendingController::class, 'index'])->middleware('auth')->name('account.pending');
-Route::post('/account-pending/payment', [PaymentController::class, 'store'])->middleware('auth')->name('account.pending.payment');
+Route::get('/checkout', [PendingController::class, 'index'])->middleware('auth')->name('checkout');
+Route::post('/checkout/payment', [PaymentController::class, 'store'])->middleware('auth')->name('checkout.payment');
 
 
 Route::middleware(['auth', 'active'])->group(function () {

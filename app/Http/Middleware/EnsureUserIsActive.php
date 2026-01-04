@@ -20,7 +20,7 @@ class EnsureUserIsActive
         }
 
         if (auth()->user()->status !== 1) {
-            return redirect()->route('account.pending');
+            return redirect()->route('checkout');
         }
 
         return $next($request);
