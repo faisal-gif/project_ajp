@@ -26,9 +26,9 @@ function LandingLayout({ children }) {
                                 tabIndex={0}
                                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                             >
-                                <li><a>Beranda</a></li>
-                                <li><a>Tentang</a></li>
-                                <li><a>Harga</a></li>
+                                <li><Link href={"/"}>Beranda</Link></li>
+                                <li><Link href={"/tentang"}>Tentang</Link></li>
+                                <li><Link href={"/harga"}>Harga</Link></li>
                             </ul>
                         </div>
 
@@ -41,9 +41,9 @@ function LandingLayout({ children }) {
                     {/* CENTER (Desktop Menu) */}
                     <div className="navbar-center hidden lg:flex">
                         <ul className="menu menu-horizontal px-1 gap-1">
-                            <li><a>Beranda</a></li>
-                            <li><a>Tentang</a></li>
-                            <li><a>Harga</a></li>
+                            <li><Link href={"/"}>Beranda</Link></li>
+                            <li><Link href={"/tentang"}>Tentang</Link></li>
+                            <li><Link href={"/harga"}>Harga</Link></li>
                         </ul>
                     </div>
 
@@ -159,12 +159,12 @@ function LandingLayout({ children }) {
                                 © {currentYear} AJP - Aplikasi Jurnalisme Positif. Hak cipta dilindungi.
                             </p>
                             <div className="flex gap-6">
-                                <a href="#" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
+                                <Link href="/kebijakan-privasi" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
                                     Kebijakan Privasi
-                                </a>
-                                <a href="#" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
+                                </Link>
+                                <Link href="/syarat-ketentuan" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
                                     Syarat & Ketentuan
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

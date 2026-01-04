@@ -16,6 +16,13 @@ Route::get('/tentang', function () {
     return Inertia::render('Tentang/Index');
 })->name('tentang');
 Route::get('/harga', [WelcomeController::class, 'harga'])->name('harga');
+Route::get('/kebijakan-privasi', function () {
+    return Inertia::render('KebijakanPrivasi/Index');
+})->name('kebijakan-privasi');
+Route::get('/syarat-ketentuan', function () {
+    return Inertia::render('SyaratKetentuan/Index');
+})->name('syarat-ketentuan');
+
 
 
 

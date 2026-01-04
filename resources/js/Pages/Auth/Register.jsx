@@ -270,7 +270,7 @@ export default function Register({ newsPackages, kategoriKt }) {
                         <div className="flex items-center pt-2">
                             <input id="terms" type="checkbox" className="checkbox checkbox-sm checkbox-primary" required />
                             <label htmlFor="terms" className="ml-2 block text-sm text-gray-600">
-                                Saya setuju dengan <a href="#" className="link link-primary link-hover">Syarat & Ketentuan</a>
+                                Saya setuju dengan <Link href="/syarat-ketentuan" className="link link-primary link-hover">Syarat & Ketentuan</Link>
                             </label>
                         </div>
 
