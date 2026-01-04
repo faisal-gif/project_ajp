@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->validateCsrfTokens(except: [
             '/tripay/callback',
-            '/account-pending/payment',
+            '/checkout/payment',
             '/stripe/*',
         ]);
         $middleware->alias([
