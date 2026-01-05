@@ -41,9 +41,9 @@ class TripayCallbackController extends Controller
                 $user = User::find($payment->user_id);
                 $user->quota_news += $newsPackage->quota;
                 if ($user->dateexp == null) {
-                    $user->dateexp = now()->addMonth($newsPackage->perioid);
+                    $user->dateexp = now()->addMonth($newsPackage->period);
                 } else {
-                    $user->dateexp = $user->dateexp->addMonth($newsPackage->perioid);
+                    $user->dateexp = $user->dateexp->addMonth($newsPackage->period);
                 }
                 $user->package_id = $newsPackage->id;
                 $user->status = 1;
