@@ -113,6 +113,7 @@ class NewsController extends Controller
             'image3' => $image_3,
             'caption' => $request->caption,
             'pewarta_id' => $auth->id,
+            'type' => $auth->type,
             'status' => 0
         ]);
 
