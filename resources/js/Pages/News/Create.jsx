@@ -6,26 +6,30 @@ import InputLabel from '@/Components/InputLabel'
 import InputTextarea from '@/Components/InputTextarea'
 import TextInput from '@/Components/TextInput'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { Head, useForm } from '@inertiajs/react'
+import { Head, useForm, usePage } from '@inertiajs/react'
 import { Calendar1Icon, CaptionsIcon, CopyIcon, DollarSignIcon, EyeIcon, GalleryThumbnails, GlobeIcon, ImageIcon, ImagesIcon, InfoIcon, NotebookPenIcon, Settings2 } from 'lucide-react'
 import React from 'react'
 
 
-function Create() {
-
+function Create({narsum_detail}) {
+  const { auth } = usePage().props;
+    const user = auth.user;
     const { data, setData, post, processing, errors, reset } = useForm({
         title: '',
         content: '',
-        city: '',
-        narsum: '',
-        profesi: '',
-        contact: '',
+        city:  narsum_detail.city ? narsum_detail.city : '',
+        narsum: narsum_detail.narsum ? narsum_detail.narsum : '',
+        profesi: narsum_detail.profesi ? narsum_detail.profesi : '',
+        contact: narsum_detail.contact ? narsum_detail.contact : '',
         image: null,
         image_2: null,
         image_3: null,
         caption: '',
 
     });
+
+  
+
 
     const submit = (e) => {
         e.preventDefault();
@@ -106,89 +110,93 @@ function Create() {
                                 </Card>
 
                                 {/* Card laninnya */}
-                                <Card
-                                    title={
-                                        <span className="flex flex-row gap-2 items-center text-2xl font-semibold text-foreground ">
-                                            <Settings2 className='w-6 h-6' /> Narasumber & Lokasi
-                                        </span>
-                                    }
-                                >
+                                {
+                                    user.type != 4 ? (<Card
+                                        title={
+                                            <span className="flex flex-row gap-2 items-center text-2xl font-semibold text-foreground ">
+                                                <Settings2 className='w-6 h-6' /> Narasumber & Lokasi
+                                            </span>
+                                        }
+                                    >
 
-                                    <div className='grid grid-cols-1 lg:grid-cols-6 gap-4 mt-8'>
-                                        <div className='lg:col-span-6'>
-                                            <InputLabel
-                                                htmlFor="city"
-                                                value="Kota"
-                                                className='mb-2 label-text font-bold'
-                                            />
-                                            <TextInput
-                                                id="city"
-                                                name="Kota"
-                                                type="text"
-                                                className="mt-1 block w-full"
-                                                value={data.city}
-                                                onChange={(e) => setData('city', e.target.value)}
-                                                autoComplete="city"
-                                            />
-                                            <InputError message={errors.city} className="mt-2" />
+                                        <div className='grid grid-cols-1 lg:grid-cols-6 gap-4 mt-8'>
+                                            <div className='lg:col-span-6'>
+                                                <InputLabel
+                                                    htmlFor="city"
+                                                    value="Kota"
+                                                    className='mb-2 label-text font-bold'
+                                                />
+                                                <TextInput
+                                                    id="city"
+                                                    name="Kota"
+                                                    type="text"
+                                                    className="mt-1 block w-full"
+                                                    value={data.city}
+                                                    onChange={(e) => setData('city', e.target.value)}
+                                                    autoComplete="city"
+                                                />
+                                                <InputError message={errors.city} className="mt-2" />
+                                            </div>
+                                            <div className='lg:col-span-6'>
+                                                <InputLabel
+                                                    htmlFor="narsum"
+                                                    value="Narasumber"
+                                                    className='mb-2 label-text font-bold'
+                                                />
+                                                <TextInput
+                                                    id="narsum"
+                                                    name="Narasumber"
+                                                    type="text"
+                                                    className="mt-1 block w-full"
+                                                    value={data.narsum}
+                                                    onChange={(e) => setData('narsum', e.target.value)}
+                                                    autoComplete="narsum"
+                                                />
+                                                <InputError message={errors.narsum} className="mt-2" />
+                                            </div>
+                                            <div className='lg:col-span-6'>
+                                                <InputLabel
+                                                    htmlFor="profesi"
+                                                    value="Profesi"
+                                                    className='mb-2 label-text font-bold'
+                                                />
+                                                <TextInput
+                                                    id="profesi"
+                                                    name="Profesi"
+                                                    type="text"
+                                                    className="mt-1 block w-full"
+                                                    value={data.profesi}
+                                                    onChange={(e) => setData('profesi', e.target.value)}
+                                                    autoComplete="profesi"
+                                                />
+                                                <InputError message={errors.profesi} className="mt-2" />
+                                            </div>
+                                            <div className='lg:col-span-6'>
+                                                <InputLabel
+                                                    htmlFor="contact"
+                                                    value="Kontak"
+                                                    className='mb-2 label-text font-bold'
+                                                />
+                                                <TextInput
+                                                    id="contact"
+                                                    name="contact"
+                                                    type="text"
+                                                    className="mt-1 block w-full"
+                                                    value={data.contact}
+                                                    onChange={(e) => setData('contact', e.target.value)}
+                                                    autoComplete="contact"
+                                                />
+                                                <InputError message={errors.contact} className="mt-2" />
+                                            </div>
+
+
+
                                         </div>
-                                        <div className='lg:col-span-6'>
-                                            <InputLabel
-                                                htmlFor="narsum"
-                                                value="Narasumber"
-                                                className='mb-2 label-text font-bold'
-                                            />
-                                            <TextInput
-                                                id="narsum"
-                                                name="Narasumber"
-                                                type="text"
-                                                className="mt-1 block w-full"
-                                                value={data.narsum}
-                                                onChange={(e) => setData('narsum', e.target.value)}
-                                                autoComplete="narsum"
-                                            />
-                                            <InputError message={errors.narsum} className="mt-2" />
-                                        </div>
-                                        <div className='lg:col-span-6'>
-                                            <InputLabel
-                                                htmlFor="profesi"
-                                                value="Profesi"
-                                                className='mb-2 label-text font-bold'
-                                            />
-                                            <TextInput
-                                                id="profesi"
-                                                name="Profesi"
-                                                type="text"
-                                                className="mt-1 block w-full"
-                                                value={data.profesi}
-                                                onChange={(e) => setData('profesi', e.target.value)}
-                                                autoComplete="profesi"
-                                            />
-                                            <InputError message={errors.profesi} className="mt-2" />
-                                        </div>
-                                        <div className='lg:col-span-6'>
-                                            <InputLabel
-                                                htmlFor="contact"
-                                                value="Kontak"
-                                                className='mb-2 label-text font-bold'
-                                            />
-                                            <TextInput
-                                                id="contact"
-                                                name="contact"
-                                                type="text"
-                                                className="mt-1 block w-full"
-                                                value={data.contact}
-                                                onChange={(e) => setData('contact', e.target.value)}
-                                                autoComplete="contact"
-                                            />
-                                            <InputError message={errors.contact} className="mt-2" />
-                                        </div>
 
+                                    </Card>) :
+                                        ''
+                                }
 
-
-                                    </div>
-
-                                </Card>
                                 {/* Card Publish */}
                                 <Card
                                     title={

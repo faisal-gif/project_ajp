@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NewsFormRequest;
+use App\Models\KategoriKt;
 use App\Models\News;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -70,7 +71,20 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('News/Create');
+        $user = Auth::user();
+        $narsum_detail = [];
+        if ($user->type == 4) {
+            $narsum_detail = [
+                'city' => $user->city,
+                'narsum' => $user->name,
+                'profesi' => KategoriKt::find($user->kategori)->name,
+                'contact' => $user->contact,
+            ];
+        }
+
+        return Inertia::render('News/Create', [
+            'narsum_detail' => $narsum_detail,
+        ]);
     }
 
     /**
@@ -148,27 +162,27 @@ class NewsController extends Controller
 
 
     public function apiShow($id)
-{
-    $news = News::with('writer:id,nama')->find($id);
+    {
+        $news = News::with('writer:id,nama')->find($id);
 
-    if (!$news) {
+        if (!$news) {
+            return response()->json([
+                'error' => true
+            ], 404);
+        }
+
         return response()->json([
-            'error' => true
-        ], 404);
+            'error' => false,
+            'data' => [
+                'datetime' => $news->datetime,
+                'title'    => $news->title,
+                'caption'  => $news->caption,
+                'content'  => $news->content,
+                'city'     => $news->city,
+                'writer'   => optional($news->writer)->nama,
+            ]
+        ]);
     }
-
-    return response()->json([
-        'error' => false,
-        'data' => [
-            'datetime' => $news->datetime,
-            'title'    => $news->title,
-            'caption'  => $news->caption,
-            'content'  => $news->content,
-            'city'     => $news->city,
-            'writer'   => optional($news->writer)->nama,
-        ]
-    ]);
-}
 
     /**
      * Show the form for editing the specified resource.
