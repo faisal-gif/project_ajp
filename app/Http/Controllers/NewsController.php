@@ -72,6 +72,7 @@ class NewsController extends Controller
     public function create()
     {
         $user = Auth::user();
+        dd($user->kategori);
         $narsum_detail = [];
         if ($user->type == 4) {
             $narsum_detail = [
@@ -82,7 +83,7 @@ class NewsController extends Controller
             ];
         }
 
-        dd($narsum_detail);
+
 
         return Inertia::render('News/Create', [
             'narsum_detail' => $narsum_detail,
