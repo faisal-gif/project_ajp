@@ -47,6 +47,7 @@ class RegisteredUserController extends Controller
             'plan_id' => 'required|exists:news_package,id',
             'profesi' => 'required|exists:kategori_kt,kategori_id',
         ]);
+        
 
         $user = User::create([
             'nama' => $request->name,

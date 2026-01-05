@@ -77,10 +77,12 @@ class NewsController extends Controller
             $narsum_detail = [
                 'city' => $user->city,
                 'narsum' => $user->nama,
-                'profesi' =>  KategoriKt::find($user->kategori)->name ?? null,
+                'profesi' => KategoriKt::find($user->kategori)->name ?? null,
                 'contact' => $user->contact,
             ];
         }
+
+        dd($narsum_detail);
 
         return Inertia::render('News/Create', [
             'narsum_detail' => $narsum_detail,
