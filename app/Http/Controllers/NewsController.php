@@ -77,7 +77,7 @@ class NewsController extends Controller
             $narsum_detail = [
                 'city' => $user->city,
                 'narsum' => $user->nama,
-                'profesi' => KategoriKt::find($user->kategori)->name ?? null,
+                'profesi' => KategoriKt::find($user->kategori),
                 'contact' => $user->contact,
             ];
         }
