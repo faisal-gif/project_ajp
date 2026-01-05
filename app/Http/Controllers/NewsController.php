@@ -72,13 +72,13 @@ class NewsController extends Controller
     public function create()
     {
         $user = Auth::user();
-        dd($user->kategori);
+   
         $narsum_detail = [];
         if ($user->type == 4) {
             $narsum_detail = [
                 'city' => $user->city,
                 'narsum' => $user->nama,
-                'profesi' => KategoriKt::find($user->kategori),
+                'profesi' => KategoriKt::where('kategori_id',$user->kategori)->first()->name,
                 'contact' => $user->contact,
             ];
         }
