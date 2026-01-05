@@ -9,20 +9,24 @@ use Inertia\Inertia;
 
 class PendingController extends Controller
 {
-    public function index(TripayService $tripayService)
+    public function index(TripayService $tripayService, Request $request)
     {
-  
+
         if (!auth()->check()) {
             return redirect()->route('login');
         }
 
         if (auth()->user()->status === 1) {
-           return redirect()->route('dashboard');
+            return redirect()->route('dashboard');
         }
 
         $auth = auth()->user();
 
         $newsPackage = NewsPackage::find($auth->package_id);
+
+        if ($request->package_id) {
+            $newsPackage = NewsPackage::find($request->package_id);
+        }
 
         $paymentChannels = $tripayService->getPaymentChannel();
 

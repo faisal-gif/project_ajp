@@ -14,7 +14,7 @@ class PaymentController extends Controller
     public function store(Request $request, TripayService $tripayService)
     {
         $user = Auth::user();
-        $newsPackage = NewsPackage::find($user->package_id);
+        $newsPackage = NewsPackage::find($request->package_id);
 
         $merchant_ref = 'SUB-' . time();
 

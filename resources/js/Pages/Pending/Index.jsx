@@ -11,6 +11,7 @@ export default function Index({ channel, newsPackage }) {
 
     const { data, setData, post, processing, errors } = useForm({
         paymentMethod: 'BRIVA',
+        package_id: newsPackage.id,
     });
 
     // const handleSubmit = (e) => {
@@ -102,6 +103,7 @@ export default function Index({ channel, newsPackage }) {
                                         .getAttribute('content')}
                                 />
                                 <input type="hidden" name="paymentMethod" value={data.paymentMethod} />
+                                <input type="hidden" name="package_id" value={data.package_id} />
                                 <button type="submit" className="btn btn-primary w-full mt-6" disabled={processing}>
                                     Bayar Sekarang
                                 </button>

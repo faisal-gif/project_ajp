@@ -83,8 +83,6 @@ class NewsController extends Controller
             ];
         }
 
-
-
         return Inertia::render('News/Create', [
             'narsum_detail' => $narsum_detail,
         ]);
