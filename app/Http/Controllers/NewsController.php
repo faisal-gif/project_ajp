@@ -76,7 +76,7 @@ class NewsController extends Controller
         if ($user->type == 4) {
             $narsum_detail = [
                 'city' => $user->city,
-                'narsum' => $user->name,
+                'narsum' => $user->nama,
                 'profesi' => KategoriKt::find($user->kategori)->name,
                 'contact' => $user->contact,
             ];
