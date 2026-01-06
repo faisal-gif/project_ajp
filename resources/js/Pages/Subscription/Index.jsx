@@ -1,11 +1,13 @@
 import Card from '@/Components/Card'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { formatDuration, formatRupiah } from '@/Utils/formatter'
-import { Head, Link } from '@inertiajs/react'
+import { Head, Link, usePage } from '@inertiajs/react'
 import { Check, Sparkles } from 'lucide-react'
 import React from 'react'
 
 function Index({ newsPackages, userPackage }) {
+    const { auth } = usePage().props;
+    const user = auth.user;
     return (
         <>
             <Head title='Membership' />
@@ -46,7 +48,7 @@ function Index({ newsPackages, userPackage }) {
 
                                     <span className="font-semibold text-primary">
                                         {
-                                            userPackage.status == 1 ? 'Aktif' : 'Non Aktif'
+                                            user.status == 1 ? 'Aktif' : 'Non Aktif'
                                         }
                                     </span>
                                 </div>
