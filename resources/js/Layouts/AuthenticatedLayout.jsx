@@ -103,7 +103,7 @@ export default function AuthenticatedLayout({ header, children }) {
                         </Link>
                     </li>
 
-                     <li>
+                    <li>
                         <Link
                             href={route('news.index')}
                             className={linkClass(isActive('news.*'))}
@@ -112,18 +112,22 @@ export default function AuthenticatedLayout({ header, children }) {
                             News
                         </Link>
                     </li>
+                    {
+                        user.type == 4 && (
+                            <li>
+                                <Link
+                                    href={route('subscription.index')}
+                                    className={linkClass(isActive('subscription.*'))}
+                                >
+                                    <Crown size={16} />
+                                    Membership
+                                </Link>
+                            </li>
 
-                    <li>
-                        <Link
-                            href={route('subscription.index')}
-                            className={linkClass(isActive('subscription.*'))}
-                        >
-                            <Crown size={16} />
-                            News
-                        </Link>
-                    </li>
+                        )
+                    }
 
-              
+
                 </ul>
             </div>
         </div>

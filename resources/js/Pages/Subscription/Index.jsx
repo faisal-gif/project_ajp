@@ -5,7 +5,7 @@ import { Head, Link } from '@inertiajs/react'
 import { Check, Sparkles } from 'lucide-react'
 import React from 'react'
 
-function Index({ newsPackages }) {
+function Index({ newsPackages, userPackage }) {
     return (
         <>
             <Head title='Membership' />
@@ -41,11 +41,13 @@ function Index({ newsPackages }) {
                                         <div className="font-extralight text-base-content/60">
                                             Paket Anda Saat Ini
                                         </div>
-                                        <span className="text-lg font-bold">Free Plan</span>
+                                        <span className="text-lg font-bold">{userPackage.name}</span>
                                     </div>
 
                                     <span className="font-semibold text-primary">
-                                        Aktif
+                                        {
+                                            userPackage.status == 1 ? 'Aktif' : 'Non Aktif'
+                                        }
                                     </span>
                                 </div>
                             </div>
