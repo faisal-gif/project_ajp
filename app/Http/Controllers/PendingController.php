@@ -16,10 +16,6 @@ class PendingController extends Controller
             return redirect()->route('login');
         }
 
-        if (auth()->user()->status === 1) {
-            return redirect()->route('dashboard');
-        }
-
         $auth = auth()->user();
 
         $newsPackage = NewsPackage::find($auth->package_id);

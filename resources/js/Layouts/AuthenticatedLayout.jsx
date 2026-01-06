@@ -3,6 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import { Link, usePage } from '@inertiajs/react';
 import {
     Clipboard,
+    Crown,
     Edit,
     File,
     FolderInput,
@@ -108,6 +109,16 @@ export default function AuthenticatedLayout({ header, children }) {
                             className={linkClass(isActive('news.*'))}
                         >
                             <NewspaperIcon size={16} />
+                            News
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link
+                            href={route('subscription.index')}
+                            className={linkClass(isActive('subscription.*'))}
+                        >
+                            <Crown size={16} />
                             News
                         </Link>
                     </li>
