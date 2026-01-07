@@ -22,7 +22,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        $newsPackages = NewsPackage::where('type', '4')->get();
+        $newsPackages = NewsPackage::where('type', '1')->get();
         $kategoriKt = KategoriKt::select('kategori_id','name')->get();
         return Inertia::render('Auth/Register',[
             'newsPackages' => $newsPackages,
