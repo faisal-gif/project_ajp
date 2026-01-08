@@ -1,3 +1,4 @@
+import Alert from '@/Components/Alert';
 import Card from '@/Components/Card';
 import Checkbox from '@/Components/Checkbox';
 import InputError from '@/Components/InputError';
@@ -44,6 +45,20 @@ export default function Login({ status, canResetPassword }) {
             </Link>
 
             <Card className='rounded-2xl shadow-2xl p-4 lg:p-6 animate-fade-in'>
+
+                <Alert
+                    type="warning"
+                    title="Salah Website"
+                    message={errors.type}
+                    dismissible
+                >
+                    <a
+                        href="http://kopi.times.co.id/"
+                        className="link link-primary"
+                    >
+                        kopi.times.co.id
+                    </a>
+                </Alert>
 
                 <div className="mb-8">
                     <h2 className="text-3xl font-bold text-foreground mb-2">
