@@ -79,7 +79,7 @@ function Show({ news }) {
                                     <div key={index} className="space-y-2">
                                         <div className="aspect-video rounded-lg overflow-hidden bg-muted">
                                             <img
-                                                src={image ? `/storage/${image}` : '/placeholder.svg'}
+                                                src={image ? `${image}` : '/placeholder.svg'}
                                                 alt={news.title + ' Image ' + (index + 1)}
                                                 className="w-full h-full object-cover"
                                             />
