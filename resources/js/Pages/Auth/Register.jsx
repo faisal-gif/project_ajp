@@ -15,7 +15,7 @@ import InputTextarea from '@/Components/InputTextarea';
 import InputPhoneNumber from '@/Components/InputPhoneNumber';
 import InputSelect from '@/Components/InputSelect';
 
-export default function Register({ newsPackages, kategoriKt }) {
+export default function Register({ newsPackages }) {
     // 1. State Alur
     const [registerStep, setRegisterStep] = useState("plan");
     const [selectedPlan, setSelectedPlan] = useState(null);
@@ -25,7 +25,6 @@ export default function Register({ newsPackages, kategoriKt }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
-        profesi: '',
         prov: '',
         city: '',
         contact: '',
@@ -165,14 +164,6 @@ export default function Register({ newsPackages, kategoriKt }) {
 
                                 <InputError message={errors.email} className="mt-2" />
                             </div>
-                        </div>
-                        <div className="space-y-2 floating-label">
-                            <span className='text-lg'>Profesi</span>
-                            <InputSelect
-                                value={data.profesi}
-                                onChange={(e) => setData('profesi', e.target.value)}
-                                options={kategoriKt.map(k => ({ value: k.kategori_id, label: k.name }))}
-                            />
                         </div>
 
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>

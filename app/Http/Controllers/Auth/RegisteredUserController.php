@@ -23,10 +23,8 @@ class RegisteredUserController extends Controller
     public function create(): Response
     {
         $newsPackages = NewsPackage::where('type', '1')->get();
-        $kategoriKt = KategoriKt::select('kategori_id','name')->get();
-        return Inertia::render('Auth/Register',[
+        return Inertia::render('Auth/Register', [
             'newsPackages' => $newsPackages,
-            'kategoriKt' => $kategoriKt,
         ]);
     }
 
@@ -45,9 +43,8 @@ class RegisteredUserController extends Controller
             'contact' => 'required|string|max:20',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'plan_id' => 'required|exists:news_package,id',
-            'profesi' => 'required|exists:kategori_kt,kategori_id',
         ]);
-        
+
 
         $user = User::create([
             'nama' => $request->name,
@@ -56,7 +53,6 @@ class RegisteredUserController extends Controller
             'city' => $request->city,
             'address' => $request->address,
             'contact' => $request->contact,
-            'kategori' => $request->profesi,
             'package_id' => $request->plan_id,
             'password' => Hash::make($request->password),
             'status' => 0,

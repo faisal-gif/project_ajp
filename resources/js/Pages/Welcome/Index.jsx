@@ -14,7 +14,7 @@ export default function Index({ newsPackages }) {
     return (
         <>
             <Head>
-                <title>Beranda</title>
+                <title>Beranda - AJP</title>
                 <meta name="description" content="AJP (Aplikasi Jurnalisme Positif) adalah platform jurnalistik yang mendorong pemberitaan berimbang, solutif, dan inspiratif untuk membangun optimisme publik." />
 
                 {/* Meta untuk Social Media (Open Graph) */}
