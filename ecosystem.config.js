@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     // Konfigurasi Queue Worker
     {
-      name: "laravel-worker",
+      name: "ajp-worker",
       script: "artisan",
       args: "queue:work --sleep=3 --tries=3 --max-time=3600",
       interpreter: "php",
@@ -11,7 +11,7 @@ module.exports = {
     },
     // Konfigurasi Inertia SSR
     {
-      name: "inertia-ssr",
+      name: "ajp-ssr",
       script: "artisan",
       args: "inertia:start-ssr",
       interpreter: "php",
