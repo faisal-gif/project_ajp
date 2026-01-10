@@ -2,7 +2,7 @@ import Card from '@/Components/Card';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { formatDate } from '@/Utils/formatter';
 import { Head, usePage } from '@inertiajs/react';
-import { AlertTriangle, Badge, BookOpen, Calendar, CheckCircle, Image, MousePointer, PenTool, Plus, Send, TrendingUp } from 'lucide-react';
+import { AlertTriangle, Badge, BookOpen, Calendar, CheckCircle, Image, MapPin, MousePointer, PenTool, Plus, Send, TrendingUp } from 'lucide-react';
 
 export default function Dashboard({ total_news, paket_terdaftar, pending_news, publish_news }) {
 
@@ -76,20 +76,32 @@ export default function Dashboard({ total_news, paket_terdaftar, pending_news, p
                                         <p className="text-xs text-muted-foreground mt-1">Buat judul yang menarik dan tulis isi artikel Anda. Maksimal 4.000 karakter (sekitar 600 kata).</p>
                                     </div>
                                 </div>
-                                <div className="flex items-start gap-3 p-3 rounded-lg bg-white/60 ">
+                                <div className="flex items-start gap-3 p-3 rounded-lg bg-white/60 dark:bg-white/5">
                                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">4</div>
+                                    <div>
+                                        <p className="font-medium text-foreground flex items-center gap-2">
+                                            <MapPin className="w-4 h-4 text-blue-600" />
+                                            Isi Data Narasumber & Lokasi
+                                        </p>
+                                        <p className="text-xs text-muted-foreground mt-1">
+                                            Lengkapi informasi: <span className="font-medium">Kota</span> (lokasi liputan), <span className="font-medium">Narasumber</span> (nama orang yang diwawancara), <span className="font-medium">Profesi</span> (pekerjaan narasumber), dan <span className="font-medium">Kontak</span> (nomor HP).
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3 p-3 rounded-lg bg-white/60 ">
+                                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">5</div>
                                     <div>
                                         <p className="font-medium text-foreground flex items-center gap-2">
                                             <Image className="w-4 h-4 text-blue-600" />
                                             Tambah Gambar
                                         </p>
                                         <p className="text-xs text-muted-foreground mt-1">
-                                               <span className="text-red-600 font-semibold">Gambar A wajib diisi</span> sebagai gambar utama artikel. Gambar B dan C boleh dilewati. Jangan lupa tambahkan keterangan untuk setiap gambar.
+                                            <span className="text-red-600 font-semibold">Gambar A wajib diisi</span> sebagai gambar utama artikel. Gambar B dan C boleh dilewati. Jangan lupa tambahkan keterangan untuk setiap gambar.
                                         </p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3 p-3 rounded-lg bg-white/60 ">
-                                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">5</div>
+                                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">6</div>
                                     <div>
                                         <p className="font-medium text-foreground flex items-center gap-2">
                                             <Send className="w-4 h-4 text-blue-600" />
