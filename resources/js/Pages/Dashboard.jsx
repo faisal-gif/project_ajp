@@ -43,7 +43,7 @@ export default function Dashboard({ total_news, paket_terdaftar, pending_news, p
 
                         <div className="space-y-4">
                             <p className="text-sm text-muted-foreground">
-                                Yuk ikuti langkah mudah ini untuk mengirim artikel ke Kopi TIMES!
+                                Yuk ikuti langkah mudah ini untuk mengirim artikel ke AJP!
                             </p>
                             <div className="space-y-3">
                                 <div className="flex items-start gap-3 p-3 rounded-lg bg-white/60">
