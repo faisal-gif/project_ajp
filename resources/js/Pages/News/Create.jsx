@@ -11,13 +11,13 @@ import { Calendar1Icon, CaptionsIcon, CopyIcon, DollarSignIcon, EyeIcon, Gallery
 import React from 'react'
 
 
-function Create({narsum_detail}) {
-  const { auth } = usePage().props;
+function Create({ narsum_detail }) {
+    const { auth } = usePage().props;
     const user = auth.user;
     const { data, setData, post, processing, errors, reset } = useForm({
         title: '',
         content: '',
-        city:  narsum_detail.city ? narsum_detail.city : '',
+        city: narsum_detail.city ? narsum_detail.city : '',
         narsum: narsum_detail.narsum ? narsum_detail.narsum : '',
         profesi: narsum_detail.profesi ? narsum_detail.profesi : '',
         contact: narsum_detail.contact ? narsum_detail.contact : '',
@@ -28,7 +28,7 @@ function Create({narsum_detail}) {
 
     });
 
-  
+
 
 
     const submit = (e) => {
@@ -82,6 +82,7 @@ function Create({narsum_detail}) {
                                                 value="Judul Berita"
                                                 className='mb-2 label-text font-bold'
                                             />
+                                            <span className='text-error'>*</span>
                                             <TextInput
                                                 id="title"
                                                 name="title"
@@ -99,6 +100,7 @@ function Create({narsum_detail}) {
                                                 value="Konten Berita"
                                                 className='mb-2 label-text font-bold'
                                             />
+                                            <span className='text-error'>*</span>
                                             <InputEditor
                                                 value={data.content}
                                                 onChange={(e) => setData('content', e)}
@@ -126,6 +128,7 @@ function Create({narsum_detail}) {
                                                     value="Kota"
                                                     className='mb-2 label-text font-bold'
                                                 />
+                                                <span className='text-error'>*</span>
                                                 <TextInput
                                                     id="city"
                                                     name="Kota"
@@ -143,6 +146,7 @@ function Create({narsum_detail}) {
                                                     value="Narasumber"
                                                     className='mb-2 label-text font-bold'
                                                 />
+                                                <span className='text-error'>*</span>
                                                 <TextInput
                                                     id="narsum"
                                                     name="Narasumber"
@@ -160,6 +164,7 @@ function Create({narsum_detail}) {
                                                     value="Profesi"
                                                     className='mb-2 label-text font-bold'
                                                 />
+                                                <span className='text-error'>*</span>
                                                 <TextInput
                                                     id="profesi"
                                                     name="Profesi"
@@ -177,6 +182,7 @@ function Create({narsum_detail}) {
                                                     value="Kontak"
                                                     className='mb-2 label-text font-bold'
                                                 />
+                                                <span className='text-error'>*</span>
                                                 <TextInput
                                                     id="contact"
                                                     name="contact"
@@ -208,7 +214,13 @@ function Create({narsum_detail}) {
                                     <div className='grid grid-cols-1 lg:grid-cols-6 gap-4 mt-8'>
                                         <div className='lg:col-span-2'>
                                             <InputImageUpload
-                                                label="Gambar A"
+                                                label={
+                                                    (
+                                                        <>
+                                                            Gambar A<span className='text-error'>*</span>
+                                                        </>
+                                                    )
+                                                }
                                                 value={data.image}
                                                 onChange={(file) => setData("image", file)}
                                             />
@@ -231,7 +243,11 @@ function Create({narsum_detail}) {
                                             <InputTextarea
                                                 id="caption"
                                                 name="Caption Image"
-                                                label={"Caption Image"}
+                                                label={(
+                                                    <>
+                                                        Caption<span className='text-error'>*</span>
+                                                    </>
+                                                )}
                                                 value={data.caption}
                                                 onChange={(e) => setData('caption', e.target.value)}
                                                 autoComplete="caption"
