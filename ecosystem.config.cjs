@@ -17,7 +17,6 @@ module.exports = {
       interpreter: "php",
       instances: 1,
       autorestart: true,
-      watch: false, // Jangan di-set true jika folder storage/logs berubah-ubah
     }
   ],
 };
