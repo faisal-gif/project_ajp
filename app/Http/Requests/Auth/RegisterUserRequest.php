@@ -40,11 +40,17 @@ class RegisterUserRequest extends FormRequest
     {
         return [
             'name.required' => 'Nama lengkap wajib diisi.',
-            'email.required' => 'Email tidak boleh kosong.',
-            'email.unique' => 'Email ini sudah terdaftar.',
-            'password.confirmed' => 'Konfirmasi kata sandi tidak sesuai.',
-            'plan_id.required' => 'Pilih paket langganan Anda.',
-            // Tambahkan pesan lainnya sesuai kebutuhan...
+            'email.required' => 'Alamat email tidak boleh kosong.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email ini sudah terdaftar, silakan gunakan email lain.',
+            'prov.required' => 'Silakan pilih provinsi Anda.',
+            'city.required' => 'Kota/Kabupaten harus diisi.',
+            'contact.required' => 'Nomor kontak/HP wajib diisi.',
+            'password.required' => 'Kata sandi tidak boleh kosong.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+            'password.min' => 'Kata sandi minimal harus :min karakter.',
+            'plan_id.required' => 'Silakan pilih paket langganan terlebih dahulu.',
+            'plan_id.exists' => 'Paket yang dipilih tidak valid.',
         ];
     }
 }
