@@ -185,6 +185,7 @@ class NewsController extends Controller
                 'is_code' => $news->is_code,
                 'datetime' => $news->datetime,
                 'title'    => $news->title,
+                'image' => $news->image,
                 'caption'  => $news->caption,
                 'content'  => $news->content,
                 'city'     => $news->city,
