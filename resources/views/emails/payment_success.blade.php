@@ -5,7 +5,7 @@
 </head>
 <body>
     <h2>Halo, {{ $user->nama }}!</h2>
-    <p>Terima kasih telah melakukan pembayaran. Akun Anda sekarang telah aktif menjadi member <strong>{{ $user->type }}</strong>.</p>
+    <p>Terima kasih telah melakukan pembayaran. Akun Anda sekarang telah aktif menjadi member <strong>AJP - Aplikasi Jurnalisme Positif</strong>.</p>
     
     <table border="1" cellpadding="10" cellspacing="0">
         <tr>
