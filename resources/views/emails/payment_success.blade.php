@@ -14,7 +14,7 @@
         </tr>
         <tr>
             <td><strong>Paket</strong></td>
-            <td>{{ $payment->package_id }}</td> 
+            <td>{{ $newsPackage->name }}</td> 
         </tr>
         <tr>
             <td><strong>Jumlah Bayar</strong></td>
@@ -30,7 +30,6 @@
         </tr>
     </table>
 
-    <p>Sekarang Anda memiliki kuota sebanyak <strong>{{ $user->quota_news }}</strong> news.</p>
     <p>Terima kasih telah berlangganan!</p>
 </body>
 </html>
