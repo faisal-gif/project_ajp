@@ -22,7 +22,9 @@ export default function InputEditor({ value, onChange }) {
                 noneditable_class: 'instagram-media',
                 extended_valid_elements: '+script[language|type|src]',
                 inputMode: 'text',
-                contextmenu: false,
+                contextmenu: 'copy paste selectall',
+                quickbars_insert_toolbar: false,
+                quickbars_selection_toolbar: 'copy paste | bold italic | quicklink',
                 mobile: {
                     menubar: false,
                     toolbar_mode: 'wrap',
@@ -51,7 +53,7 @@ export default function InputEditor({ value, onChange }) {
                 branding: false,
                 promotion: false,
 
-             content_style: `
+                content_style: `
                     body { 
                         -webkit-user-select: text !important; 
                         user-select: text !important; 
