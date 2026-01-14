@@ -38,7 +38,7 @@ export default function InputEditor({ value, onChange }) {
                     'wordcount'
                 ],
                 toolbar:
-                    'bold italic underline strikethrough | ' +
+                    'bold italic underline strikethrough | link | ' +
                     'numlist bullist | ' +
                     'outdent indent | ' +
                     'blockquote | ' +
