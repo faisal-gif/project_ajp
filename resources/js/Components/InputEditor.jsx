@@ -21,7 +21,8 @@ export default function InputEditor({ value, onChange }) {
                 forced_root_block: 'p',
                 noneditable_class: 'instagram-media',
                 extended_valid_elements: '+script[language|type|src]',
-                paste_as_text: true,
+                inputMode: 'text',
+                contextmenu: false,
                 mobile: {
                     menubar: false,
                     toolbar_mode: 'wrap',
