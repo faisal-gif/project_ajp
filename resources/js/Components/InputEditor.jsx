@@ -21,6 +21,12 @@ export default function InputEditor({ value, onChange }) {
                 forced_root_block: 'p',
                 noneditable_class: 'instagram-media',
                 extended_valid_elements: '+script[language|type|src]',
+                quickbars_insert_toolbar: false,
+                quickbars_selection_toolbar: false,
+                mobile: {
+                    menubar: false,
+                    toolbar_mode: 'wrap',
+                },
 
                 plugins: [
                     'searchreplace', 'lists', 'advlist', 'link',
@@ -44,8 +50,14 @@ export default function InputEditor({ value, onChange }) {
                 menubar: false,
                 branding: false,
                 promotion: false,
-
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                content_style: `
+                                body { 
+                                    font-family:Helvetica,Arial,sans-serif; 
+                                    font-size:16px; /* 16px mencegah auto-zoom di iOS */
+                                    -webkit-user-select: text; 
+                                    user-select: text; 
+                                }
+                            `,
             }}
         />
     );
