@@ -30,7 +30,7 @@ export default function InputEditor({ value, onChange }) {
                 },
 
                 plugins: [
-                    'searchreplace', 'lists', 'advlist',
+                    'searchreplace', 'lists', 'advlist', 'link',
                     'charmap', 'pagebreak', 'nonbreaking',
                     'visualblocks', 'visualchars', 'fullscreen',
                     'insertdatetime', 'table', 'help',
@@ -51,14 +51,8 @@ export default function InputEditor({ value, onChange }) {
                 menubar: false,
                 branding: false,
                 promotion: false,
-                content_style: `
-                                body { 
-                                    font-family:Helvetica,Arial,sans-serif; 
-                                    font-size:16px; /* 16px mencegah auto-zoom di iOS */
-                                    -webkit-user-select: text; 
-                                    user-select: text; 
-                                }
-                            `,
+
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
             }}
         />
     );
