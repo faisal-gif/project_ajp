@@ -21,8 +21,6 @@ export default function InputEditor({ value, onChange }) {
                 forced_root_block: 'p',
                 noneditable_class: 'instagram-media',
                 extended_valid_elements: '+script[language|type|src]',
-                quickbars_insert_toolbar: false,
-                quickbars_selection_toolbar: false,
                 contextmenu: false,
                 mobile: {
                     menubar: false,
@@ -52,7 +50,12 @@ export default function InputEditor({ value, onChange }) {
                 branding: false,
                 promotion: false,
 
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+             content_style: `
+                    body { 
+                        -webkit-user-select: text !important; 
+                        user-select: text !important; 
+                    }
+                `,
             }}
         />
     );
