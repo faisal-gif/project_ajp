@@ -6,6 +6,7 @@ export default function InputEditor({ value, onChange }) {
         <Editor
             // 1. GUNAKAN API KEY (Daftar di tiny.cloud untuk dapat gratis)
             // Atau kosongkan jika ingin pakai mode warning/self-hosted
+            inline={true}
             tinymceScriptSrc="/vendor/tinymce/tinymce.min.js"
             referrerPolicy='origin'
             // 2. Binding Data
