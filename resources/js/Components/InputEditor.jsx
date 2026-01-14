@@ -23,6 +23,7 @@ export default function InputEditor({ value, onChange }) {
                 extended_valid_elements: '+script[language|type|src]',
                 quickbars_insert_toolbar: false,
                 quickbars_selection_toolbar: false,
+                contextmenu: false,
                 mobile: {
                     menubar: false,
                     toolbar_mode: 'wrap',
