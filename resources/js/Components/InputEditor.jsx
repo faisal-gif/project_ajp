@@ -29,7 +29,7 @@ export default function InputEditor({ value, onChange }) {
                 },
 
                 plugins: [
-                    'searchreplace', 'lists', 'advlist', 'link',
+                    'searchreplace', 'lists', 'advlist',
                     'charmap', 'pagebreak', 'nonbreaking',
                     'visualblocks', 'visualchars', 'fullscreen',
                     'insertdatetime', 'table', 'help',
