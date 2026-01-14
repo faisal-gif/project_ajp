@@ -20,8 +20,14 @@ export default function InputEditor({ value, onChange }) {
                 noneditable_class: 'instagram-media',
                 extended_valid_elements: '+script[language|type|src]',
                 inputMode: 'text',
+                contextmenu: false,
                 quickbars_insert_toolbar: false,
                 quickbars_selection_toolbar: false,
+                mobile: {
+                    menubar: false,
+                    toolbar_mode: 'wrap',
+                },
+
                 plugins: [
                     'searchreplace', 'lists', 'advlist', 'link',
                     'charmap', 'pagebreak', 'nonbreaking',
@@ -46,8 +52,10 @@ export default function InputEditor({ value, onChange }) {
                 promotion: false,
 
                 content_style: `
-                    body { font-family:Helvetica,Arial,sans-serif; font-size:16px; }
-                    .instagram-media { margin: 10px auto !important; }
+                    body { 
+                        body { font-family:Helvetica,Arial,sans-serif; font-size:16px; }
+                        .instagram-media { margin: 10px auto !important; }
+                    }
                 `,
             }}
         />
