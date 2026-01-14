@@ -9,7 +9,6 @@ export default function InputEditor({ value, onChange }) {
             tinymceScriptSrc="/vendor/tinymce/tinymce.min.js"
             referrerPolicy='origin'
             // 2. Binding Data
-            inline={true}
             value={value}
             onEditorChange={(content, editor) => {
                 onChange(content);
