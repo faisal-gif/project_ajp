@@ -96,6 +96,11 @@ class NewsController extends Controller
 
         $auth = Auth::user();
         $title = $request->title;
+
+        $cleanTitle = preg_replace('/[^\x00-\x{FFFF}]/u', '', $request->title);
+        $cleanContent = preg_replace('/[^\x00-\x{FFFF}]/u', '', $request->content);
+        $cleanCaption = preg_replace('/[^\x00-\x{FFFF}]/u', '', $request->caption);
+
         $image_1 = null;
         $image_2 = null;
         $image_3 = null;
@@ -123,8 +128,8 @@ class NewsController extends Controller
 
         News::create([
             'is_code' => $is_code,
-            'title' => $request->title,
-            'content' => $request->content,
+            'title'     => $cleanTitle,
+            'content'   => $cleanContent,
             'city' => $request->city,
             'narsum' => $request->narsum,
             'profesi' => $request->profesi,
@@ -133,7 +138,7 @@ class NewsController extends Controller
             'image' => url(Storage::url($image_1)),
             'image2' => url(Storage::url($image_2)),
             'image3' => url(Storage::url($image_3)),
-            'caption' => $request->caption,
+            'caption'   => $cleanCaption,
             'pewarta_id' => $auth->id,
             'type' => $auth->type,
             'status' => 0
