@@ -1,11 +1,11 @@
 import Card from "@/Components/Card";
 import { formatDuration, formatRupiah } from "@/Utils/formatter";
 import { Link } from "@inertiajs/react";
-import { Check, Sparkles } from "lucide-react";
+import { Check, MessageCircle, Sparkles } from "lucide-react";
 
 
 const PricingSection = ({ newsPackagesReguler, newsPackagesSeasonal }) => {
-   
+
     return (
         <section id="pricing" className="py-24 bg-muted/50">
             <div className="container mx-auto px-4">
@@ -150,10 +150,28 @@ const PricingSection = ({ newsPackagesReguler, newsPackagesSeasonal }) => {
                         </Card>
                     ))}
                 </div>
+
+                {/* Custom Plan Card */}
+                <div className="max-w-3xl mx-auto mt-12">
+                    <div className="relative bg-card rounded-2xl border border-dashed border-primary/50 p-8 flex flex-col md:flex-row items-center gap-8">
+                        <div className="flex-1 text-center md:text-left">
+                            <h3 className="font-serif text-2xl font-bold mb-2">Paket Kustom</h3>
+                            <p className="text-muted-foreground mb-4">Untuk kebutuhan khusus yang tidak tersedia dalam paket standar.</p>
+
+                        </div>
+                        <div className="shrink-0">
+
+                            <a href="mailto:redaksi@timesindonesia.co.id" className="btn btn-primary">
+                                <MessageCircle className="w-4 h-4" />
+                                Hubungi Kami
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 {/* FAQ Hint */}
                 <p className="text-center text-muted-foreground text-sm mt-12">
                     Punya pertanyaan? Hubungi tim kami di{" "}
-                    <a href="mailto:hello@ajp.id" className="text-primary hover:underline">
+                    <a href="mailto:redaksi@timesindonesia.co.id" className="text-primary hover:underline">
                         redaksi@timesindonesia.co.id
                     </a>
                 </p>
