@@ -5,7 +5,7 @@ import PaginationDaisy from '@/Components/PaginationDaisy'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { formatDate, formatDateTime } from '@/Utils/formatter'
 import { Head, Link, router, usePage } from '@inertiajs/react'
-import { Eye, Newspaper, Plus, Search, TrendingUp } from 'lucide-react'
+import { Calendar, Eye, Newspaper, Plus, Search, TrendingUp } from 'lucide-react'
 import React, { useEffect, useRef, useState } from 'react'
 
 
@@ -153,11 +153,18 @@ function Index({ news, writers, kanals, filters }) {
 
               {/* Quota Card */}
               <Card className="mb-8 ">
-
-                <div className=" flex items-center gap-2 text-lg text-base-content/80 font-semibold">
-                  <Newspaper className="w-5 h-5 text-primary" />
-                  Sisa Kuota: {user?.quota_news} artikel
+                <div className='flex flex-col md:flex-row items-center mb-4'>
+                  <div className=" flex items-center gap-2 text-lg text-base-content/80 font-semibold">
+                    <Newspaper className="w-5 h-5 text-primary" />
+                    Sisa Kuota: {user?.quota_news} artikel
+                  </div>
+                   <div className=" flex items-center gap-2 text-lg text-base-content/80 font-semibold">
+                    <Calendar className="w-5 h-5 text-primary" />
+                    Quota Berakhir : {user?.dateexp}
+                  </div>
                 </div>
+
+
 
 
 
