@@ -20,10 +20,12 @@ class WelcomeController extends Controller
     }
     public function harga()
     {
-        $newsPackages = NewsPackage::where('type', '1')->get();
+        $newsPackagesReguler = NewsPackage::where('type', '1')->where('level', 1)->get();
+        $newsPackagesSeasonal = NewsPackage::where('type', '1')->where('level', 2)->get();
 
         return Inertia::render('Harga/Index', [
-            'newsPackages' => $newsPackages,
+            'newsPackagesReguler' => $newsPackagesReguler,
+            'newsPackagesSeasonal' => $newsPackagesSeasonal,
         ]);
     }
 }
