@@ -139,7 +139,7 @@ function Index({ news, writers, kanals, filters }) {
 
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 {/* Button Tambah User */}
-                {user?.quota_news > 0 || new Date(user?.dateexp) > new Date() ? (
+                {user?.quota_news > 0 && new Date(user?.dateexp) > new Date() ? (
                   <Link href={route('news.create')} className="btn btn-primary rounded-lg">
                     <Plus size={16} /> Tambah News
                   </Link>
@@ -151,24 +151,31 @@ function Index({ news, writers, kanals, filters }) {
               </div>
               {/* End Head */}
 
+
               {/* Quota Card */}
-              <Card className="mb-8 ">
-                <div className='flex flex-col md:flex-row items-center mb-4'>
+              <div className='flex flex-row gap-5'>
+                <Card className="mb-8 ">
                   <div className=" flex items-center gap-2 text-lg text-base-content/80 font-semibold">
                     <Newspaper className="w-5 h-5 text-primary" />
                     Sisa Kuota: {user?.quota_news} artikel
                   </div>
-                   <div className=" flex items-center gap-2 text-lg text-base-content/80 font-semibold">
+                </Card>
+                <Card className="mb-8 ">
+                  <div className=" flex items-center gap-2 text-lg text-base-content/80 font-semibold">
                     <Calendar className="w-5 h-5 text-primary" />
                     Quota Berakhir : {user?.dateexp}
                   </div>
-                </div>
+                  {
+                    new Date(user?.dateexp) < new Date() && (
+                      <div className="mt-2 text-sm text-red-600">
+                        Masa aktif akun Anda telah berakhir. Silakan perbarui langganan Anda dengan menghubungi admin.
+                      </div>
+                    )
+                  }
+                </Card>
 
+              </div>
 
-
-
-
-              </Card>
 
               {/* Start Filter */}
               <Card>
