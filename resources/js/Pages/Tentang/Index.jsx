@@ -4,7 +4,7 @@ import { Head } from "@inertiajs/react";
 import { Heart, Shield, Lightbulb, Globe, Users, Target, Award, TrendingUp } from "lucide-react";
 
 
-const Tentang = () => {
+const Tentang = ({ countuser, countArticle }) => {
     const values = [
         {
             icon: Heart,
@@ -33,9 +33,8 @@ const Tentang = () => {
     ];
 
     const stats = [
-        { icon: Users, value: "10,000+", label: "Penulis Aktif" },
-        { icon: Target, value: "50,000+", label: "Artikel Dipublikasikan" },
-        { icon: Award, value: "100+", label: "Penghargaan" },
+        { icon: Users, value: countuser, label: "Penulis Aktif" },
+        { icon: Target, value: countArticle, label: "Artikel Dipublikasikan" },
         { icon: TrendingUp, value: "1M+", label: "Pembaca Bulanan" },
     ];
 
@@ -66,8 +65,8 @@ const Tentang = () => {
 
                     {/* Stats Section */}
                     <section className="py-16 border-b border-border">
-                        <div className="max-w-7xl mx-auto px-4">
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        <div className="max-w-7xl mx-auto px-4 ">
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                                 {stats.map((stat) => (
                                     <div key={stat.label} className="text-center">
                                         <div className="w-12 h-12 rounded-lg bg-linear-to-bl from-primary to-accent flex items-center justify-center mx-auto mb-4">

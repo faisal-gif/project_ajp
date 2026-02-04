@@ -14,9 +14,7 @@ use Inertia\Inertia;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
-Route::get('/tentang', function () {
-    return Inertia::render('Tentang/Index');
-})->name('tentang');
+Route::get('/tentang', [WelcomeController::class, 'tentang'])->name('tentang');
 Route::get('/harga', [WelcomeController::class, 'harga'])->name('harga');
 Route::get('/kebijakan-privasi', function () {
     return Inertia::render('KebijakanPrivasi/Index');

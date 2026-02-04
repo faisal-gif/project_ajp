@@ -8,7 +8,7 @@ import PricingSection from './Partials/PricingSection';
 import { Head } from '@inertiajs/react';
 
 
-export default function Index({ newsPackagesReguler, newsPackagesSeasonal }) {
+export default function Index({ newsPackagesReguler, newsPackagesSeasonal, countuser, countArticle }) {
 
 
     return (
@@ -23,7 +23,7 @@ export default function Index({ newsPackagesReguler, newsPackagesSeasonal }) {
                 <meta property="og:image" content="/logo-web-ajp.png" />
             </Head>
             <LandingLayout>
-                <HeroSection />
+                <HeroSection countuser={countuser} countArticle={countArticle} />
                 <AboutSection />
                 <FeaturesSection />
                 <PricingSection newsPackagesReguler={newsPackagesReguler} newsPackagesSeasonal={newsPackagesSeasonal} />

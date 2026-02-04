@@ -2,7 +2,7 @@ import { Link } from '@inertiajs/react'
 import { ArrowRight, PenLine, Users, TrendingUp } from "lucide-react";
 import React from 'react'
 
-function HeroSection() {
+function HeroSection({countuser, countArticle}) {
     return (
         <section className="relative min-h-screen flex items-center pt-6 overflow-hidden">
             {/* Background Pattern */}
@@ -61,8 +61,8 @@ function HeroSection() {
                         style={{ animationDelay: "0.4s" }}
                     >
                         {[
-                            { icon: PenLine, value: "10K+", label: "Artikel" },
-                            { icon: Users, value: "5K+", label: "Penulis" },
+                            { icon: PenLine, value: countArticle, label: "Artikel" },
+                            { icon: Users, value: countuser, label: "Penulis" },
                             { icon: TrendingUp, value: "1M+", label: "Pembaca" },
                         ].map((stat) => (
                             <div key={stat.label} className="text-center">
