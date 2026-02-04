@@ -93,7 +93,7 @@ export default function Register({ newsPackages }) {
                                 </div>
 
                                 <div className="flex flex-wrap gap-2 mt-4">
-                                    {plan.feature.keunggulan.slice(3).map((feature) => (
+                                    {plan.feature.keunggulan.slice(0, 3).map((feature) => (
                                         <span
                                             key={feature}
                                             className="inline-flex items-center gap-1 text-[11px] bg-white border border-gray-50 px-2 py-1 rounded-md text-gray-600"
