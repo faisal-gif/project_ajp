@@ -27,7 +27,7 @@ const PricingSection = ({ newsPackagesReguler, newsPackagesSeasonal }) => {
                 <h2 className="font-serif text-2xl font-bold text-center mb-8">Paket Seasonal</h2>
                 <div
                     className={`grid gap-8 max-w-7xl mx-auto
-                            ${newsPackages.length === 1
+                            ${newsPackagesSeasonal.length === 1
                             ? "grid-cols-1 justify-items-center"
                             : "grid-cols-1 md:grid-cols-4"
                         }
@@ -90,7 +90,7 @@ const PricingSection = ({ newsPackagesReguler, newsPackagesSeasonal }) => {
                 <h2 className="text-center text-2xl font-bold mt-12 mb-4">Paket Regular</h2>
                 <div
                     className={`grid gap-8 max-w-7xl mx-auto
-                            ${newsPackages.length === 1
+                            ${newsPackagesReguler.length === 1
                             ? "grid-cols-1 justify-items-center"
                             : "grid-cols-1 md:grid-cols-4"
                         }
