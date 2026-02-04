@@ -72,7 +72,7 @@ export default function Register({ newsPackages }) {
                                     : "border-gray-200 bg-white"
                                     }`}
                             >
-                                {plan.popular && (
+                                {plan.popular == 1 && (
                                     <div className="absolute -top-3 left-4">
                                         <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary text-white text-[10px] font-bold uppercase tracking-wider">
                                             <Sparkles className="w-3 h-3" />
