@@ -139,7 +139,7 @@ function Index({ news, writers, kanals, filters }) {
 
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 {/* Button Tambah User */}
-                {user?.quota_news > 0 ? (
+                {user?.quota_news > 0 && user?.dateexp > now() ? (
                   <Link href={route('news.create')} className="btn btn-primary rounded-lg">
                     <Plus size={16} /> Tambah News
                   </Link>
