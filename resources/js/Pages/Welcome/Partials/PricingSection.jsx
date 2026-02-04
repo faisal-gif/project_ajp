@@ -92,7 +92,7 @@ const PricingSection = ({ newsPackagesReguler, newsPackagesSeasonal }) => {
                     className={`grid gap-8 max-w-7xl mx-auto
                             ${newsPackagesReguler.length === 1
                             ? "grid-cols-1 justify-items-center"
-                            : "grid-cols-1 md:grid-cols-4"
+                            : "grid-cols-1 md:grid-cols-3"
                         }
                 `}>
                     {newsPackagesReguler.map((plan) => (
