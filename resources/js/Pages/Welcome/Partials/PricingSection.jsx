@@ -5,7 +5,14 @@ import { Check, Sparkles } from "lucide-react";
 
 
 const PricingSection = ({ newsPackages }) => {
+    const sortedPackages = [...newsPackages].sort((a, b) => {
+        const getPriority = (pkg) => {
+            if (pkg.level === 2) return 1; // Seasonal jadi nomor 1
+            if (pkg.level === 1) return 2; // Regular jadi nomor 2              // Custom/Lainnya jadi nomor 3
+        };
 
+        return getPriority(a) - getPriority(b);
+    });
     return (
         <section id="pricing" className="py-24 bg-muted/50">
             <div className="container mx-auto px-4">
@@ -26,25 +33,26 @@ const PricingSection = ({ newsPackages }) => {
                 {/* Pricing Cards */}
                 <div
                     className={`grid gap-8 max-w-7xl mx-auto
-                            ${newsPackages.length === 1
+        ${sortedPackages.length === 1
                             ? "grid-cols-1 justify-items-center"
-                            : "grid-cols-1 md:grid-cols-4"
+                            : "grid-cols-1 md:grid-cols-3" // Sesuaikan jumlah kolom jika perlu
                         }
-                `}>
-                    {newsPackages.map((plan) => (
+    `}
+                >
+                    {sortedPackages.map((plan) => (
                         <Card
                             key={plan.name}
                             className={`relative bg-base-100 rounded-2xl border p-8 flex flex-col
-                                    ${newsPackages.length === 1 ? "w-full max-w-md" : ""}
-                                    ${plan.popular
+                ${sortedPackages.length === 1 ? "w-full max-w-md" : ""}
+                ${plan.popular === 1
                                     ? "border-primary shadow-lg scale-105 z-10"
                                     : "border-border"
                                 }`}
                         >
-                            {/* Popular Badge */}
-                            {plan.popular && (
+                            {/* Tag Paling Populer */}
+                            {plan.popular === 1 && (
                                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                                    <div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full  bg-gradient-to-br from-primary to-accent text-primary-content text-sm font-medium">
+                                    <div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-br from-primary to-accent text-primary-content text-sm font-medium">
                                         <Sparkles className="w-3 h-3" />
                                         Paling Populer
                                     </div>
@@ -69,22 +77,11 @@ const PricingSection = ({ newsPackages }) => {
                                         <span className="text-sm">{feature}</span>
                                     </div>
                                 ))}
-                                {/* {plan.limitations.map((limitation) => (
-                                    <div key={limitation} className="flex items-start gap-3 opacity-50">
-                                        <Check className="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" />
-                                        <span className="text-sm">{limitation}</span>
-                                    </div>
-                                ))} */}
                             </div>
 
                             {/* CTA */}
-
                             <Link className="btn btn-primary" href="/register">Pilih</Link>
-
                         </Card>
-
-
-
                     ))}
                 </div>
 

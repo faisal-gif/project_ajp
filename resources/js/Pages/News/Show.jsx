@@ -70,13 +70,16 @@ function Show({ news }) {
                                 </div>
                             </div>
                         </div>
-                        <Card className="mb-6">
-                            <Link2Icon className="w-5 h-5 text-primary mb-4" />
-                            <p>Link Artikel: </p>
-                            <a href={news.url} target="_blank" className="text-blue-600 underline">
-                                {news.url}
-                            </a>
-                        </Card>
+                        {news.url && (
+                            <Card className="mb-6">
+                                <Link2Icon className="w-5 h-5 text-primary mb-4" />
+                                <p>Link Artikel: </p>
+                                <a href={news.url} target="_blank" className="text-blue-600 underline">
+                                    {news.url}
+                                </a>
+                            </Card>
+
+                        )}
 
 
 
