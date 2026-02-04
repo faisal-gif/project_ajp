@@ -4,7 +4,7 @@ import React from 'react'
 import Card from "@/Components/Card";
 import { formatDuration, formatRupiah } from "@/Utils/formatter";
 import { Link } from "@inertiajs/react";
-import { Check, Sparkles } from "lucide-react";
+import { Check, MessageCircle, Sparkles } from "lucide-react";
 
 function Index({ newsPackagesReguler, newsPackagesSeasonal }) {
     return (
@@ -28,7 +28,7 @@ function Index({ newsPackagesReguler, newsPackagesSeasonal }) {
                         </div>
 
                         {/* Pricing Cards */}
-                        {/* Pricing Cards */}
+
                         <h2 className="font-serif text-2xl font-bold text-center mb-8">Paket Seasonal</h2>
                         <div
                             className={`grid gap-8 max-w-7xl mx-auto
@@ -154,6 +154,25 @@ function Index({ newsPackagesReguler, newsPackagesSeasonal }) {
 
                                 </Card>
                             ))}
+                        </div>
+
+
+                        {/* Custom Plan Card */}
+                        <div className="max-w-3xl mx-auto mt-12">
+                            <div className="relative bg-card rounded-2xl border border-dashed border-primary/50 p-8 flex flex-col md:flex-row items-center gap-8">
+                                <div className="flex-1 text-center md:text-left">
+                                    <h3 className="font-serif text-2xl font-bold mb-2">Paket Kustom</h3>
+                                    <p className="text-muted-foreground mb-4">Untuk kebutuhan khusus yang tidak tersedia dalam paket standar.</p>
+
+                                </div>
+                                <div className="shrink-0">
+
+                                    <a href="mailto:redaksi@timesindonesia.co.id" className="btn btn-primary">
+                                        <MessageCircle className="w-4 h-4" />
+                                        Hubungi Kami
+                                    </a>
+                                </div>
+                            </div>
                         </div>
 
                         {/* FAQ Hint */}
