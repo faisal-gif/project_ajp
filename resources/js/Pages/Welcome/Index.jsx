@@ -8,7 +8,7 @@ import PricingSection from './Partials/PricingSection';
 import { Head } from '@inertiajs/react';
 
 
-export default function Index({ newsPackages }) {
+export default function Index({ newsPackagesReguler, newsPackagesSeasonal }) {
 
 
     return (
@@ -26,7 +26,7 @@ export default function Index({ newsPackages }) {
                 <HeroSection />
                 <AboutSection />
                 <FeaturesSection />
-                <PricingSection newsPackages={newsPackages} />
+                <PricingSection newsPackagesReguler={newsPackagesReguler} newsPackagesSeasonal={newsPackagesSeasonal} />
             </LandingLayout>
         </>
     );
