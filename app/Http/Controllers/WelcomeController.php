@@ -12,14 +12,12 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $newsPackagesReguler = NewsPackage::where('type', '1')->where('level', 1)->get();
-        $newsPackagesSeasonal = NewsPackage::where('type', '1')->where('level', 2)->get();
+        $newsFirstPackage = NewsPackage::where('type', '1')->where('level', 1)->get();
         $countuser = User::where('type', '1')->count();
         $countArticle = News::where('type', '1')->count();
 
         return Inertia::render('Welcome/Index', [
-            'newsPackagesReguler' => $newsPackagesReguler,
-            'newsPackagesSeasonal' => $newsPackagesSeasonal,
+            'newsFirstPackage' => $newsFirstPackage,
             'countuser' => $countuser,
             'countArticle' => $countArticle,
         ]);

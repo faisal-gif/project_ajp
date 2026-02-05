@@ -11,14 +11,16 @@ class SubscriptionController extends Controller
 {
     public function index()
     {
-        $newsPackages = NewsPackage::where('type', '4')->where('level', 2)->get();
+        $newsPackagesRegular = NewsPackage::where('type', '1')->where('level', 2)->get();
+        $newsPackagesSeasonal = NewsPackage::where('type', '1')->where('level', 3)->get();
         $user = Auth::user();
 
         $userPackage = NewsPackage::find($user->package_id);
 
 
         return Inertia::render('Subscription/Index', [
-            'newsPackages' => $newsPackages,
+            'newsPackagesRegular' => $newsPackagesRegular,
+            'newsPackagesSeasonal' => $newsPackagesSeasonal,
             'userPackage' => $userPackage,
         ]);
     }

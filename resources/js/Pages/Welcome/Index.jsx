@@ -8,7 +8,7 @@ import PricingSection from './Partials/PricingSection';
 import { Head } from '@inertiajs/react';
 
 
-export default function Index({ newsPackagesReguler, newsPackagesSeasonal, countuser, countArticle }) {
+export default function Index({ newsFirstPackage, countuser, countArticle }) {
 
 
     return (
@@ -26,7 +26,7 @@ export default function Index({ newsPackagesReguler, newsPackagesSeasonal, count
                 <HeroSection countuser={countuser} countArticle={countArticle} />
                 <AboutSection />
                 <FeaturesSection />
-                <PricingSection newsPackagesReguler={newsPackagesReguler} newsPackagesSeasonal={newsPackagesSeasonal} />
+                <PricingSection newsFirstPackage={newsFirstPackage} />
             </LandingLayout>
         </>
     );
