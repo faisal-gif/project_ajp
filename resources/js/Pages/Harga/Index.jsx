@@ -6,7 +6,7 @@ import { formatDuration, formatRupiah } from "@/Utils/formatter";
 import { Link } from "@inertiajs/react";
 import { Check, MessageCircle, Sparkles } from "lucide-react";
 
-function Index({ newsPackagesReguler, newsPackagesSeasonal }) {
+function Index({ newsFirstPackage }) {
     return (
         <>
             <Head title='Harga' />
