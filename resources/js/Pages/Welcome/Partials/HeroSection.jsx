@@ -27,7 +27,7 @@ function HeroSection({countuser, countArticle}) {
                         className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 animate-fade-in"
                         style={{ animationDelay: "0.1s" }}
                     >
-                        Suarakan Cerita{" "}
+                        Suarakan Narasi{" "}
                         <span className="text-primary">Positif</span>
                         <br />
                         untuk Indonesia

@@ -57,7 +57,7 @@ const Tentang = ({ countuser, countArticle }) => {
                                 </h1>
                                 <p className="text-lg text-muted-foreground leading-relaxed">
                                     AJP hadir sebagai wadah bagi para penulis Indonesia untuk menyuarakan
-                                    cerita-cerita positif yang menginspirasi dan membangun bangsa.
+                                    narasi positif yang menginspirasi dan membangun bangsa.
                                 </p>
                             </div>
                         </div>
