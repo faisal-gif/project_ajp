@@ -116,7 +116,7 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, userPackage }) {
 
                                     {/* CTA */}
 
-                                    <Link className="btn btn-primary" href="/register">Pilih</Link>
+                                  <Link className="btn btn-primary" href={"/checkout?package_id=" + plan.id}>Pilih</Link>
 
                                 </Card>
                             ))}
@@ -179,7 +179,7 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, userPackage }) {
 
                                     {/* CTA */}
 
-                                    <Link className="btn btn-primary" href="/register">Pilih</Link>
+                                   <Link className="btn btn-primary" href={"/checkout?package_id=" + plan.id}>Pilih</Link>
 
                                 </Card>
                             ))}
