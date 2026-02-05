@@ -124,16 +124,16 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, userPackage }) {
                         <h2 className="text-center text-2xl font-bold mt-12 mb-4">Paket Regular</h2>
                         <div
                             className={`grid gap-8 max-w-7xl mx-auto
-                                                   ${newsPackagesReguler.length === 1
+                                                   ${newsPackagesRegular.length === 1
                                     ? "grid-cols-1 justify-items-center"
                                     : "grid-cols-1 md:grid-cols-3"
                                 }
                                        `}>
-                            {newsPackagesReguler.map((plan) => (
+                            {newsPackagesRegular.map((plan) => (
                                 <Card
                                     key={plan.name}
                                     className={`relative bg-base-100 rounded-2xl border p-8 flex flex-col
-                                                           ${newsPackagesReguler.length === 1 ? "w-full max-w-md" : ""}
+                                                           ${newsPackagesRegular.length === 1 ? "w-full max-w-md" : ""}
                                                            ${plan.popular
                                             ? "border-primary shadow-lg scale-105 z-10"
                                             : "border-border"
