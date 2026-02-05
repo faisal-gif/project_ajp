@@ -23,7 +23,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        $newsPackages = NewsPackage::where('type', '1')->get();
+        $newsPackages = NewsPackage::where('type', '1')->where('level', '1')->get();
         return Inertia::render('Auth/Register', [
             'newsPackages' => $newsPackages,
         ]);

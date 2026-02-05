@@ -88,7 +88,7 @@ const PricingSection = ({ newsFirstPackage }) => {
                 </div>
 
                 {/* Custom Plan Card */}
-                <div className="max-w-3xl mx-auto mt-12">
+                {/* <div className="max-w-3xl mx-auto mt-12">
                     <div className="relative bg-card rounded-2xl border border-dashed border-primary/50 p-8 flex flex-col md:flex-row items-center gap-8">
                         <div className="flex-1 text-center md:text-left">
                             <h3 className="font-serif text-2xl font-bold mb-2">Paket Kustom</h3>
@@ -103,7 +103,7 @@ const PricingSection = ({ newsFirstPackage }) => {
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* FAQ Hint */}
                 <p className="text-center text-muted-foreground text-sm mt-12">
                     Punya pertanyaan? Hubungi tim kami di{" "}

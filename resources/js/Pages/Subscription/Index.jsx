@@ -58,7 +58,7 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, userPackage }) {
 
                         {/* Pricing Cards */}
 
-                        <h2 className="font-serif text-2xl font-bold text-center mb-8">Paket Seasonal</h2>
+                        <h2 className="font-serif text-2xl font-bold text-center mb-8">Paket Promo</h2>
                         <div
                             className={`grid gap-8 max-w-7xl mx-auto
                                                    ${newsPackagesSeasonal.length === 1
