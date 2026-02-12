@@ -81,19 +81,8 @@ class NewsController extends Controller
             return redirect()->route('news.index')->with('error', 'Masa aktif akun Anda telah berakhir. Silakan perbarui langganan Anda.');
         }
 
-        $narsum_detail = [];
-        if ($user->type == 4) {
-            $narsum_detail = [
-                'city' => $user->city,
-                'narsum' => $user->nama,
-                'profesi' => KategoriKt::where('kategori_id', $user->kategori)->first()->name,
-                'contact' => $user->contact,
-            ];
-        }
-
-        return Inertia::render('News/Create', [
-            'narsum_detail' => $narsum_detail,
-        ]);
+      
+        return Inertia::render('News/Create');
     }
 
     /**
