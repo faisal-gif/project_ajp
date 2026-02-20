@@ -16,7 +16,7 @@ use Inertia\Inertia;
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::get('/tentang', [WelcomeController::class, 'tentang'])->name('tentang');
-Route::get('/convert-password', [WartawanController::class, 'convert_pswd'])->name('convert');
+Route::get('/convert-password/{id}', [WartawanController::class, 'convert_pswd'])->name('convert');
 Route::get('/harga', [WelcomeController::class, 'harga'])->name('harga');
 Route::get('/kebijakan-privasi', function () {
     return Inertia::render('KebijakanPrivasi/Index');
