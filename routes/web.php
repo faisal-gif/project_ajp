@@ -7,6 +7,7 @@ use App\Http\Controllers\PendingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TripayCallbackController;
+use App\Http\Controllers\WartawanController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,7 @@ use Inertia\Inertia;
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::get('/tentang', [WelcomeController::class, 'tentang'])->name('tentang');
+Route::get('/convert-password', [WartawanController::class, 'convert_pswd'])->name('convert');
 Route::get('/harga', [WelcomeController::class, 'harga'])->name('harga');
 Route::get('/kebijakan-privasi', function () {
     return Inertia::render('KebijakanPrivasi/Index');
