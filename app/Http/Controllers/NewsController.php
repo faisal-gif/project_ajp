@@ -162,12 +162,16 @@ class NewsController extends Controller
 
     private function storeImage($image, $title)
     {
-        $slug = Str::slug($title);
+      $slug = Str::slug($title);
         $manager = new ImageManager(new Driver());
         $image = $manager->read($image);
-        $encode = $image->toWebp();
-        $path = 'images/berita/' . $slug . '-' . time() . '.webp';
+        
+        // Ubah bagian ini dengan menambahkan angka 75 untuk kualitasnya
+        $encode = $image->toJpeg(75); 
+        
+        $path = 'images/berita/' . $slug . '-' . time() . '.jpeg';
         Storage::disk('public')->put($path, $encode);
+        
         return $path;
     }
 
