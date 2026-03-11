@@ -6,9 +6,11 @@ use App\Http\Requests\NewsFormRequest;
 use App\Models\KategoriKt;
 use App\Models\News;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -81,7 +83,7 @@ class NewsController extends Controller
             return redirect()->route('news.index')->with('error', 'Masa aktif akun Anda telah berakhir. Silakan perbarui langganan Anda.');
         }
 
-      
+
         return Inertia::render('News/Create');
     }
 
@@ -90,7 +92,6 @@ class NewsController extends Controller
      */
     public function store(NewsFormRequest $request)
     {
-
         $auth = Auth::user();
         $title = $request->title;
 
@@ -102,51 +103,61 @@ class NewsController extends Controller
         $image_2 = null;
         $image_3 = null;
 
-
         do {
             $is_code = 'AJP' . strtoupper(Str::random(8));
         } while (News::where('is_code', $is_code)->exists());
 
-        if ($request->hasFile('image')) {
-            $image_1 = $this->storeImage($request->file('image'), $title . '-1');
-        }
-
-        if ($request->hasFile('image_2')) {
-            $image_2 = $this->storeImage($request->file('image_2'), $title . '-2');
-        }
-
-        if ($request->hasFile('image_3')) {
-            $image_3 = $this->storeImage($request->file('image_3'), $title . '-3');
-        }
-
-
-
         DB::beginTransaction();
 
-        News::create([
-            'is_code' => $is_code,
-            'title'     => $cleanTitle,
-            'content'   => $cleanContent,
-            'city' => $request->city,
-            'narsum' => $request->narsum,
-            'profesi' => $request->profesi,
-            'contact' => $request->contact,
-            'datetime' => now(),
-            'image' => url(Storage::url($image_1)),
-            'image2' => url(Storage::url($image_2)),
-            'image3' => url(Storage::url($image_3)),
-            'caption'   => $cleanCaption,
-            'pewarta_id' => $auth->id,
-            'type' => $auth->type,
-            'status' => 0
-        ]);
+        try {
+            // Jika file bermasalah, fungsi storeImage akan menghasilkan Exception
+            if ($request->hasFile('image')) {
+                $image_1 = $this->storeImage($request->file('image'), $title . '-1');
+            }
 
-        $user = User::find($auth->id);
-        $user->quota_news = $user->quota_news - 1;
-        $user->save();
+            if ($request->hasFile('image_2')) {
+                $image_2 = $this->storeImage($request->file('image_2'), $title . '-2');
+            }
 
-        DB::commit();
-        return redirect()->route('news.index')->with('success', 'Berita berhasil ditambahkan.');
+            if ($request->hasFile('image_3')) {
+                $image_3 = $this->storeImage($request->file('image_3'), $title . '-3');
+            }
+
+            News::create([
+                'is_code' => $is_code,
+                'title'     => $cleanTitle,
+                'content'   => $cleanContent,
+                'city' => $request->city,
+                'narsum' => $request->narsum,
+                'profesi' => $request->profesi,
+                'contact' => $request->contact,
+                'datetime' => now(),
+                'image' => $image_1 ? url(Storage::url($image_1)) : null,
+                'image2' => $image_2 ? url(Storage::url($image_2)) : null,
+                'image3' => $image_3 ? url(Storage::url($image_3)) : null,
+                'caption'   => $cleanCaption,
+                'pewarta_id' => $auth->id,
+                'type' => $auth->type,
+                'status' => 0
+            ]);
+
+            $user = User::find($auth->id);
+            $user->quota_news = $user->quota_news - 1;
+            $user->save();
+
+            DB::commit();
+
+            return redirect()->route('news.index')->with('success', 'Berita berhasil ditambahkan.');
+        } catch (Exception $e) {
+            // Batalkan semua query database jika ada gambar yang gagal diproses
+            DB::rollBack();
+
+            // Catat error aslinya di file storage/logs/laravel.log untuk keperluan debugging
+            Log::error('Gagal upload gambar saat membuat berita: ' . $e->getMessage());
+
+            // Kembalikan user ke form dengan input sebelumnya dan pesan error
+            return back()->withInput()->with('error', 'Gagal memproses gambar. Pastikan file gambar tidak rusak dan coba lagi.');
+        }
     }
 
     private function storeImage($image, $title)
