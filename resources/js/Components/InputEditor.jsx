@@ -67,7 +67,18 @@ export default function InputEditor({ value, onChange }) {
                         el.style.lineHeight = "";
                     });
                 },
-                content_style: 'body { font-size:14px } img { max-width:100%; height:auto; }',
+                content_style: `
+                        html { height: 100%; }
+                        body { 
+                            min-height: 100%; 
+                            font-size: 14px; 
+                            cursor: text; /* Mengubah kursor panah menjadi kursor teks (I-beam) di seluruh area */
+                        } 
+                        img { 
+                            max-width: 100%; 
+                            height: auto; 
+                        }
+                    `,
             }}
         />
     );
