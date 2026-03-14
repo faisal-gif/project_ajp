@@ -50,17 +50,24 @@ export default function InputEditor({ value, onChange }) {
                 menubar: false,
                 branding: false,
                 promotion: false,
-
-                content_style: `
-                    html, body { height: 100%; margin: 0; } 
-                    body { 
-                        font-family:Helvetica,Arial,sans-serif; 
-                        font-size:16px; 
-                        padding: 10px; /* Memberi ruang napas di pinggir */
-                        box-sizing: border-box; 
-                    }
-                    .instagram-media { margin: 10px auto !important; }
-                `,
+                paste_preprocess: (plugin, args) => {
+                    // Regex Unicode modern untuk mendeteksi semua rentang karakter emoji
+                    const emojiRegex = /[\p{Extended_Pictographic}\p{Emoji_Presentation}]/gu;
+                    args.content = args.content.replace(emojiRegex, '');
+                },
+                paste_postprocess: (plugin, args) => {
+                    args.node.querySelectorAll("span").forEach(el => {
+                        el.replaceWith(...el.childNodes); // unwrap span
+                    });
+                    args.node.querySelectorAll("o\\:p").forEach(el => el.remove());
+                    args.node.querySelectorAll("*").forEach(el => {
+                        el.removeAttribute("class");
+                        el.style.fontFamily = "";
+                        el.style.fontSize = "";
+                        el.style.lineHeight = "";
+                    });
+                },
+                content_style: 'body { font-size:14px } img { max-width:100%; height:auto; }',
             }}
         />
     );
