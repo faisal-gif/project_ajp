@@ -37,6 +37,7 @@ class NewsFormRequest extends FormRequest
         return [
             'image.dimensions' => 'Dimensi gambar terlalu besar. Maksimal 4000x4000 piksel.',
             'image.mimes' => 'Format gambar harus berupa jpeg, png, jpg, atau webp.',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 4MB.',
         ];
     }
 }
