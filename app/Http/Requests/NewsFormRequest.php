@@ -23,9 +23,9 @@ class NewsFormRequest extends FormRequest
             'contact' => 'required|string|max:100',
 
             // Tambahkan mimes dan dimensions
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:4096|dimensions:max_width=4000,max_height=4000',
-            'image_2' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096|dimensions:max_width=4000,max_height=4000',
-            'image_3' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096|dimensions:max_width=4000,max_height=4000',
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'image_2' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'image_3' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
 
             'caption' => 'nullable|string|max:255',
         ];
