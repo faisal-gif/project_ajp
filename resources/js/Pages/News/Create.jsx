@@ -19,7 +19,7 @@ function Create({ narsum_detail }) {
         content: '',
         city: '',
         narsum: '',
-        profesi:'',
+        profesi: '',
         contact: '',
         image: null,
         image_2: null,
@@ -224,6 +224,7 @@ function Create({ narsum_detail }) {
                                                 value={data.image}
                                                 onChange={(file) => setData("image", file)}
                                             />
+                                            <InputError message={errors.image} className="mt-2" />
                                         </div>
                                         <div className='lg:col-span-2'>
                                             <InputImageUpload
@@ -231,6 +232,7 @@ function Create({ narsum_detail }) {
                                                 value={data.image_2}
                                                 onChange={(file) => setData("image_2", file)}
                                             />
+                                            <InputError message={errors.image_2} className="mt-2" />
                                         </div>
                                         <div className='lg:col-span-2'>
                                             <InputImageUpload
@@ -238,6 +240,7 @@ function Create({ narsum_detail }) {
                                                 value={data.image_3}
                                                 onChange={(file) => setData("image_3", file)}
                                             />
+                                            <InputError message={errors.image_3} className="mt-2" />
                                         </div>
                                         <div className='lg:col-span-6'>
                                             <InputTextarea
