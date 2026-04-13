@@ -131,13 +131,13 @@ export default function Index({ channel, newsPackage }) {
                                     </a>
 
                                     <a
-                                        href="https://wa.me/6281234567890"
+                                        href="https://wa.me/6285736001238"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
                                     >
                                         <MessageCircle className="h-4 w-4" />
-                                        WhatsApp: +62 812-3456-7890
+                                        WhatsApp: +62 857 3600 1238
                                     </a>
                                 </div>
                             </div>
