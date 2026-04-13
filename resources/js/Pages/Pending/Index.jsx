@@ -119,7 +119,7 @@ export default function Index({ channel, newsPackage }) {
                                         className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
                                     >
                                         <Mail className="h-4 w-4" />
-                                        admin@portalberita.com
+                                        redaksi@timesindonesia.co.id
                                     </a>
 
                                     <a
@@ -127,7 +127,7 @@ export default function Index({ channel, newsPackage }) {
                                         className="flex items-center gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
                                     >
                                         <Phone className="h-4 w-4" />
-                                        +62 812-3456-7890
+                                        (0341) 563566
                                     </a>
 
                                     <a
