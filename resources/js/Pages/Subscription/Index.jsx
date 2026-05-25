@@ -16,7 +16,7 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, userPackage }) {
 
                     <div className="max-w-7xl mx-auto px-4">
                         {/* Title */}
-                        <div className='flex md:flex-row justify-between items-center mb-6'>
+                        <div className='flex flex-col md:flex-row justify-between items-center mb-6'>
                             {/* start Header */}
                             <div>
                                 <h1 className="text-3xl font-bold text-foreground mb-2">Upgrade Membership</h1>
