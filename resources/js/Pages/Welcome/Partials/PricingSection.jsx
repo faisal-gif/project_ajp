@@ -51,6 +51,15 @@ const PricingSection = ({ newsFirstPackage }) => {
                                 </div>
                             )}
 
+                            {plan.flash_sale && (
+                                <div className="absolute -top-4 right-4">
+                                    <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-to-br from-red-500 to-pink-500 text-white text-xs font-medium">
+                                        <Sparkles className="w-3 h-3" />
+                                        Flash Sale
+                                    </div>
+                                </div>
+                            )}
+
 
 
                             {/* Plan Header */}
