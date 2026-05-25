@@ -16,7 +16,7 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, userPackage }) {
 
                     <div className="max-w-7xl mx-auto px-4">
                         {/* Title */}
-                        <div className='flex flex-row justify-between items-center mb-6'>
+                        <div className='flex md:flex-row justify-between items-center mb-6'>
                             {/* start Header */}
                             <div>
                                 <h1 className="text-3xl font-bold text-foreground mb-2">Upgrade Membership</h1>
@@ -86,7 +86,14 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, userPackage }) {
                                         </div>
                                     )}
 
-
+                                    {plan.flash_sale && (
+                                        <div className="absolute -top-4 right-4">
+                                            <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-to-br from-red-500 to-pink-500 text-white text-xs font-medium">
+                                                <Sparkles className="w-3 h-3" />
+                                                Flash Sale
+                                            </div>
+                                        </div>
+                                    )}
 
                                     {/* Plan Header */}
                                     <div className="text-center mb-6">
@@ -116,7 +123,7 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, userPackage }) {
 
                                     {/* CTA */}
 
-                                  <Link className="btn btn-primary" href={"/checkout?package_id=" + plan.id}>Pilih</Link>
+                                    <Link className="btn btn-primary" href={"/checkout?package_id=" + plan.id}>Pilih</Link>
 
                                 </Card>
                             ))}
@@ -179,7 +186,7 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, userPackage }) {
 
                                     {/* CTA */}
 
-                                   <Link className="btn btn-primary" href={"/checkout?package_id=" + plan.id}>Pilih</Link>
+                                    <Link className="btn btn-primary" href={"/checkout?package_id=" + plan.id}>Pilih</Link>
 
                                 </Card>
                             ))}
