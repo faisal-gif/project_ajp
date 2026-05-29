@@ -6,6 +6,7 @@ use App\Mail\PaymentSuccessfulMail;
 use App\Models\NewsPackage;
 use App\Models\Payments;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -41,12 +42,28 @@ class TripayCallbackController extends Controller
                 $newsPackage = NewsPackage::find($payment->package_id);
 
                 $user = User::find($payment->user_id);
-                $user->quota_news += $newsPackage->quota;
-                if ($user->dateexp == null) {
-                    $user->dateexp = now()->addMonth($newsPackage->period);
-                } else {
-                    $user->dateexp = $user->dateexp->addMonth($newsPackage->period);
+
+
+                $baseDate = $user->dateexp ? Carbon::parse($user->dateexp) : now();
+
+                switch ($newsPackage->jenis_periode) {
+                    case 'hari':
+                        $baseDate->addDays($newsPackage->period);
+                        break;
+                    case 'minggu':
+                        $baseDate->addWeeks($newsPackage->period);
+                        break;
+                    case 'tahun':
+                        $baseDate->addYears($newsPackage->period);
+                        break;
+                    case 'bulan':
+                    default:
+                        $baseDate->addMonths($newsPackage->period);
+                        break;
                 }
+
+                $user->quota_news += $newsPackage->quota;
+                $user->dateexp = $baseDate;
                 $user->package_id = $newsPackage->id;
                 $user->status = 1;
                 $user->type = $newsPackage->type;
