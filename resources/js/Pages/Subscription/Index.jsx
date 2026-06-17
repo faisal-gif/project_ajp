@@ -65,7 +65,7 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, newsSatuan, userPack
                                     <Card
                                         key={plan.name}
                                         className={`relative bg-base-100 rounded-2xl border p-8 flex flex-col
-                                    ${newsPackages.length === 1 ? "w-full max-w-md" : ""}
+                                    ${newsSatuan.length === 1 ? "w-full max-w-md" : ""}
                                     ${plan.popular
                                                 ? "border-primary shadow-lg scale-105 z-10"
                                                 : "border-border"
