@@ -11,8 +11,13 @@ class SubscriptionController extends Controller
 {
     public function index()
     {
-        $newsPackagesRegular = NewsPackage::where('type', '1')->where('level', 2)->get();
-        $newsPackagesSeasonal = NewsPackage::where('type', '1')->where('level', 3)->get();
+        $newsPackagesRegular = NewsPackage::where('type', '1')->where('level', 2)->where('kategori_produk', 'paket')->get();
+        $newsPackagesSeasonal = NewsPackage::where('type', '1')->where('level', 3)->where('kategori_produk', 'paket')->get();
+        $newsSatuan =  NewsPackage::where('type', '1')
+            ->where('level', 2)
+            ->where('status', 1)
+            ->where('kategori_produk', 'satuan')
+            ->get();
         $user = Auth::user();
 
         $userPackage = NewsPackage::find($user->package_id);
@@ -21,6 +26,7 @@ class SubscriptionController extends Controller
         return Inertia::render('Subscription/Index', [
             'newsPackagesRegular' => $newsPackagesRegular,
             'newsPackagesSeasonal' => $newsPackagesSeasonal,
+            'newsSatuan' => $newsSatuan,
             'userPackage' => $userPackage,
         ]);
     }
