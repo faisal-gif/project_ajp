@@ -56,7 +56,7 @@ function Index({ newsPackagesRegular, newsPackagesSeasonal, newsSatuan, userPack
 
                         </Card>
 
-                        <div className='flex flex-col max-w-5xl mx-auto gap-8'>
+                        <div className='flex flex-col max-w-5xl mx-auto gap-8 mb-2'>
                             <h2 className='text-2xl font-bold'>Add Ons</h2>
                             {/* Pricing Cards */}
                             <div
