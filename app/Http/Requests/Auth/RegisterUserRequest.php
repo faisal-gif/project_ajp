@@ -26,7 +26,7 @@ class RegisterUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'email' => 'required|string|email|max:255|unique:' . User::class,
             'prov' => 'required|string|max:100',
             'city' => 'required|string|max:100',
             'address' => 'required|string|max:255',
