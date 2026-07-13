@@ -30,19 +30,27 @@ class TripayCallbackController extends Controller
 
         $payment = Payments::where('reference', $request->reference)->firstOrFail();
 
-        if ($data['status'] === 'PAID') {
-            DB::transaction(function () use ($payment, $data) {
-                $payment->update([
-                    'status' => 'paid',
-                    'paid_at' => now(),
+        // Ubah status dari Tripay menjadi huruf kecil agar sesuai dengan ENUM database kamu
+        // Catatan: Jika Tripay mengirimkan 'UNPAID', kamu mungkin perlu mengubahnya menjadi 'pending' 
+        // jika di database kamu menggunakan 'pending'
+        $statusDariTripay = strtolower($data['status']);
 
+        // Opsional: Penyesuaian nama status jika Tripay pakai 'unpaid' tapi DB kamu 'pending'
+        if ($statusDariTripay === 'unpaid') {
+            $statusDariTripay = 'pending';
+        } elseif ($statusDariTripay === 'refund') {
+            $statusDariTripay = 'refunded'; // Jika Tripay pakai 'refund' tapi DB kamu 'refunded'
+        }
+
+        if ($statusDariTripay === 'paid') {
+            DB::transaction(function () use ($payment, $statusDariTripay) {
+                $payment->update([
+                    'status' => $statusDariTripay,
+                    'paid_at' => now(),
                 ]);
 
-
                 $newsPackage = NewsPackage::find($payment->package_id);
-
                 $user = User::find($payment->user_id);
-
 
                 $baseDate = $user->dateexp ? Carbon::parse($user->dateexp) : now();
 
@@ -73,9 +81,12 @@ class TripayCallbackController extends Controller
                     Mail::to($user->email)->send(new PaymentSuccessfulMail($payment, $user, $newsPackage));
                 });
             });
+        } elseif (in_array($statusDariTripay, ['pending', 'failed', 'expired', 'refunded'])) {
+            // Handle semua status selain paid di sini
+            $payment->update([
+                'status' => $statusDariTripay,
+            ]);
         }
-
-
 
         return response()->json(['success' => true]);
     }
