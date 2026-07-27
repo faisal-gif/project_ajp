@@ -10,5 +10,6 @@ class NewsPackage extends Model
 
     protected $casts = [
         'feature' => 'array',
+        'popular' => 'boolean',
     ];
 }
