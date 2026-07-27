@@ -35,8 +35,14 @@ class User extends Authenticatable
         'address',
         'package_id',
         'dateexp',
+        'type',
         'quota_news',
+        'feed_instagram',
+        'ekoran',
+        'wa_channel',
         'instansi',
+        'avatar',
+        'avatar_raw',
         'password',
         'passwd',
         'status',
@@ -51,6 +57,12 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function paket()
+    {
+        return $this->belongsTo(NewsPackage::class, 'package_id', 'id');
+    }
+
 
     /**
      * Get the attributes that should be cast.
