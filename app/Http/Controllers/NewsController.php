@@ -175,11 +175,11 @@ class NewsController extends Controller
         return $path;
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(News $news)
     {
+        // Load relasi addonRequests agar bisa dibaca oleh frontend
+        $news->load('addonRequests');
+
         return Inertia::render('News/Show', [
             'news' => $news,
         ]);
