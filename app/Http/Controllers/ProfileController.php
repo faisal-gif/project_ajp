@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -40,24 +41,67 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
+    public function uploadAvatar(Request $request)
     {
         $request->validate([
-            'password' => ['required', 'current_password'],
+            'avatar' => 'required|image|mimes:png|max:2048',
+            'avatar_raw' => 'required|image|max:5120',
         ]);
 
-        $user = $request->user();
+        $user = auth()->user();
 
-        Auth::logout();
+        DB::transaction(function () use ($request, $user) {
 
-        $user->delete();
+            /** =========================
+             * HAPUS FILE LAMA (JIKA ADA)
+             * ========================= */
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
+            }
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+            if ($user->avatar_raw && Storage::disk('public')->exists($user->avatar_raw)) {
+                Storage::disk('public')->delete($user->avatar_raw);
+            }
 
-        return Redirect::to('/');
+            // HAPUS member_card lama (karena kita tidak pakai ini lagi di DB)
+            if ($user->member_card && Storage::disk('public')->exists($user->member_card)) {
+                Storage::disk('public')->delete($user->member_card);
+            }
+
+            /** =========================
+             * SIMPAN FILE BARU
+             * ========================= */
+            $rawPath = $this->storeAvatarRaw($request->file('avatar_raw'));
+            $avatarPath = $this->storeAvatar($request->file('avatar'));
+
+            /** =========================
+             * UPDATE USER
+             * ========================= */
+            $user->update([
+                'avatar' => $avatarPath,
+                'avatar_raw' => $rawPath,
+                'member_card' => null, // Dikosongkan karena di-generate via Frontend
+            ]);
+        });
+
+        return back()->with('success', 'Avatar berhasil diperbarui!');
+    }
+
+    // Biarkan fungsi storeAvatar() dan storeAvatarRaw() tetap seperti biasa
+
+    private function storeAvatar($image)
+    {
+        $ext = $image->getClientOriginalExtension() ?: 'png';
+        $path = 'images/avatar/' . time() . '.' . $ext;
+        Storage::disk('public')->putFileAs('images/avatar', $image, time() . '.' . $ext);
+        return $path;
+    }
+
+    private function storeAvatarRaw($image)
+    {
+        $ext = $image->getClientOriginalExtension() ?: 'png';
+        $name = time() . '_raw.' . $ext;
+        Storage::disk('public')->putFileAs('images/avatar/raw', $image, $name);
+        return 'images/avatar/raw/' . $name;
     }
 }
