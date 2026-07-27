@@ -1,7 +1,71 @@
 import Card from "@/Components/Card";
-import { formatDuration, formatRupiah } from "@/Utils/formatter";
+import { formatRupiah } from "@/Utils/formatter";
 import { Link } from "@inertiajs/react";
-import { Check, MessageCircle, Sparkles } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
+
+// =====================================================================
+// MINI COMPONENT: Render Fitur Otomatis dari Database
+// =====================================================================
+const RenderDBFeatures = ({ plan }) => {
+    return (
+        <div className="flex-1 space-y-3 mb-8">
+            {/* 1. Masa Berlaku */}
+            {(plan.duration_days > 0 || plan.period > 0) && (
+                <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-sm">
+                        Masa Berlaku: <span className="font-semibold">{plan.duration_days ? `${plan.duration_days} Hari` : `${plan.period} ${plan.jenis_periode}`}</span>
+                    </span>
+                </div>
+            )}
+
+            {/* 2. Kuota Artikel */}
+            {(plan.quota > 0 || plan.quota === null) && (
+                <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-sm">
+                        Kuota Opini: <span className="font-semibold">{plan.quota === null ? 'Unlimited (Tanpa Batas)' : `${plan.quota} Artikel`}</span>
+                    </span>
+                </div>
+            )}
+
+            {/* 3. Feed Instagram */}
+            {plan.feed_instagram > 0 && (
+                <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-sm">Feed IG: <span className="font-semibold">{plan.feed_instagram} Post</span></span>
+                </div>
+            )}
+
+            {/* 4. Ekoran */}
+            {plan.ekoran > 0 && (
+                <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-sm">Ekoran: <span className="font-semibold">{plan.ekoran} Edisi</span></span>
+                </div>
+            )}
+
+            {/* 5. WA Channel */}
+            {plan.wa_channel > 0 && (
+                <div className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-sm">WA Channel: <span className="font-semibold">{plan.wa_channel} Post</span></span>
+                </div>
+            )}
+
+            {/* 6. Fitur Wajib (Default) */}
+            <div className="flex items-start gap-3 pt-3 border-t border-base-200 mt-3">
+                <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                <span className="text-sm font-medium">Publikasi di TIMES Indonesia</span>
+            </div>
+            <div className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                <span className="text-sm font-medium">Bimbingan dan penyuntingan redaksi</span>
+            </div>
+        </div>
+    );
+};
+// =====================================================================
 
 
 const PricingSection = ({ newsFirstPackage }) => {
@@ -34,85 +98,56 @@ const PricingSection = ({ newsFirstPackage }) => {
                     {newsFirstPackage.map((plan) => (
                         <Card
                             key={plan.name}
-                            className={`relative bg-base-100 rounded-2xl border p-8 flex flex-col
+                            className={`relative bg-base-100 rounded-2xl border p-8 flex flex-col shadow-sm transition-all hover:shadow-md
                                     ${newsFirstPackage.length === 1 ? "w-full max-w-md" : ""}
-                                    ${plan.popular
+                                    ${Boolean(plan.popular)
                                     ? "border-primary shadow-lg scale-105 z-10"
                                     : "border-border"
                                 }`}
                         >
                             {/* Popular Badge */}
-                            {plan.popular == 1 && (
+                            {Boolean(plan.popular) && (
                                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                                    <div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full  bg-gradient-to-br from-primary to-accent text-primary-content text-sm font-medium">
+                                    <div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-br from-primary to-accent text-primary-content text-sm font-medium shadow-sm">
                                         <Sparkles className="w-3 h-3" />
                                         Paling Populer
                                     </div>
                                 </div>
                             )}
 
-                            {plan.flash_sale && (
+                            {/* Flash Sale Badge */}
+                            {Boolean(plan.flash_sale) && (
                                 <div className="absolute -top-4 right-4">
-                                    <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-to-br from-red-500 to-pink-500 text-white text-xs font-medium">
+                                    <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-to-br from-red-500 to-pink-500 text-white text-xs font-medium shadow-sm">
                                         <Sparkles className="w-3 h-3" />
                                         Flash Sale
                                     </div>
                                 </div>
                             )}
 
-
-
                             {/* Plan Header */}
                             <div className="text-center mb-6">
                                 <h3 className="font-serif text-2xl font-bold mb-2">{plan.name}</h3>
                                 <div className="mb-2">
-                                    <span className="font-serif text-2xl font-bold">{formatRupiah(plan.price)}</span>
-                                    <span className="text-muted-foreground text-sm ml-1">/ {formatDuration(plan.period)}</span>
+                                    <span className="font-serif text-3xl font-bold text-primary">{formatRupiah(plan.price)}</span>
+                                    {/* Gunakan periode langsung agar selaras dengan format Subscription */}
+                                    <span className="text-muted-foreground text-sm ml-1">/ {plan.period} {plan.jenis_periode}</span>
                                 </div>
                                 <p className="text-muted-foreground text-sm">{plan.description}</p>
                             </div>
 
-                            {/* Features */}
-                            <div className="flex-1 space-y-3 mb-8">
-                                {plan.feature.keunggulan.map((feature) => (
-                                    <div key={feature} className="flex items-start gap-3">
-                                        <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                                        <span className="text-sm">{feature}</span>
-                                    </div>
-                                ))}
-                                {/* {plan.limitations.map((limitation) => (
-                                    <div key={limitation} className="flex items-start gap-3 opacity-50">
-                                        <Check className="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" />
-                                        <span className="text-sm">{limitation}</span>
-                                    </div>
-                                ))} */}
-                            </div>
+                            {/* Panggil komponen RenderDBFeatures pengganti mapping manual */}
+                            <RenderDBFeatures plan={plan} />
 
                             {/* CTA */}
-
-                            <Link className="btn btn-primary" href="/register">Pilih</Link>
+                            <Link className="btn btn-primary w-full shadow-sm mt-auto" href="/register">
+                                Pilih Paket Ini
+                            </Link>
 
                         </Card>
                     ))}
                 </div>
 
-                {/* Custom Plan Card */}
-                {/* <div className="max-w-3xl mx-auto mt-12">
-                    <div className="relative bg-card rounded-2xl border border-dashed border-primary/50 p-8 flex flex-col md:flex-row items-center gap-8">
-                        <div className="flex-1 text-center md:text-left">
-                            <h3 className="font-serif text-2xl font-bold mb-2">Paket Kustom</h3>
-                            <p className="text-muted-foreground mb-4">Untuk kebutuhan khusus yang tidak tersedia dalam paket standar.</p>
-
-                        </div>
-                        <div className="shrink-0">
-
-                            <a href="mailto:redaksi@timesindonesia.co.id" className="btn btn-primary">
-                                <MessageCircle className="w-4 h-4" />
-                                Hubungi Kami
-                            </a>
-                        </div>
-                    </div>
-                </div> */}
                 {/* FAQ Hint */}
                 <p className="text-center text-muted-foreground text-sm mt-12">
                     Punya pertanyaan? Hubungi tim kami di{" "}
