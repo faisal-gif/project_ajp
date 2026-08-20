@@ -70,6 +70,13 @@ const RenderDBFeatures = ({ plan }) => {
 
 const PricingSection = ({ newsFirstPackage }) => {
 
+    const defaultLevel1Features = [
+        "Dapat member card penulis",
+        "Dapat Akun CMS akses",
+        "Mendapatkan Kouta menulis",
+        "Jangkauan audience luas"
+    ];
+
     return (
         <section id="pricing" className="py-24 bg-muted/50">
             <div className="container mx-auto px-4">
@@ -95,57 +102,69 @@ const PricingSection = ({ newsFirstPackage }) => {
                             : "grid-cols-1 md:grid-cols-3"
                         }
                 `}>
-                    {newsFirstPackage.map((plan) => (
-                        <Card
-                            key={plan.name}
-                            className={`relative bg-base-100 rounded-2xl border p-8 flex flex-col shadow-sm transition-all hover:shadow-md
-                                    ${newsFirstPackage.length === 1 ? "w-full max-w-md" : ""}
-                                    ${Boolean(plan.popular)
-                                    ? "border-primary shadow-lg scale-105 z-10"
-                                    : "border-border"
-                                }`}
-                        >
-                            {/* Popular Badge */}
-                            {Boolean(plan.popular) && (
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                                    <div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-br from-primary to-accent text-primary-content text-sm font-medium shadow-sm">
-                                        <Sparkles className="w-3 h-3" />
-                                        Paling Populer
+                    {newsFirstPackage.map((plan) => {
+                        const features = plan.features || defaultLevel1Features;
+                        return (
+                            <Card
+                                key={plan.name}
+                                className={`relative bg-base-100 rounded-2xl border p-8 flex flex-col shadow-sm transition-all hover:shadow-md
+                                        ${newsFirstPackage.length === 1 ? "w-full max-w-md" : ""}
+                                        ${Boolean(plan.popular)
+                                        ? "border-primary shadow-lg scale-105 z-10"
+                                        : "border-border"
+                                    }`}
+                            >
+                                {/* Popular Badge */}
+                                {Boolean(plan.popular) && (
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                                        <div className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-br from-primary to-accent text-primary-content text-sm font-medium shadow-sm">
+                                            <Sparkles className="w-3 h-3" />
+                                            Paling Populer
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
 
-                            {/* Flash Sale Badge */}
-                            {Boolean(plan.flash_sale) && (
-                                <div className="absolute -top-4 right-4">
-                                    <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-to-br from-red-500 to-pink-500 text-white text-xs font-medium shadow-sm">
-                                        <Sparkles className="w-3 h-3" />
-                                        Flash Sale
+                                {/* Flash Sale Badge */}
+                                {Boolean(plan.flash_sale) && (
+                                    <div className="absolute -top-4 right-4">
+                                        <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-to-br from-red-500 to-pink-500 text-white text-xs font-medium shadow-sm">
+                                            <Sparkles className="w-3 h-3" />
+                                            Flash Sale
+                                        </div>
                                     </div>
+                                )}
+
+                                {/* Plan Header */}
+                                <div className="text-center mb-6">
+                                    <h3 className="font-serif text-2xl font-bold mb-2">{plan.name}</h3>
+                                    <div className="mb-2">
+                                        <span className="font-serif text-3xl font-bold text-primary">{formatRupiah(plan.price)}</span>
+                                        {/* Gunakan periode langsung agar selaras dengan format Subscription */}
+                                        <span className="text-muted-foreground text-sm ml-1">/ {plan.period} {plan.jenis_periode}</span>
+                                    </div>
+                                    <p className="text-muted-foreground text-sm">{plan.description}</p>
                                 </div>
-                            )}
+                                {plan.level === 1 ? (
+                                    <>
+                                        {features.map((feature, idx) => (
+                                            <div key={idx} className="flex items-start gap-3">
+                                                <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                                                <span className="text-sm">{feature}</span>
+                                            </div>
+                                        ))}
+                                    </>
+                                ) : (
+                                    < RenderDBFeatures plan={plan} />
+                                )}
 
-                            {/* Plan Header */}
-                            <div className="text-center mb-6">
-                                <h3 className="font-serif text-2xl font-bold mb-2">{plan.name}</h3>
-                                <div className="mb-2">
-                                    <span className="font-serif text-3xl font-bold text-primary">{formatRupiah(plan.price)}</span>
-                                    {/* Gunakan periode langsung agar selaras dengan format Subscription */}
-                                    <span className="text-muted-foreground text-sm ml-1">/ {plan.period} {plan.jenis_periode}</span>
-                                </div>
-                                <p className="text-muted-foreground text-sm">{plan.description}</p>
-                            </div>
+                                {/* CTA */}
+                                <Link className="btn btn-primary w-full shadow-sm mt-auto" href="/register">
+                                    Pilih Paket Ini
+                                </Link>
 
-                            {/* Panggil komponen RenderDBFeatures pengganti mapping manual */}
-                            <RenderDBFeatures plan={plan} />
-
-                            {/* CTA */}
-                            <Link className="btn btn-primary w-full shadow-sm mt-auto" href="/register">
-                                Pilih Paket Ini
-                            </Link>
-
-                        </Card>
-                    ))}
+                            </Card>
+                        )
+                    })}
                 </div>
 
                 {/* FAQ Hint */}
