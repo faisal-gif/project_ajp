@@ -71,7 +71,6 @@ const RenderDBFeatures = ({ plan }) => {
 const PricingSection = ({ newsFirstPackage }) => {
 
     const defaultLevel1Features = [
-        "Dapat member card penulis",
         "Dapat Akun CMS akses",
         "Mendapatkan Kouta menulis",
         "Jangkauan audience luas"
