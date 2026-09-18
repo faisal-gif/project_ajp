@@ -1,55 +1,53 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/react';
-import { Newspaper } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import Fist from '@/Pages/Welcome/Partials/Fist';
+import Stamp from '@/Pages/Welcome/Partials/Stamp';
 
+// Auth pages: a pasted-up board on AJP red (desktop) beside a paper desk that holds the form.
 export default function GuestLayout({ children }) {
     return (
-        <div className="min-h-screen flex">
-            {/* Left Panel - Decorative */}
-            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary to-accent relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.05&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
+        <div className="landing auth flex min-h-screen text-ink">
+            {/* Board */}
+            <aside className="relative hidden overflow-hidden bg-dull lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-[46%] lg:flex-col lg:justify-between lg:p-12">
+                <Link href="/" aria-label="AJP, ke beranda" className="ticket relative z-10 inline-block self-start bg-stock py-3 pl-4 pr-10 [--notch:6px] [--stub:1.6rem]">
+                    <ApplicationLogo className="h-8 w-auto" />
+                </Link>
 
-                <div className="relative z-10 flex flex-col justify-between p-12 text-primary-content h-full">
-                    {/* Logo */}
-                    <Link to="/" className="flex items-center gap-2 group">
-                        <div className="w-10 h-10 rounded-lg bg-primary-foreground/20 flex items-center justify-center">
-                            <Newspaper className="w-5 h-5" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="font-serif text-xl font-bold">AJP</span>
-                            <span className="text-[10px] opacity-80 -mt-1">Aplikasi Jurnalisme Positif</span>
-                        </div>
+                <div className="relative z-10 max-w-md">
+                    <div className="scrap-drop -rotate-2">
+                        <figure className="torn grain bg-newsprint px-7 pb-9 pt-7">
+                            <div className="halftone h-40 mix-blend-multiply" aria-hidden="true" />
+                            <blockquote className="mt-5 font-news text-[1.6rem] font-bold leading-snug">
+                                “Setiap kata yang kita tulis memiliki kekuatan untuk mengubah dunia menjadi tempat yang lebih baik.”
+                            </blockquote>
+                            <figcaption className="mt-4 font-type text-xs uppercase text-olive">AJP — Aplikasi Jurnalisme Positif</figcaption>
+                        </figure>
+                    </div>
+                    <Stamp sub="TIMES INDONESIA" className="pointer-events-none absolute -bottom-12 -right-10 w-44 rotate-[-10deg] [--color-dull:#1c1a17]" />
+                </div>
+
+                <p className="relative z-10 flex items-center gap-3 font-type text-sm text-stock/85">
+                    <Fist className="w-16 shrink-0 [--color-stock:#e6d7b8]" />
+                    Disunting &amp; diterbitkan bersama redaksi TIMES Indonesia.
+                </p>
+            </aside>
+
+            {/* Desk */}
+            <main className="grain flex w-full flex-col bg-stock lg:w-[54%]">
+                <div className="flex items-center justify-between px-6 pt-6 lg:px-12">
+                    <Link href="/" aria-label="AJP, ke beranda" className="lg:invisible">
+                        <ApplicationLogo className="h-7 w-auto" />
                     </Link>
-
-                    {/* Quote */}
-                    <div className="max-w-md">
-                        <blockquote className="font-serif text-2xl italic leading-relaxed mb-6">
-                            "Setiap kata yang kita tulis memiliki kekuatan untuk mengubah dunia menjadi tempat yang lebih baik."
-                        </blockquote>
-                        <div className="w-16 h-1 bg-primary-foreground/30 rounded-full" />
-                    </div>
-
-                    {/* Stats */}
-                    <div className="flex gap-8">
-                        <div>
-                            <div className="font-serif text-3xl font-bold">5K+</div>
-                            <div className="text-sm opacity-80">Penulis Aktif</div>
-                        </div>
-                        <div>
-                            <div className="font-serif text-3xl font-bold">10K+</div>
-                            <div className="text-sm opacity-80">Artikel Positif</div>
-                        </div>
-                    </div>
+                    <Link href="/" className="inline-flex items-center gap-2 font-type text-sm hover:text-dull">
+                        <ArrowLeft className="h-4 w-4" />
+                        Kembali ke beranda
+                    </Link>
                 </div>
-            </div>
-            {/* Right Panel - Login Form */}
-
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
-                <div className="w-full max-w-xl">
-                    {children}
+                <div className="flex flex-1 items-center justify-center px-5 py-10 sm:px-8">
+                    <div className="w-full max-w-xl">{children}</div>
                 </div>
-            </div>
+            </main>
         </div>
-
     );
 }

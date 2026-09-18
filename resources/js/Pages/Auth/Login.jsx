@@ -1,5 +1,4 @@
 import Alert from '@/Components/Alert';
-import Card from '@/Components/Card';
 import Checkbox from '@/Components/Checkbox';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -8,7 +7,6 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { ArrowLeft } from 'lucide-react';
 
 
 export default function Login({ status, canResetPassword }) {
@@ -28,135 +26,93 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title="Masuk" />
+
+            <h1 className="font-wood text-[clamp(2.6rem,6vw,4rem)] font-black uppercase leading-[0.88]">
+                Selamat datang
+                <span className="mt-1 block font-slab text-[0.45em] normal-case leading-none text-dull">kembali di meja AJP.</span>
+            </h1>
+            <p className="mt-4 text-ink/80">Masuk ke akun Anda untuk melanjutkan.</p>
 
             {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
-                </div>
+                <p className="mt-6 border-2 border-ink bg-[#f6f1e6] px-4 py-2 font-type text-sm">{status}</p>
             )}
 
-            <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors"
-            >
-                <ArrowLeft className="w-4 h-4" />
-                Kembali ke Beranda
-            </Link>
-
-            <Card className='rounded-2xl shadow-2xl p-4 lg:p-6 animate-fade-in'>
-
-                <Alert
-                    type="warning"
-                    title="Salah Website"
-                    message={errors.type}
-                    dismissible
-                >
-                    <a
-                        href="http://kopi.times.co.id/"
-                        className="link link-primary"
+            <div className="scrap-drop mt-8 -rotate-[0.5deg]">
+                <div className="torn grain bg-newsprint px-6 pb-9 pt-8 sm:px-8">
+                    <Alert
+                        type="warning"
+                        title="Salah Website"
+                        message={errors.type}
+                        dismissible
+                        className="mb-6 rounded-none"
                     >
-                        kopi.times.co.id
-                    </a>
-                </Alert>
+                        <a href="http://kopi.times.co.id/" className="link font-bold">
+                            kopi.times.co.id
+                        </a>
+                    </Alert>
 
-                <div className="mb-8">
-                    <h2 className="text-3xl font-bold text-foreground mb-2">
-                        Selamat Datang
-                    </h2>
-                    <p className="text-muted-foreground">
-                        Masuk ke akun Anda untuk melanjutkan
-                    </p>
-                </div>
-
-                <form onSubmit={submit} className="space-y-8">
-                    <div className="space-y-2">
-                        <InputLabel htmlFor="email" value="Username atau Email" />
-
-                        <TextInput
-                            id="email"
-                            type="text"
-                            name="email"
-                            value={data.email}
-                            className="block w-full"
-                            autoComplete="username"
-                            placeholder="Masukan username atau email"
-                            isFocused={true}
-                            onChange={(e) => setData('email', e.target.value)}
-                        />
-
-                        <InputError message={errors.email} className="mt-2" />
-                    </div>
-
-                    <div className="mt-4 space-y-2">
-                        <InputLabel htmlFor="password" value="Password" />
-
-                        <InputPassword
-                            id="password"
-                            name="password"
-                            value={data.password}
-                            className=" w-full"
-                            autoComplete="current-password"
-                            placeholder="Masukan password"
-                            onChange={(e) => setData('password', e.target.value)}
-                        />
-
-                        <InputError message={errors.password} className="mt-2" />
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-between">
-                        <label className="flex items-center ">
-                            <Checkbox
-                                name="remember"
-                                checked={data.remember}
-                                className='checkbox-xs'
-                                onChange={(e) =>
-                                    setData('remember', e.target.checked)
-                                }
+                    <form onSubmit={submit} className="space-y-6">
+                        <div>
+                            <InputLabel htmlFor="email" value="Username atau email" />
+                            <TextInput
+                                id="email"
+                                type="text"
+                                name="email"
+                                value={data.email}
+                                className="block w-full"
+                                autoComplete="username"
+                                placeholder="Masukkan username atau email"
+                                isFocused={true}
+                                onChange={(e) => setData('email', e.target.value)}
                             />
-                            <span className="ms-2 text-sm text-gray-600">
-                                Remember me
-                            </span>
-                        </label>
+                            <InputError message={errors.email} className="mt-2" />
+                        </div>
 
-                        {/* {canResetPassword && (
-                            <Link
-                                href={route('password.request')}
-                                className="link link-primary text-xs"
-                            >
-                                Forgot your password?
-                            </Link>
-                        )} */}
-                    </div>
+                        <div>
+                            <InputLabel htmlFor="password" value="Password" />
+                            <InputPassword
+                                id="password"
+                                name="password"
+                                value={data.password}
+                                className="w-full"
+                                autoComplete="current-password"
+                                placeholder="Masukkan password"
+                                onChange={(e) => setData('password', e.target.value)}
+                            />
+                            <InputError message={errors.password} className="mt-2" />
+                        </div>
 
-                    <div className="mt-4">
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <label className="flex items-center gap-2 text-sm">
+                                <Checkbox
+                                    name="remember"
+                                    checked={data.remember}
+                                    className="checkbox-sm"
+                                    onChange={(e) => setData('remember', e.target.checked)}
+                                />
+                                Ingat saya
+                            </label>
+                            {canResetPassword && (
+                                <Link href={route('password.request')} className="font-type text-sm underline underline-offset-4 hover:text-dull">
+                                    Lupa password?
+                                </Link>
+                            )}
+                        </div>
 
-
-                        <PrimaryButton className="w-full my-2 rounded-lg" disabled={processing}>
-                            Log in
+                        <PrimaryButton className="ticket h-14 w-full [--notch:8px] [--stub:3rem]" disabled={processing}>
+                            {processing ? 'Memproses…' : 'Masuk'}
                         </PrimaryButton>
-                    </div>
+                    </form>
+                </div>
+            </div>
 
-                    <div className='mt-6 block'>
-                        {canResetPassword && (
-                            <Link
-                                href={route('password.request')}
-                                className="btn btn-link btn-primary w-full"
-                            >
-                                Lupa Password?
-                            </Link>
-                        )}
-                    </div>
-                    <div className='mt-4 text-black  flex items-center justify-center gap-2'>
-                        <span>Belum Punya Akun?</span>
-                        <Link href={route('register')} className="btn btn-link btn-sm p-0 btn-primary">
-                            Daftar Sekarang
-                        </Link>
-                    </div>
-                </form>
-            </Card>
-
-
+            <p className="mt-8 text-center font-type text-sm">
+                Belum punya akun?{' '}
+                <Link href={route('register')} className="font-bold text-dull underline underline-offset-4">
+                    Daftar sekarang
+                </Link>
+            </p>
         </GuestLayout>
     );
 }

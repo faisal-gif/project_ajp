@@ -126,6 +126,47 @@
   .landing { scrollbar-color: var(--color-dull) var(--color-stock); }
 }
 
+/* Auth pages (GuestLayout): daisyUI form controls re-cut in the Merz world.
+   Unlayered on purpose so it wins over daisyUI's own layers; scoped to .auth so the dashboard keeps its look. */
+.auth .input,
+.auth .textarea {
+  border: 2px solid var(--color-ink);
+  border-radius: 0;
+  background: #f6f1e6;
+  color: var(--color-ink);
+  box-shadow: none;
+}
+.auth .input:focus-within,
+.auth .textarea:focus { outline: 3px solid var(--color-foil); outline-offset: 1px; }
+.auth .input::placeholder,
+.auth .input input::placeholder,
+.auth .textarea::placeholder { color: color-mix(in oklab, var(--color-ink) 45%, transparent); }
+.auth .join .btn {
+  border: 2px solid var(--color-ink);
+  border-left: 0;
+  border-radius: 0;
+  background: var(--color-buff);
+  color: var(--color-ink);
+  box-shadow: none;
+}
+.auth .checkbox { border: 2px solid var(--color-ink); border-radius: 0; --input-color: var(--color-dull); }
+.auth .checkbox:checked { background-color: var(--color-dull); color: var(--color-stock); }
+.auth .btn-primary {
+  border: 0;
+  border-radius: 0;
+  background: var(--color-foil);
+  color: var(--color-ink);
+  font-family: var(--font-wood);
+  font-weight: 900;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  box-shadow: none;
+}
+.auth .btn-primary:hover { background: #f5b43d; }
+.auth .label-text-alt { font-family: var(--font-type); color: var(--color-olive); }
+.auth label.label { font-family: var(--font-type); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--color-ink); }
+
 @keyframes paste {
   from { opacity: 0; translate: 0 -14px; scale: 1.04; }
   to { opacity: 1; translate: 0 0; scale: 1; }
