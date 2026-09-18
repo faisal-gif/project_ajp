@@ -46,6 +46,94 @@
   --font-sans:
     Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-wood: 'Big Shoulders Display', 'Figtree', sans-serif;
+  --font-slab: 'Alfa Slab One', Georgia, serif;
+  --font-news: 'Old Standard TT', Georgia, serif;
+  --font-type: 'Courier Prime', 'Courier New', monospace;
+
+  /* Merz assemblage palette (landing) */
+  --color-stock: #e6d7b8;      /* ticket stock */
+  --color-buff: #d9c6a0;       /* aged buff */
+  --color-newsprint: #dcd9d0;  /* newsprint gray */
+  --color-ink: #1c1a17;        /* ink black */
+  --color-dull: #7b0f1f;       /* AJP red */
+  --color-foil: #f0a51c;       /* AJP logo yellow: primary action only */
+  --color-olive: #5c5a3e;      /* faded olive fine print */
+}
+
+/* ---------- Merz assemblage materials (landing) ---------- */
+@layer components {
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .05 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* torn paper edge, top and bottom (fibrous tiles in public/landing) */
+  .torn {
+    mask:
+      url('/landing/torn-top.svg') top left / 240px 12px repeat-x,
+      linear-gradient(#000 0 0) center / 100% calc(100% - 22px) no-repeat,
+      url('/landing/torn-bottom.svg') bottom left / 240px 12px repeat-x;
+  }
+  .torn-alt { mask-position: left 97px top, center, left 151px bottom; }
+
+  /* ragged strip that tears one section into the next: bg = the upper section's color */
+  .tear { height: 26px; mask: url('/landing/tear.svg') top left / 1600px 26px repeat-x; }
+  .tear-lip { mask-image: url('/landing/tear-lip.svg'); mask-position: 530px 0; }
+
+  .halftone { background: url('/landing/halftone-gedung.svg') center / cover; }
+
+  /* ticket with a perforated tear line at --stub from the right */
+  .ticket {
+    --stub: 5.5rem;
+    --notch: 9px;
+    mask:
+      radial-gradient(circle var(--notch) at calc(100% - var(--stub)) 0, #0000 98%, #000) top / 100% 51% no-repeat,
+      radial-gradient(circle var(--notch) at calc(100% - var(--stub)) 100%, #0000 98%, #000) bottom / 100% 51% no-repeat;
+  }
+  .ticket-v {
+    --stub: 4.5rem;
+    --notch: 9px;
+    mask:
+      radial-gradient(circle var(--notch) at 0 calc(100% - var(--stub)), #0000 98%, #000) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% calc(100% - var(--stub)), #0000 98%, #000) right / 51% 100% no-repeat;
+  }
+  .perf-x { background: repeating-linear-gradient(90deg, currentColor 0 6px, #0000 6px 11px) center / 100% 2px no-repeat; }
+  .perf-y { background: repeating-linear-gradient(180deg, currentColor 0 6px, #0000 6px 11px) center / 2px 100% no-repeat; }
+
+  .tape::before {
+    content: '';
+    position: absolute;
+    width: 5.5rem;
+    height: 1.4rem;
+    top: -0.7rem;
+    left: 50%;
+    translate: -50% 0;
+    rotate: -3deg;
+    background: color-mix(in oklab, var(--color-buff) 70%, transparent);
+    box-shadow: 0 1px 2px rgb(28 26 23 / .15);
+  }
+
+  .scrap-drop { filter: drop-shadow(0 5px 7px rgb(28 26 23 / .3)); }
+  .scrap-shadow { box-shadow: 0 1px 1px rgb(28 26 23 / .18), 0 6px 14px -6px rgb(28 26 23 / .35); }
+
+  /* paste-and-lift: stepped, no smooth easing */
+  .paste { animation: paste .36s steps(3, end) backwards; }
+  .lift { transition: translate .12s steps(2, end), filter .12s steps(2, end); }
+  .lift:hover, .lift:focus-within { translate: 0 -3px; filter: drop-shadow(0 12px 12px rgb(28 26 23 / .38)); }
+
+  .landing ::selection { background: var(--color-dull); color: var(--color-stock); }
+  .landing :focus-visible { outline: 3px solid var(--color-foil); outline-offset: 3px; }
+  .landing { scrollbar-color: var(--color-dull) var(--color-stock); }
+}
+
+@keyframes paste {
+  from { opacity: 0; translate: 0 -14px; scale: 1.04; }
+  to { opacity: 1; translate: 0 0; scale: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paste { animation: none; }
+  .lift { transition: none; }
 }
 
 /*

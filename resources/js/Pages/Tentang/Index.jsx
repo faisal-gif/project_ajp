@@ -1,181 +1,151 @@
-import Card from "@/Components/Card";
 import LandingLayout from "@/Layouts/LandingLayout";
 import { Head } from "@inertiajs/react";
-import { Heart, Shield, Lightbulb, Globe, Users, Target, Award, TrendingUp } from "lucide-react";
+import Fist from "../Welcome/Partials/Fist";
+import RedaksiSection from "../Welcome/Partials/RedaksiSection";
+import Tear from "../Welcome/Partials/Tear";
 
+// Values pasted as newsprint clippings: uneven widths and tilts, no icon tiles.
+const VALUES = [
+    {
+        title: "Jurnalisme Positif",
+        description: "Kami percaya kekuatan kata-kata dapat menginspirasi perubahan. Setiap artikel di AJP harus membawa dampak positif bagi pembaca.",
+        cls: "md:col-span-7 -rotate-1",
+    },
+    {
+        title: "Kredibel & Terpercaya",
+        description: "Setiap artikel melalui proses moderasi untuk memastikan kualitas dan kebenaran informasi yang disampaikan.",
+        cls: "md:col-span-5 rotate-[1.5deg] md:mt-10",
+    },
+    {
+        title: "Ide Tanpa Batas",
+        description: "Platform terbuka bagi siapa saja yang ingin berbagi ide, cerita, dan pengetahuan yang bermanfaat.",
+        cls: "md:col-span-5 rotate-1",
+    },
+    {
+        title: "Jangkauan Luas",
+        description: "Tulisanmu akan dibaca oleh ribuan pembaca dari seluruh Indonesia yang mencari konten berkualitas.",
+        cls: "md:col-span-7 -rotate-[1.2deg] md:-mt-6",
+    },
+];
+
+const PRINCIPLES = ["Transparansi", "Integritas", "Inovasi", "Komunitas"];
 
 const Tentang = ({ countuser, countArticle }) => {
-    const values = [
-        {
-            icon: Heart,
-            title: "Jurnalisme Positif",
-            description:
-                "Kami percaya kekuatan kata-kata dapat menginspirasi perubahan. Setiap artikel di AJP harus membawa dampak positif bagi pembaca.",
-        },
-        {
-            icon: Shield,
-            title: "Kredibel & Terpercaya",
-            description:
-                "Setiap artikel melalui proses moderasi untuk memastikan kualitas dan kebenaran informasi yang disampaikan.",
-        },
-        {
-            icon: Lightbulb,
-            title: "Ide Tanpa Batas",
-            description:
-                "Platform terbuka bagi siapa saja yang ingin berbagi ide, cerita, dan pengetahuan yang bermanfaat.",
-        },
-        {
-            icon: Globe,
-            title: "Jangkauan Luas",
-            description:
-                "Tulisanmu akan dibaca oleh ribuan pembaca dari seluruh Indonesia yang mencari konten berkualitas.",
-        },
-    ];
-
     const stats = [
-        { icon: Users, value: countuser, label: "Penulis Aktif" },
-        { icon: Target, value: countArticle, label: "Artikel Dipublikasikan" },
-        { icon: TrendingUp, value: "1M+", label: "Pembaca Bulanan" },
+        { value: countuser, label: "Penulis aktif", tilt: "-rotate-3" },
+        { value: countArticle, label: "Artikel dipublikasikan", tilt: "rotate-2" },
+        { value: "1M+", label: "Pembaca TIMES Indonesia", tilt: "-rotate-1" },
     ];
 
     return (
         <>
-            <Head title="Tentang Kamu" />
-
+            <Head title="Tentang" />
 
             <LandingLayout>
-                <main className="pt-16 ">
-                    {/* Hero Section */}
-                    <section className="py-20 bg-primary/5">
-                        <div className="max-w-7xl mx-auto px-4">
-                            <div className="max-w-3xl mx-auto text-center">
-                                <span className="text-sm font-medium text-primary uppercase tracking-wider">
-                                    Tentang AJP
-                                </span>
-                                <h1 className="font-serif text-4xl md:text-5xl font-bold mt-3 mb-6">
-                                    Platform Jurnalisme Positif Indonesia
+                {/* Header */}
+                <section className="grain relative bg-stock pb-20 pt-28 text-ink lg:pb-28 lg:pt-36">
+                    <div className="mx-auto grid max-w-7xl items-end gap-14 px-4 lg:grid-cols-12">
+                        <div className="lg:col-span-7">
+                            <div className="flex items-start gap-3">
+                                <Fist className="mt-2 hidden w-24 shrink-0 sm:block" />
+                                <h1 className="font-wood text-[clamp(3rem,7vw,5.5rem)] font-black uppercase leading-[0.86]">
+                                    Platform
+                                    <span className="my-2 block font-slab text-[0.42em] normal-case leading-none text-olive">jurnalisme positif</span>
+                                    <span className="text-dull">Indonesia.</span>
                                 </h1>
-                                <p className="text-lg text-muted-foreground leading-relaxed">
-                                    AJP hadir sebagai wadah bagi para penulis Indonesia untuk menyuarakan
-                                    narasi positif yang menginspirasi dan membangun bangsa.
-                                </p>
                             </div>
+                            <p className="mt-8 max-w-[34rem] text-[1.05rem] leading-relaxed text-ink/85 sm:ml-[6.75rem]">
+                                AJP hadir sebagai wadah bagi para penulis Indonesia untuk menyuarakan
+                                narasi positif yang menginspirasi dan membangun bangsa.
+                            </p>
                         </div>
-                    </section>
 
-                    {/* Stats Section */}
-                    <section className="py-16 border-b border-border">
-                        <div className="max-w-7xl mx-auto px-4 ">
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-                                {stats.map((stat) => (
-                                    <div key={stat.label} className="text-center">
-                                        <div className="w-12 h-12 rounded-lg bg-linear-to-bl from-primary to-accent flex items-center justify-center mx-auto mb-4">
-                                            <stat.icon className="w-6 h-6 text-primary-content" />
-                                        </div>
-                                        <div className="font-serif text-3xl font-bold mb-1">{stat.value}</div>
-                                        <div className="text-sm text-muted-foreground">{stat.label}</div>
+                        {/* live counts as ticket stubs */}
+                        <ul className="flex flex-wrap items-end gap-4 lg:col-span-5 lg:justify-end">
+                            {stats.map((s) => (
+                                <li key={s.label} className={`ticket-v paste w-32 bg-ink px-3 pb-3 pt-4 text-center text-stock [--stub:2.4rem] ${s.tilt}`}>
+                                    <p className="font-slab text-3xl leading-none text-foil tabular-nums">{s.value}</p>
+                                    <p className="mt-1.5 min-h-[2.4em] font-type text-[10px] uppercase leading-tight">{s.label}</p>
+                                    <p className="perf-x mt-2 h-2 text-stock/50" />
+                                    <p className="mt-1 font-type text-[10px]">No. 0341</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </section>
+
+                {/* Values */}
+                <section className="grain relative bg-newsprint py-20 text-ink lg:py-28">
+                    <Tear color="bg-stock" />
+                    <div className="mx-auto max-w-7xl px-4">
+                        <h2 className="font-wood text-[clamp(2.4rem,5vw,4rem)] font-black uppercase leading-[0.9]">
+                            Mengapa
+                            <span className="mx-3 inline-block -rotate-2 bg-ink px-2 pb-1 pt-1.5 font-slab text-[0.55em] normal-case leading-none text-stock">memilih</span>
+                            <span className="text-dull">AJP?</span>
+                        </h2>
+
+                        <div className="mt-14 grid gap-8 md:grid-cols-12 md:gap-x-10 md:gap-y-12">
+                            {VALUES.map((v) => (
+                                <article key={v.title} className={`scrap-drop lift ${v.cls}`}>
+                                    <div className="torn grain bg-[#eeeae0] px-6 pb-8 pt-6">
+                                        <h3 className="border-b-2 border-ink pb-2 font-news text-[1.7rem] font-bold leading-tight">{v.title}</h3>
+                                        <p className="mt-3 max-w-prose font-news text-[1.02rem] leading-relaxed text-ink/85">{v.description}</p>
                                     </div>
-                                ))}
-                            </div>
+                                </article>
+                            ))}
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    {/* Values Section */}
-                    <section className="py-20">
-                        <div className="max-w-7xl mx-auto px-4">
-                            <div className="max-w-2xl mx-auto text-center mb-16">
-                                <span className="text-sm font-medium text-primary uppercase tracking-wider">
-                                    Nilai-Nilai Kami
-                                </span>
-                                <h2 className="font-serif text-3xl md:text-4xl font-bold mt-3 mb-6">
-                                    Mengapa Memilih AJP?
-                                </h2>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                                {values.map((value, index) => (
-                                    <Card
-                                        key={value.title}
-                                        className="bg-card rounded-xl p-6 border border-border card-hover"
-                                        style={{ animationDelay: `${index * 0.1}s` }}
+                {/* Vision */}
+                <section className="grain relative bg-stock py-20 text-ink lg:py-28">
+                    <Tear color="bg-newsprint" />
+                    <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-12">
+                        <h2 className="font-wood text-[clamp(2.4rem,5vw,4rem)] font-black uppercase leading-[0.9] lg:col-span-5">
+                            Masa depan
+                            <span className="my-1 block font-slab text-[0.5em] normal-case leading-none text-olive">jurnalisme</span>
+                            <span className="font-news font-bold normal-case tracking-tight text-dull">Indonesia.</span>
+                        </h2>
+                        <div className="lg:col-span-7 lg:pt-3">
+                            <p className="max-w-[38rem] text-[1.05rem] leading-relaxed text-ink/85">
+                                Kami bermimpi menjadi platform jurnalisme terdepan di Indonesia yang
+                                tidak hanya menyajikan berita, tetapi juga menginspirasi perubahan positif
+                                di masyarakat. Dengan teknologi dan komunitas yang kuat, kami yakin dapat
+                                mewujudkan ekosistem media yang sehat dan konstruktif.
+                            </p>
+                            <ul className="mt-8 flex flex-wrap gap-3">
+                                {PRINCIPLES.map((p, i) => (
+                                    <li
+                                        key={p}
+                                        className={`border-2 px-3 py-1.5 font-type text-sm font-bold uppercase ${i === 0 ? 'border-dull bg-dull text-stock' : 'border-ink bg-[#eeeae0]'}`}
+                                        style={{ rotate: `${[-2, 1.5, -1, 2][i]}deg` }}
                                     >
-                                        <div className="w-12 h-12 rounded-lg bg-linear-to-bl from-primary to-accent flex items-center justify-center mb-4">
-                                            <value.icon className="w-6 h-6 text-primary-content" />
-                                        </div>
-                                        <h3 className="font-serif text-xl font-semibold mb-3">{value.title}</h3>
-                                        <p className="text-muted-foreground text-sm leading-relaxed">
-                                            {value.description}
-                                        </p>
-                                    </Card>
+                                        {p}
+                                    </li>
                                 ))}
-                            </div>
+                            </ul>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    {/* Mission Section */}
-                    <section className="py-20 bg-base-300">
-                        <div className="container mx-auto px-4">
-                            <div className="max-w-4xl mx-auto">
-                                <Card className="relative bg-base-100 rounded-2xl p-8 md:p-12 border border-border overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-bl from-primary to-accent opacity-5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                                    <div className="relative z-10">
-                                        <h2 className="font-serif text-2xl md:text-3xl font-bold text-center mb-8">
-                                            Misi Kami
-                                        </h2>
-                                        <blockquote className="font-serif text-xl md:text-2xl italic text-center leading-relaxed mb-6">
-                                            "Kami percaya bahwa setiap cerita positif memiliki kekuatan untuk
-                                            mengubah perspektif dan menginspirasi tindakan nyata."
-                                        </blockquote>
-                                        <div className="text-center">
-                                            <div className="w-16 h-1 hero-gradient mx-auto rounded-full mb-4" />
-                                            <p className="text-muted-foreground text-sm">
-                                                Tim AJP - Aplikasi Jurnalisme Positif
-                                            </p>
-                                        </div>
-                                    </div>
-                                </Card>
-                            </div>
-                        </div>
-                    </section>
+                {/* Mission */}
+                <section className="relative bg-dull py-20 text-stock lg:py-28">
+                    <Tear color="bg-stock" />
+                    <div className="relative mx-auto max-w-5xl px-4">
+                        <h2 className="font-wood text-3xl font-black uppercase tracking-wide text-foil">Misi kami</h2>
+                        <blockquote className="mt-6 font-news text-[clamp(1.6rem,3.2vw,2.6rem)] font-bold leading-snug">
+                            “Kami percaya bahwa setiap cerita positif memiliki kekuatan untuk
+                            mengubah perspektif dan menginspirasi tindakan nyata.”
+                        </blockquote>
+                        <p className="mt-6 flex items-center gap-3 font-type text-sm text-stock/80">
+                            <span className="perf-x h-1 w-16 text-stock/50" />
+                            Tim AJP — Aplikasi Jurnalisme Positif
+                        </p>
+                    </div>
+                </section>
 
-                    {/* Vision Section */}
-                    <section className="py-20 bg-base-200">
-                        <div className="max-w-7xl mx-auto px-4">
-                            <div className="max-w-3xl mx-auto text-center">
-                                <span className="text-sm font-medium text-primary uppercase tracking-wider">
-                                    Visi Kami
-                                </span>
-                                <h2 className="font-serif text-3xl md:text-4xl font-bold mt-3 mb-6">
-                                    Masa Depan Jurnalisme Indonesia
-                                </h2>
-                                <p className="text-muted-foreground leading-relaxed mb-8">
-                                    Kami bermimpi menjadi platform jurnalisme terdepan di Indonesia yang
-                                    tidak hanya menyajikan berita, tetapi juga menginspirasi perubahan positif
-                                    di masyarakat. Dengan teknologi dan komunitas yang kuat, kami yakin dapat
-                                    mewujudkan ekosistem media yang sehat dan konstruktif.
-                                </p>
-                                <div className="flex flex-wrap justify-center gap-4 text-sm">
-                                    <span className="px-4 py-2 bg-primary/10 text-primary rounded-full">
-                                        Transparansi
-                                    </span>
-                                    <span className="px-4 py-2 bg-primary/10 text-primary rounded-full">
-                                        Integritas
-                                    </span>
-                                    <span className="px-4 py-2 bg-primary/10 text-primary rounded-full">
-                                        Inovasi
-                                    </span>
-                                    <span className="px-4 py-2 bg-primary/10 text-primary rounded-full">
-                                        Komunitas
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </main>
-
+                <RedaksiSection />
             </LandingLayout>
-
-
         </>
     );
 };

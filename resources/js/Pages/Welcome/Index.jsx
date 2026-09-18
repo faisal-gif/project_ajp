@@ -1,16 +1,11 @@
-
-
 import LandingLayout from '@/Layouts/LandingLayout';
-import AboutSection from './Partials/AboutSection';
-import FeaturesSection from './Partials/FeatureSection';
+import AlurSection from './Partials/AlurSection';
 import HeroSection from './Partials/HeroSection';
 import PricingSection from './Partials/PricingSection';
+import RedaksiSection from './Partials/RedaksiSection';
 import { Head } from '@inertiajs/react';
 
-
 export default function Index({ newsFirstPackage, countuser, countArticle }) {
-
-
     return (
         <>
             <Head>
@@ -24,9 +19,9 @@ export default function Index({ newsFirstPackage, countuser, countArticle }) {
             </Head>
             <LandingLayout>
                 <HeroSection countuser={countuser} countArticle={countArticle} />
-                <AboutSection />
-                <FeaturesSection />
+                <AlurSection />
                 <PricingSection newsFirstPackage={newsFirstPackage} />
+                <RedaksiSection />
             </LandingLayout>
         </>
     );
