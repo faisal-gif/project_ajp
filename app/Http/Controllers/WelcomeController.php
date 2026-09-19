@@ -20,6 +20,9 @@ class WelcomeController extends Controller
             'newsFirstPackage' => $newsFirstPackage,
             'countuser' => $countuser,
             'countArticle' => $countArticle,
+        ])->withViewData('meta', [
+            'title' => 'Terbitkan kabar instansi di TIMES Indonesia',
+            'description' => 'Kirim naskah lewat AJP. Redaksi TIMES Indonesia menyunting dan menerbitkannya, lalu menyebarkannya ke e-koran, Instagram, dan WA Channel sesuai paket.',
         ]);
     }
 
@@ -31,6 +34,9 @@ class WelcomeController extends Controller
         return Inertia::render('Tentang/Index', [
             'countuser' => $countuser,
             'countArticle' => $countArticle,
+        ])->withViewData('meta', [
+            'title' => 'Tentang',
+            'description' => 'AJP (Aplikasi Jurnalisme Positif) adalah platform jurnalistik bersama redaksi TIMES Indonesia yang mendorong pemberitaan berimbang, solutif, dan inspiratif.',
         ]);
     }
 
@@ -40,6 +46,9 @@ class WelcomeController extends Controller
 
         return Inertia::render('Harga/Index', [
             'newsFirstPackage' => $newsFirstPackage
+        ])->withViewData('meta', [
+            'title' => 'Harga paket',
+            'description' => 'Pilih paket publikasi AJP: terbit di TIMES Indonesia, dibimbing dan disunting redaksi, dengan kuota opini, e-koran, feed Instagram, dan WA Channel.',
         ]);
     }
 }

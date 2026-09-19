@@ -26,6 +26,9 @@ class RegisteredUserController extends Controller
         $newsPackages = NewsPackage::where('type', '1')->where('level', '1')->get();
         return Inertia::render('Auth/Register', [
             'newsPackages' => $newsPackages,
+        ])->withViewData('meta', [
+            'title' => 'Daftar',
+            'description' => 'Daftarkan instansi Anda di AJP, pilih paket, dan terbitkan naskah bersama redaksi TIMES Indonesia.',
         ]);
     }
 

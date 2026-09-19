@@ -21,7 +21,7 @@ class AuthenticatedSessionController extends Controller
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
-        ]);
+        ])->withViewData('meta', ['title' => 'Masuk', 'robots' => 'noindex, follow']);
     }
 
     /**

@@ -6,7 +6,7 @@ import PricingSection from '../Welcome/Partials/PricingSection'
 function Index({ newsFirstPackage }) {
     return (
         <>
-            <Head title='Harga' />
+            <Head title='Harga paket' />
             <LandingLayout>
                 <PricingSection newsFirstPackage={newsFirstPackage} standalone />
                 <AlurSection tear="bg-dull" straddle={false} />

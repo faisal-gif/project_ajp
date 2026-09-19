@@ -19,10 +19,10 @@ Route::get('/tentang', [WelcomeController::class, 'tentang'])->name('tentang');
 Route::get('/convert-password/{id}', [WartawanController::class, 'convert_pswd'])->name('convert');
 Route::get('/harga', [WelcomeController::class, 'harga'])->name('harga');
 Route::get('/kebijakan-privasi', function () {
-    return Inertia::render('KebijakanPrivasi/Index');
+    return Inertia::render('KebijakanPrivasi/Index')->withViewData('meta', ['title' => 'Kebijakan Privasi']);
 })->name('kebijakan-privasi');
 Route::get('/syarat-ketentuan', function () {
-    return Inertia::render('SyaratKetentuan/Index');
+    return Inertia::render('SyaratKetentuan/Index')->withViewData('meta', ['title' => 'Syarat & Ketentuan']);
 })->name('syarat-ketentuan');
 
 
