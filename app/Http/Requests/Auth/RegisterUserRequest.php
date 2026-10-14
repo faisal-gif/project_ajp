@@ -33,6 +33,9 @@ class RegisterUserRequest extends FormRequest
             'contact' => 'required|string|max:20',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'plan_id' => 'required|exists:news_package,id',
+            // Referral tidak pernah menggagalkan pendaftaran; kode tak dikenal diabaikan.
+            'ref' => 'nullable|string|max:32',
+            'referral_code' => 'nullable|string|max:32',
         ];
     }
 

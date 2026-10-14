@@ -1,0 +1,49 @@
+<?php
+
+return [
+    /*
+     * Matikan untuk menghentikan pencatatan komisi tanpa deploy ulang kode.
+     * Atribusi referral tetap berjalan; hanya pembuatan baris komisi yang berhenti.
+     */
+    'enabled' => (bool) env('AFFILIATE_ENABLED', true),
+
+    /*
+     * Tarif dalam basis poin (1% = 100 bps) supaya tidak ada pecahan.
+     * tier1 dihitung dari harga pembayaran, tier2 & internal dari sisa setelah tier1.
+     * Default: 48.000 -> 9.600 (tier1) / 1.920 (tier2) / 3.840 (internal) / 32.640 (kantor).
+     */
+    'tier1_bps'    => (int) env('AFFILIATE_TIER1_BPS', 2000),
+    'tier2_bps'    => (int) env('AFFILIATE_TIER2_BPS', 500),
+    'internal_bps' => (int) env('AFFILIATE_INTERNAL_BPS', 1000),
+
+    // Masa tahan sebelum komisi boleh disetujui untuk dicairkan.
+    'hold_days' => (int) env('AFFILIATE_HOLD_DAYS', 7),
+
+    // Saldo minimum sebelum komisi bisa dicairkan. Dipakai di syarat & ketentuan,
+    // dan jadi acuan CMS saat menyusun batch pencairan.
+    'min_payout' => (int) env('AFFILIATE_MIN_PAYOUT', 50_000),
+
+    /*
+     * Label situs untuk laporan. Kopi TIMES dan AJP memakai codebase dan database
+     * yang sama, jadi deployment-lah yang menyebutkan dirinya siapa.
+     */
+    'site' => env('AFFILIATE_SITE', 'ajp'),
+
+    /*
+     * Penanda situs yang disimpan di seluruh tabel afiliasi, memakai kolom `type`
+     * yang sudah dipakai sistem lama: 1 = AJP, 4 = Kopi TIMES.
+     * Afiliator hanya berkomisi dari pendaftar di situs yang sama dengan type-nya.
+     */
+    'site_type' => (int) env('AFFILIATE_SITE_TYPE', 1),
+
+    // Cookie atribusi: sentuhan pertama yang menang.
+    'cookie_name' => 'kt_ref',
+    'cookie_days' => 30,
+
+    /*
+     * Kosong = cookie hanya berlaku di domain situs ini (atribusi terpisah per situs).
+     * Diisi '.times.co.id' = satu klik berlaku di seluruh subdomain TIMES.
+     * Nama cookie sengaja sama di semua situs supaya opsi ini bisa dinyalakan kapan saja.
+     */
+    'cookie_domain' => env('AFFILIATE_COOKIE_DOMAIN'),
+];

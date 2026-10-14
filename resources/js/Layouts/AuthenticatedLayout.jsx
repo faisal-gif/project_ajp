@@ -19,6 +19,7 @@ import {
     NewspaperIcon,
     Pen,
     Settings,
+    Share2,
     User
 } from 'lucide-react';
 
@@ -122,6 +123,19 @@ export default function AuthenticatedLayout({ header, children }) {
                             Membership
                         </Link>
                     </li>
+
+                    {/* Afiliator (status apa pun) + member aktif yang belum mengajukan. */}
+                    {(auth.affiliate_status || user?.status === 1) && (
+                        <li>
+                            <Link
+                                href={route('afiliasi.index')}
+                                className={linkClass(isActive('afiliasi.*'))}
+                            >
+                                <Share2 size={16} />
+                                Afiliasi
+                            </Link>
+                        </li>
+                    )}
                 </ul>
             </div>
         </div>

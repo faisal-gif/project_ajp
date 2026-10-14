@@ -34,6 +34,8 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                // null bila belum pernah mengajukan; selain itu status barisnya.
+                'affiliate_status' => fn () => $request->user()?->affiliate?->status,
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

@@ -13,8 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
+            \App\Http\Middleware\CaptureReferralCode::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+        ]);
+        // Kode referral bukan data sensitif dan harus tetap terbaca walau APP_KEY dirotasi.
+        // Nilainya sama dengan config('affiliate.cookie_name'), dan sama di semua situs.
+        $middleware->encryptCookies(except: [
+            'kt_ref',
         ]);
         $middleware->validateCsrfTokens(except: [
             '/tripay/callback',

@@ -14,7 +14,7 @@ const Step = ({ n }) => (
     <p className="font-type text-xs font-bold uppercase text-olive">Langkah {n} dari 2</p>
 );
 
-export default function Register({ newsPackages }) {
+export default function Register({ newsPackages, referral = null }) {
     // 1. State Alur
     const [registerStep, setRegisterStep] = useState("plan");
     const [selectedPlan, setSelectedPlan] = useState(null);
@@ -30,6 +30,8 @@ export default function Register({ newsPackages }) {
         password: '',
         password_confirmation: '',
         plan_id: '',
+        ref: referral?.code ?? '',
+        referral_code: '',
     });
 
     // 3. Handlers
@@ -121,6 +123,12 @@ export default function Register({ newsPackages }) {
                             {plan?.name}
                         </span>
                     </p>
+
+                    {referral && (
+                        <p className="mt-4 border-l-2 border-dull bg-newsprint/60 px-4 py-3 font-type text-sm">
+                            Anda mendaftar atas ajakan <strong>{referral.name}</strong>.
+                        </p>
+                    )}
 
                     <div className="scrap-drop mt-8 rotate-[0.3deg]">
                         <form onSubmit={handleRegister} className="torn grain space-y-5 bg-newsprint px-6 pb-9 pt-8 sm:px-8">
@@ -237,6 +245,21 @@ export default function Register({ newsPackages }) {
                                     />
                                 </div>
                             </div>
+
+                            {!referral && (
+                                <div>
+                                    <InputLabel htmlFor="referral_code" value="Kode referral (jika ada)" />
+                                    <TextInput
+                                        id="referral_code"
+                                        name="referral_code"
+                                        value={data.referral_code}
+                                        className="block w-full uppercase"
+                                        placeholder="Mis. DOSEN01"
+                                        onChange={(e) => setData('referral_code', e.target.value.toUpperCase())}
+                                    />
+                                    <InputError message={errors.referral_code} className="mt-1" />
+                                </div>
+                            )}
 
                             <label htmlFor="terms" className="flex items-center gap-2 pt-1 text-sm">
                                 <input id="terms" type="checkbox" className="checkbox checkbox-sm" required />

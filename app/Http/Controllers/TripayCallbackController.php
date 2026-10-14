@@ -6,6 +6,7 @@ use App\Mail\PaymentSuccessfulMail;
 use App\Models\NewsPackage;
 use App\Models\Payments;
 use App\Models\User;
+use App\Services\AffiliateCommissionService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,14 +22,20 @@ class TripayCallbackController extends Controller
             config('services.tripay.private_key')
         );
 
-        abort_if(
-            $signature !== $request->header('X-Callback-Signature'),
+        abort_unless(
+            hash_equals($signature, (string) $request->header('X-Callback-Signature')),
             403
         );
 
         $data = $request->all();
 
         $payment = Payments::where('reference', $request->reference)->firstOrFail();
+
+        // Fast path: callback duplikat untuk payment yang sudah paid.
+        // Dicek ulang di bawah lock agar callback yang datang bersamaan tidak dobel.
+        if ($payment->status === 'paid') {
+            return response()->json(['success' => true]);
+        }
 
         // Ubah status dari Tripay menjadi huruf kecil agar sesuai dengan ENUM database kamu
         // Catatan: Jika Tripay mengirimkan 'UNPAID', kamu mungkin perlu mengubahnya menjadi 'pending' 
@@ -44,6 +51,12 @@ class TripayCallbackController extends Controller
 
         if ($statusDariTripay === 'paid') {
             DB::transaction(function () use ($payment, $statusDariTripay, $data) {
+                // Idempotency: kunci baris payment; callback kedua menunggu lalu melihat status paid.
+                $payment = Payments::whereKey($payment->id)->lockForUpdate()->first();
+                if ($payment->status === 'paid') {
+                    return;
+                }
+
                 $payment->update([
                     'status' => $statusDariTripay,
                     'fee_merchant' => $data['fee_merchant'],
@@ -54,8 +67,12 @@ class TripayCallbackController extends Controller
                     'paid_at' => now(),
                 ]);
 
+                // Komisi afiliasi dicatat sebelum user dimutasi, supaya deteksi "member baru"
+                // tidak terganggu status aktif yang baru ditulis di bawah.
+                app(AffiliateCommissionService::class)->accrue($payment);
+
                 $newsPackage = NewsPackage::find($payment->package_id);
-                $user = User::find($payment->user_id);
+                $user = User::whereKey($payment->user_id)->lockForUpdate()->first();
 
                $baseDate = ($user->dateexp && Carbon::parse($user->dateexp)->isFuture())
                     ? Carbon::parse($user->dateexp)
@@ -89,10 +106,10 @@ class TripayCallbackController extends Controller
                 });
             });
         } elseif (in_array($statusDariTripay, ['pending', 'failed', 'expired', 'refunded'])) {
-            // Handle semua status selain paid di sini
-            $payment->update([
-                'status' => $statusDariTripay,
-            ]);
+            // Jangan timpa status paid yang dicatat callback lain di antara cek awal dan update ini.
+            Payments::whereKey($payment->id)
+                ->where('status', '!=', 'paid')
+                ->update(['status' => $statusDariTripay]);
         }
 
         return response()->json(['success' => true]);

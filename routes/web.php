@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AffiliateApplicationController;
+use App\Http\Controllers\AffiliateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PaymentController;
@@ -46,5 +48,25 @@ Route::middleware(['auth', 'active'])->group(function () {
 Route::post('/tripay/callback', [TripayCallbackController::class, 'handle'])->name('tripay.callback');
 
 Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+
+Route::get('/syarat-afiliasi', fn () => Inertia::render('Afiliasi/SyaratKetentuan', [
+    'min_payout' => (int) config('affiliate.min_payout'),
+    'hold_days' => (int) config('affiliate.hold_days'),
+    'cookie_days' => (int) config('affiliate.cookie_days'),
+    // Tarif yang boleh dilihat publik. Pos internal sengaja tidak ikut dikirim.
+    'tier1_bps' => (int) config('affiliate.tier1_bps'),
+    'tier2_bps' => (int) config('affiliate.tier2_bps'),
+]))->name('afiliasi.syarat');
+
+Route::middleware('auth')->group(function () {
+    // Tanpa middleware 'active': afiliator bentukan admin belum tentu member berbayar.
+    Route::get('/afiliasi', [AffiliateController::class, 'index'])->name('afiliasi.index');
+
+    // Pengajuan jadi afiliator hanya untuk member aktif.
+    Route::middleware('active')->group(function () {
+        Route::get('/afiliasi/daftar', [AffiliateApplicationController::class, 'create'])->name('afiliasi.daftar');
+        Route::post('/afiliasi/daftar', [AffiliateApplicationController::class, 'store']);
+    });
+});
 
 require __DIR__ . '/auth.php';
