@@ -68,6 +68,7 @@ class RegisteredUserController extends Controller
                 'address' => $request->address,
                 'contact' => $request->contact,
                 'package_id' => $request->plan_id,
+                'type' => 1,
                 'password' => Hash::make($request->password),
                 'status' => 0,
             ]);

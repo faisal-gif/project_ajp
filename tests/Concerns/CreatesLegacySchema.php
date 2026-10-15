@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Tabel legacy (`wartawan`, `news_package`, `items_lainnya`, `kategori_kt`) tidak punya
+ * Tabel legacy (`wartawan`, `news`, `images_thumbnail`, `news_package`, `items_lainnya`, `kategori_kt`) tidak punya
  * migration di repo ini, jadi tidak ada di database test. Trait ini membuat versi
  * minimalnya khusus untuk test.
  *
@@ -43,6 +43,35 @@ trait CreatesLegacySchema
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('created')->nullable();
             $table->timestamp('modified')->nullable();
+        });
+
+        Schema::create('news', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('is_code')->nullable();
+            $table->string('title')->nullable();
+            $table->text('content')->nullable();
+            $table->string('city')->nullable();
+            $table->string('narsum')->nullable();
+            $table->string('profesi')->nullable();
+            $table->string('contact')->nullable();
+            $table->dateTime('datetime')->nullable();
+            $table->string('image')->nullable();
+            $table->string('image2')->nullable();
+            $table->string('image3')->nullable();
+            $table->text('caption')->nullable();
+            $table->integer('pewarta_id')->nullable();
+            $table->integer('type')->nullable();
+            $table->integer('status')->default(0);
+            $table->timestamp('created')->nullable();
+            $table->timestamp('modified')->nullable();
+        });
+
+        Schema::create('images_thumbnail', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('template_id')->nullable();
+            $table->string('image_path')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('news_package', function (Blueprint $table) {

@@ -12,12 +12,11 @@ use Tests\TestCase;
 
 class ReferralAttributionTest extends TestCase
 {
-    use RefreshDatabase, CreatesLegacySchema;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->createLegacySchema();
 
         DB::table('news_package')->insert([
             'id' => 1, 'name' => 'Mulai Menulis', 'level' => 1, 'type' => '1', 'status' => 1,

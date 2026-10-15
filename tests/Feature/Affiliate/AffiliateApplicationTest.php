@@ -10,13 +10,7 @@ use Tests\TestCase;
 
 class AffiliateApplicationTest extends TestCase
 {
-    use RefreshDatabase, CreatesLegacySchema;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->createLegacySchema();
-    }
+    use RefreshDatabase;
 
     private function payload(array $overrides = []): array
     {

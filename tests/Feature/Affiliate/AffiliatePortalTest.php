@@ -12,13 +12,7 @@ use Tests\TestCase;
 
 class AffiliatePortalTest extends TestCase
 {
-    use RefreshDatabase, CreatesLegacySchema;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->createLegacySchema();
-    }
+    use RefreshDatabase;
 
     private function commissionFor(Affiliate $affiliate, User $member, string $role, int $amount, string $status = 'accrued'): void
     {

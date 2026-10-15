@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'city' => fake()->city(),
             'contact' => fake()->numerify('8##########'),
             'address' => fake()->address(),
-            'type' => 4,
+            'type' => (int) config('affiliate.site_type'),
             'status' => 0,
         ];
     }
