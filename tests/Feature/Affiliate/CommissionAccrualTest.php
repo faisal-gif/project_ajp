@@ -103,12 +103,12 @@ class CommissionAccrualTest extends TestCase
         $this->assertCount(2, $rows);
         $this->assertFalse($rows->has('tier2'), 'AJP satu tingkat: pos tier2 tidak boleh terbit.');
         $this->assertSame(9600, (int) $rows['tier1']->amount);
-        $this->assertSame(3840, (int) $rows['internal']->amount);
+        $this->assertSame(4840, (int) $rows['internal']->amount);
         $this->assertSame($affiliate->id, $rows['tier1']->affiliate_id);
         $this->assertNull($rows['internal']->affiliate_id);
 
         // Net kantor adalah sisa, bukan baris. Satu tingkat menyisakan lebih banyak.
-        $this->assertSame(34560, (int) $payment->fresh()->amount - (int) AffiliateCommission::sum('amount'));
+        $this->assertSame(33560, (int) $payment->fresh()->amount - (int) AffiliateCommission::sum('amount'));
     }
 
     /**
@@ -138,7 +138,7 @@ class CommissionAccrualTest extends TestCase
         $this->sendCallback($payment)->assertOk();
 
         $this->assertSame(2, AffiliateCommission::count());
-        $this->assertSame(13440, (int) AffiliateCommission::sum('amount'));
+        $this->assertSame(14440, (int) AffiliateCommission::sum('amount'));
     }
 
     public function test_renewal_package_earns_nothing(): void
@@ -175,7 +175,7 @@ class CommissionAccrualTest extends TestCase
 
         $internal = AffiliateCommission::sole();
         $this->assertSame('internal', $internal->role);
-        $this->assertSame(4800, (int) $internal->amount);
+        $this->assertSame(5800, (int) $internal->amount);
         $this->assertNull($internal->source_affiliate_id);
     }
 
@@ -199,7 +199,7 @@ class CommissionAccrualTest extends TestCase
 
         $internal = AffiliateCommission::sole();
         $this->assertSame('internal', $internal->role);
-        $this->assertSame(4800, (int) $internal->amount);       // 10% dari 48.000 utuh
+        $this->assertSame(5800, (int) $internal->amount);       // 10% dari 48.000 utuh + flat 1.000
         $this->assertSame(48000, (int) $internal->base_amount); // tidak ada potongan tier1
         $this->assertSame(1000, (int) $internal->rate_bps);
         $this->assertSame('accrued', $internal->status);
@@ -208,7 +208,7 @@ class CommissionAccrualTest extends TestCase
         $this->assertNull($internal->source_affiliate_id);
 
         // Net kantor tetap sisa, bukan baris.
-        $this->assertSame(43200, (int) $payment->fresh()->amount - 4800);
+        $this->assertSame(42200, (int) $payment->fresh()->amount - 5800);
     }
 
     public function test_suspended_affiliate_earns_nothing_but_internal_still_accrues(): void
@@ -221,7 +221,7 @@ class CommissionAccrualTest extends TestCase
 
         $internal = AffiliateCommission::sole();
         $this->assertSame('internal', $internal->role);
-        $this->assertSame(4800, (int) $internal->amount);
+        $this->assertSame(5800, (int) $internal->amount);
         $this->assertNull($internal->source_affiliate_id);
     }
 
