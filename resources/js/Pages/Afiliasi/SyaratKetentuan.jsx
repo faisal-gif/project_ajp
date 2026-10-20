@@ -5,9 +5,7 @@ import { Head, Link } from '@inertiajs/react';
 // Komisi ditulis sebagai persentase supaya ikut harga paket, ditambah satu contoh angka.
 // Pos internal 10% tidak pernah disebut di halaman publik.
 const CONTOH_HARGA = 48000;
-const CONTOH_TIER1 = 9600;
-const CONTOH_TIER2 = 1920;
-const BERLAKU = '14 Oktober 2026';
+const BERLAKU = '20 Oktober 2026';
 
 function Pasal({ nomor, judul, children }) {
     return (
@@ -22,6 +20,16 @@ export default function SyaratKetentuan({ min_payout, hold_days, cookie_days, ti
     // Tarif datang dari config lewat props, bukan diketik di halaman.
     const TIER1_PERSEN = (tier1_bps / 100) + '%';
     const TIER2_PERSEN = (tier2_bps / 100) + '%';
+
+    // AJP berjalan satu tingkat: tier2_bps = 0. Pasal komisi jaringan tidak boleh
+    // muncul sama sekali, karena ini dokumen yang mengikat — menjanjikan komisi
+    // jaringan "0%" sama saja menjanjikan sesuatu yang tidak ada.
+    const adaTingkatKedua = tier2_bps > 0;
+
+    // Contoh angka diturunkan dari tarif, bukan ditulis mati, supaya tidak pernah
+    // bertentangan dengan persentase di atasnya.
+    const contohTier1 = Math.floor((CONTOH_HARGA * tier1_bps) / 10000);
+    const contohTier2 = Math.floor(((CONTOH_HARGA - contohTier1) * tier2_bps) / 10000);
 
     return (
         <LandingLayout>
@@ -64,16 +72,32 @@ export default function SyaratKetentuan({ min_payout, hold_days, cookie_days, ti
                                     menyelesaikan pembayaran paket pendaftaran, Anda memperoleh komisi{' '}
                                     <strong className="text-foreground">{TIER1_PERSEN} dari harga paket</strong>.
                                 </p>
-                                <p>
-                                    Bila afiliator yang Anda rekrut memperoleh pendaftar baru, Anda memperoleh komisi
-                                    jaringan sebesar{' '}
-                                    <strong className="text-foreground">{TIER2_PERSEN} dari sisa setelah komisi tingkat 1</strong>{' '}
-                                    untuk setiap pendaftar tersebut.
-                                </p>
-                                <p>
-                                    Contoh pada harga paket {formatRupiah(CONTOH_HARGA)}: komisi langsung{' '}
-                                    {formatRupiah(CONTOH_TIER1)} dan komisi jaringan {formatRupiah(CONTOH_TIER2)}.
-                                </p>
+                                {adaTingkatKedua ? (
+                                    <>
+                                        <p>
+                                            Bila afiliator yang Anda rekrut memperoleh pendaftar baru, Anda memperoleh komisi
+                                            jaringan sebesar{' '}
+                                            <strong className="text-foreground">{TIER2_PERSEN} dari sisa setelah komisi tingkat 1</strong>{' '}
+                                            untuk setiap pendaftar tersebut.
+                                        </p>
+                                        <p>
+                                            Contoh pada harga paket {formatRupiah(CONTOH_HARGA)}: komisi langsung{' '}
+                                            {formatRupiah(contohTier1)} dan komisi jaringan {formatRupiah(contohTier2)}.
+                                        </p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p>
+                                            Program ini berjalan <strong className="text-foreground">satu tingkat</strong>.
+                                            Komisi hanya diperoleh dari pendaftar yang Anda bawa sendiri; tidak ada komisi
+                                            dari pendaftar yang dibawa orang lain yang Anda rekrut.
+                                        </p>
+                                        <p>
+                                            Contoh pada harga paket {formatRupiah(CONTOH_HARGA)}: komisi langsung{' '}
+                                            {formatRupiah(contohTier1)} untuk setiap pendaftar baru Anda.
+                                        </p>
+                                    </>
+                                )}
                                 <p>
                                     Karena berupa persentase, komisi mengikuti harga yang benar-benar dibayarkan.
                                     Perubahan harga mengubah nominal komisi untuk transaksi berikutnya, tanpa mengubah

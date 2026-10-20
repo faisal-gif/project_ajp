@@ -10,10 +10,17 @@ return [
     /*
      * Tarif dalam basis poin (1% = 100 bps) supaya tidak ada pecahan.
      * tier1 dihitung dari harga pembayaran, tier2 & internal dari sisa setelah tier1.
-     * Default: 48.000 -> 9.600 (tier1) / 1.920 (tier2) / 3.840 (internal) / 32.640 (kantor).
+     * Tarif 0 berarti posnya tidak diterbitkan, bukan baris bernilai nol.
+     * Default AJP (satu tingkat): 48.000 -> 9.600 (tier1) / 3.840 (internal) / 34.560 (kantor).
      */
     'tier1_bps'    => (int) env('AFFILIATE_TIER1_BPS', 2000),
-    'tier2_bps'    => (int) env('AFFILIATE_TIER2_BPS', 500),
+    /*
+     * AJP SATU TINGKAT. Nol di sini berarti pos tier2 tidak diterbitkan sama sekali
+     * (bukan baris bernilai nol), jadi tidak ada upline yang berkomisi dan tidak ada
+     * baris `unassigned` yang menumpuk. Kopi TIMES tetap dua tingkat dengan 500.
+     * Isi AFFILIATE_TIER2_BPS di .env hanya bila AJP nanti ingin dua tingkat juga.
+     */
+    'tier2_bps'    => (int) env('AFFILIATE_TIER2_BPS', 0),
     'internal_bps' => (int) env('AFFILIATE_INTERNAL_BPS', 1000),
 
     // Masa tahan sebelum komisi boleh disetujui untuk dicairkan.
@@ -44,6 +51,24 @@ return [
      * Kosong = cookie hanya berlaku di domain situs ini (atribusi terpisah per situs).
      * Diisi '.times.co.id' = satu klik berlaku di seluruh subdomain TIMES.
      * Nama cookie sengaja sama di semua situs supaya opsi ini bisa dinyalakan kapan saja.
+     *
+     * Nilainya DINORMALKAN, bukan dipakai apa adanya. Pada 2026-10-20 produksi terisi
+     * 'https://ajp.times.co.id' — URL penuh, bukan nama domain. Atribut domain yang
+     * tidak sah membuat browser menolak cookie TANPA pesan error apa pun: tidak ada
+     * yang masuk log, dan seluruh atribusi referral mati diam-diam selama berminggu-
+     * minggu. Kegagalan sesenyap itu pada jalur uang pantas ditahan di sini, bukan
+     * diserahkan ke kedisiplinan mengisi .env.
+     *
+     * Hasilnya: URL penuh diambil host-nya, '.times.co.id' dibiarkan utuh beserta
+     * titik depannya, dan kosong tetap null (Laravel lalu jatuh ke session.domain).
      */
-    'cookie_domain' => env('AFFILIATE_COOKIE_DOMAIN'),
+    'cookie_domain' => (static function () {
+        $nilai = trim((string) env('AFFILIATE_COOKIE_DOMAIN'));
+
+        if ($nilai === '') {
+            return null;
+        }
+
+        return parse_url($nilai, PHP_URL_HOST) ?: rtrim($nilai, '/');
+    })(),
 ];

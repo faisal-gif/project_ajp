@@ -200,7 +200,9 @@ class AffiliateApplicationTest extends TestCase
             ->assertInertia(fn ($page) => $page
                 ->component('Afiliasi/SyaratKetentuan')
                 ->where('tier1_bps', 2000)
-                ->where('tier2_bps', 500)
+                // AJP satu tingkat: 0 membuat halaman menyembunyikan pasal komisi
+                // jaringan, bukan menjanjikannya sebesar "0%".
+                ->where('tier2_bps', 0)
                 ->missing('internal_bps')      // pos internal tidak pernah dikirim ke publik
             );
     }
