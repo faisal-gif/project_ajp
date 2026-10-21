@@ -6,9 +6,37 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payments extends Model
 {
-    protected $guarded = [];
+    /*
+     * Dulu `$guarded = []`, yaitu mass-assignment terbuka lebar di tabel uang.
+     * Diganti daftar eksplisit karena migration halaman pembayaran menambah lima
+     * kolom ke tabel ini, dan kolom nominal tidak boleh bisa diisi dari request.
+     */
+    protected $fillable = [
+        'user_id',
+        'package_id',
+        'type',
+        'merchant_ref',
+        'reference',
+        'method',
+        'amount',
+        'fee_merchant',
+        'fee_customer',
+        'total_fee',
+        'total_amount',
+        'amount_recived',
+        'status',
+        'checkout_url',
+        'pay_code',
+        'pay_url',
+        'qr_url',
+        'payment_name',
+        'instructions',
+        'paid_at',
+        'expired_at',
+    ];
 
     protected $casts = [
+        'instructions' => 'array',
         'paid_at' => 'datetime',
         'expired_at' => 'datetime',
     ];
@@ -26,6 +54,23 @@ class Payments extends Model
     public function commissions()
     {
         return $this->hasMany(AffiliateCommission::class, 'payment_id');
+    }
+
+    /**
+     * Label status untuk ditampilkan. Dibutuhkan halaman pembayaran; sebelumnya tidak
+     * ada karena AJP belum punya satu pun layar yang menampilkan status pembayaran.
+     */
+    public const STATUSES = [
+        'pending'  => 'Menunggu Pembayaran',
+        'paid'     => 'Lunas',
+        'failed'   => 'Gagal',
+        'expired'  => 'Kedaluwarsa',
+        'refunded' => 'Dikembalikan',
+    ];
+
+    public function getStatusLabelAttribute(): string
+    {
+        return self::STATUSES[$this->status] ?? $this->status;
     }
 
     public function scopeOwnedBy($query, $userId)

@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\PaymentSuccessfulMail;
-use App\Models\NewsPackage;
 use App\Models\Payments;
-use App\Models\User;
-use App\Services\AffiliateCommissionService;
-use Carbon\Carbon;
+use App\Services\PaymentFulfillmentService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class TripayCallbackController extends Controller
 {
-    public function handle(Request $request)
+    public function handle(Request $request, PaymentFulfillmentService $fulfillment)
     {
         $signature = hash_hmac(
             'sha256',
@@ -32,84 +26,19 @@ class TripayCallbackController extends Controller
         $payment = Payments::where('reference', $request->reference)->firstOrFail();
 
         // Fast path: callback duplikat untuk payment yang sudah paid.
-        // Dicek ulang di bawah lock agar callback yang datang bersamaan tidak dobel.
+        // Cek ulang di bawah lock di dalam service untuk callback yang datang bersamaan.
         if ($payment->status === 'paid') {
             return response()->json(['success' => true]);
         }
 
-        // Ubah status dari Tripay menjadi huruf kecil agar sesuai dengan ENUM database kamu
-        // Catatan: Jika Tripay mengirimkan 'UNPAID', kamu mungkin perlu mengubahnya menjadi 'pending' 
-        // jika di database kamu menggunakan 'pending'
-        $statusDariTripay = strtolower($data['status']);
+        $statusDariTripay = $fulfillment->statusLokal($data['status']);
 
-        // Opsional: Penyesuaian nama status jika Tripay pakai 'unpaid' tapi DB kamu 'pending'
-        if ($statusDariTripay === 'unpaid') {
-            $statusDariTripay = 'pending';
-        } elseif ($statusDariTripay === 'refund') {
-            $statusDariTripay = 'refunded'; // Jika Tripay pakai 'refund' tapi DB kamu 'refunded'
-        }
-
+        // Pengaktifan ada di PaymentFulfillmentService karena tombol "Cek status" di
+        // halaman pembayaran memicu hal yang sama saat callback terlambat atau gagal.
         if ($statusDariTripay === 'paid') {
-            DB::transaction(function () use ($payment, $statusDariTripay, $data) {
-                // Idempotency: kunci baris payment; callback kedua menunggu lalu melihat status paid.
-                $payment = Payments::whereKey($payment->id)->lockForUpdate()->first();
-                if ($payment->status === 'paid') {
-                    return;
-                }
-
-                $payment->update([
-                    'status' => $statusDariTripay,
-                    'fee_merchant' => $data['fee_merchant'],
-                    'fee_customer' => $data['fee_customer'],
-                    'total_fee' => $data['total_fee'],
-                    'total_amount' => $data['total_amount'],
-                    'amount_recived' => $data['amount_received'],
-                    'paid_at' => now(),
-                ]);
-
-                // Komisi afiliasi dicatat sebelum user dimutasi, supaya deteksi "member baru"
-                // tidak terganggu status aktif yang baru ditulis di bawah.
-                app(AffiliateCommissionService::class)->accrue($payment);
-
-                $newsPackage = NewsPackage::find($payment->package_id);
-                $user = User::whereKey($payment->user_id)->lockForUpdate()->first();
-
-               $baseDate = ($user->dateexp && Carbon::parse($user->dateexp)->isFuture())
-                    ? Carbon::parse($user->dateexp)
-                    : Carbon::now();
-
-                switch ($newsPackage->jenis_periode) {
-                    case 'hari':
-                        $baseDate->addDays($newsPackage->period);
-                        break;
-                    case 'minggu':
-                        $baseDate->addWeeks($newsPackage->period);
-                        break;
-                    case 'tahun':
-                        $baseDate->addYears($newsPackage->period);
-                        break;
-                    case 'bulan':
-                    default:
-                        $baseDate->addMonths($newsPackage->period);
-                        break;
-                }
-
-                $user->quota_news += $newsPackage->quota;
-                $user->dateexp = $baseDate;
-                $user->package_id = $newsPackage->id;
-                $user->status = 1;
-                $user->type = $newsPackage->type;
-                $user->save();
-
-                DB::afterCommit(function () use ($user, $payment, $newsPackage) {
-                    Mail::to($user->email)->send(new PaymentSuccessfulMail($payment, $user, $newsPackage));
-                });
-            });
+            $fulfillment->tandaiLunas($payment, $data);
         } elseif (in_array($statusDariTripay, ['pending', 'failed', 'expired', 'refunded'])) {
-            // Jangan timpa status paid yang dicatat callback lain di antara cek awal dan update ini.
-            Payments::whereKey($payment->id)
-                ->where('status', '!=', 'paid')
-                ->update(['status' => $statusDariTripay]);
+            $fulfillment->tandaiBelumLunas($payment, $statusDariTripay);
         }
 
         return response()->json(['success' => true]);

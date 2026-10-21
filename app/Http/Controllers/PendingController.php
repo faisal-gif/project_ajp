@@ -18,10 +18,16 @@ class PendingController extends Controller
 
         $auth = auth()->user();
 
-        $newsPackage = NewsPackage::find($auth->package_id);
+        // Dibatasi ke paket AJP yang aktif, dan dijaga dari id ngawur. Tanpa ini
+        // /checkout?package_id=<paket Kopi TIMES> bisa dibuka dari sini — satu
+        // database dipakai bersama — dan id yang tidak ada membuat halaman crash.
+        $packageId = $request->package_id ?: $auth->package_id;
+        $newsPackage = NewsPackage::where('type', '1')
+            ->where('status', 1)
+            ->find($packageId);
 
-        if ($request->package_id) {
-            $newsPackage = NewsPackage::find($request->package_id);
+        if (! $newsPackage) {
+            return redirect()->route('subscription.index');
         }
 
         $paymentChannels = $tripayService->getPaymentChannel();
