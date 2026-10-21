@@ -14,10 +14,15 @@ export default function Index({ channel, newsPackage }) {
         package_id: newsPackage.id,
     });
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     post(route('account.pending.payment'));
-    // }
+    // Biaya admin Tripay dibebankan ke pembeli, jadi harus terlihat SEBELUM ia menekan
+    // bayar — bukan baru muncul di halaman pembayaran. Angkanya ikut channel yang dipilih.
+    const selectedChannel = channel.find((c) => c.code === data.paymentMethod);
+    const feeCustomerFlat = selectedChannel?.fee_customer?.flat || 0;
+    // Persen dari Tripay sudah berupa angka persen (mis. 0.7 untuk 0,7%).
+    const feeCustomerPercent = selectedChannel?.fee_customer?.percent || 0;
+    const totalFeeCustomer = feeCustomerFlat + (newsPackage.price * (feeCustomerPercent / 100));
+    const grandTotal = newsPackage.price + totalFeeCustomer;
+
     return (
         <>
             <Head title='Konfirmasi Akun' />
@@ -59,9 +64,14 @@ export default function Index({ channel, newsPackage }) {
                                     </div>
                                 </div>
 
+                                <div className="flex items-center justify-between mt-4 px-2">
+                                    <span className="text-muted-foreground">Biaya Admin (Fee Customer)</span>
+                                    <span className="font-semibold">{formatRupiah(totalFeeCustomer)}</span>
+                                </div>
+
                                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
                                     <span className="font-semibold">Total Pembayaran</span>
-                                    <span className="text-2xl font-bold text-primary">{formatRupiah(newsPackage.price)}</span>
+                                    <span className="text-2xl font-bold text-primary">{formatRupiah(grandTotal)}</span>
                                 </div>
                             </div>
 
