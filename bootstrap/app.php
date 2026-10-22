@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Nilainya sama dengan config('affiliate.cookie_name'), dan sama di semua situs.
         $middleware->encryptCookies(except: [
             'kt_ref',
+            'kt_undangan',
         ]);
         $middleware->validateCsrfTokens(except: [
             '/tripay/callback',

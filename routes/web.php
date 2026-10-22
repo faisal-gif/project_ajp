@@ -83,6 +83,11 @@ Route::get('/panduan-afiliasi', fn () => Inertia::render('Afiliasi/Panduan', [
     'tier2_bps' => (int) config('affiliate.tier2_bps'),
 ]))->name('afiliasi.panduan');
 
+// Undangan jadi afiliator. Publik karena penerimanya belum tentu sudah login —
+// rutenya hanya menitipkan kode ke cookie lalu melempar ke formulir pengajuan.
+Route::get('/undang-afiliator/{code}', [AffiliateApplicationController::class, 'undangan'])
+    ->name('afiliasi.undangan');
+
 Route::middleware('auth')->group(function () {
     // Tanpa middleware 'active': afiliator bentukan admin belum tentu member berbayar.
     Route::get('/afiliasi', [AffiliateController::class, 'index'])->name('afiliasi.index');
