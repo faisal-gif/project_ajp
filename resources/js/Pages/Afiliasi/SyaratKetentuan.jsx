@@ -5,7 +5,7 @@ import { Head, Link } from '@inertiajs/react';
 // Komisi ditulis sebagai persentase supaya ikut harga paket, ditambah satu contoh angka.
 // Pos internal 10% tidak pernah disebut di halaman publik.
 const CONTOH_HARGA = 48000;
-const BERLAKU = '20 Oktober 2026';
+const BERLAKU = '22 Oktober 2026';
 
 function Pasal({ nomor, judul, children }) {
     return (
@@ -130,8 +130,15 @@ export default function SyaratKetentuan({ min_payout, hold_days, cookie_days, ti
                                 </p>
                                 <p>
                                     Bila seseorang membuka beberapa link referral berbeda, yang berlaku adalah link
-                                    yang <strong className="text-foreground">pertama</strong> ia buka. Satu pendaftar
-                                    selamanya tercatat pada satu afiliator dan tidak dapat dipindahkan.
+                                    yang <strong className="text-foreground">terakhir</strong> ia buka, dan masa
+                                    simpannya dihitung ulang sejak klik terakhir itu. Setelah ia mendaftar,
+                                    pencatatannya terkunci: satu pendaftar selamanya tercatat pada satu afiliator dan
+                                    tidak dapat dipindahkan.
+                                </p>
+                                <p>
+                                    Pendaftar berhak menolak ajakan yang terdeteksi dengan menekan &quot;Daftar
+                                    tanpa kode ini&quot; di halaman pendaftaran. Pendaftaran semacam itu tidak
+                                    menghasilkan komisi bagi siapa pun.
                                 </p>
                             </Pasal>
 

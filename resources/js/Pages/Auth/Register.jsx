@@ -34,6 +34,10 @@ export default function Register({ newsPackages, referral = null }) {
         referral_code: '',
     });
 
+    // Ajakan boleh dilepas: begitu data.ref dikosongkan, kolom kode manual muncul lagi
+    // dan server menerima ref kosong sebagai "tanpa kode".
+    const pakaiAjakan = Boolean(referral) && data.ref !== '';
+
     // 3. Handlers
     const handlePlanSelect = (planId) => {
         setSelectedPlan(planId);
@@ -124,9 +128,16 @@ export default function Register({ newsPackages, referral = null }) {
                         </span>
                     </p>
 
-                    {referral && (
+                    {pakaiAjakan && (
                         <p className="mt-4 border-l-2 border-dull bg-newsprint/60 px-4 py-3 font-type text-sm">
-                            Anda mendaftar atas ajakan <strong>{referral.name}</strong>.
+                            Anda mendaftar atas ajakan <strong>{referral.name}</strong>.{' '}
+                            <button
+                                type="button"
+                                onClick={() => setData('ref', '')}
+                                className="font-semibold underline underline-offset-2 hover:no-underline"
+                            >
+                                Daftar tanpa kode ini
+                            </button>
                         </p>
                     )}
 
@@ -246,7 +257,7 @@ export default function Register({ newsPackages, referral = null }) {
                                 </div>
                             </div>
 
-                            {!referral && (
+                            {!pakaiAjakan && (
                                 <div>
                                     <InputLabel htmlFor="referral_code" value="Kode referral (jika ada)" />
                                     <TextInput
