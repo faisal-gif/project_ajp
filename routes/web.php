@@ -74,6 +74,15 @@ Route::get('/syarat-afiliasi', fn () => Inertia::render('Afiliasi/SyaratKetentua
     'tier2_bps' => (int) config('affiliate.tier2_bps'),
 ]))->name('afiliasi.syarat');
 
+Route::get('/panduan-afiliasi', fn () => Inertia::render('Afiliasi/Panduan', [
+    'min_payout' => (int) config('affiliate.min_payout'),
+    'hold_days' => (int) config('affiliate.hold_days'),
+    'cookie_days' => (int) config('affiliate.cookie_days'),
+    // Tarif yang boleh dilihat publik. Pos internal sengaja tidak ikut dikirim.
+    'tier1_bps' => (int) config('affiliate.tier1_bps'),
+    'tier2_bps' => (int) config('affiliate.tier2_bps'),
+]))->name('afiliasi.panduan');
+
 Route::middleware('auth')->group(function () {
     // Tanpa middleware 'active': afiliator bentukan admin belum tentu member berbayar.
     Route::get('/afiliasi', [AffiliateController::class, 'index'])->name('afiliasi.index');

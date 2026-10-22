@@ -182,6 +182,10 @@ export default function SyaratKetentuan({ min_payout, hold_days, cookie_days, ti
                                     </a>
                                 </p>
                                 <p className="mt-4 text-sm text-muted-foreground">
+                                    Penjelasan langkah demi langkah ada di{' '}
+                                    <Link href="/panduan-afiliasi" className="link link-primary">Panduan Afiliasi</Link>.
+                                </p>
+                                <p className="mt-4 text-sm text-muted-foreground">
                                     Lihat juga{' '}
                                     <Link href="/syarat-ketentuan" className="link link-primary">Syarat &amp; Ketentuan layanan</Link>
                                     {' '}dan{' '}
