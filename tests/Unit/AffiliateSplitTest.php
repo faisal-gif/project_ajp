@@ -20,7 +20,7 @@ class AffiliateSplitTest extends TestCase
         $this->assertFalse($rows->has('tier2'), 'AJP satu tingkat: pos tier2 tidak boleh terbit.');
 
         $this->assertSame(9_600, $rows['tier1']['amount']);
-        $this->assertSame(4_840, $rows['internal']['amount']);   // 3.840 + flat 1.000
+        $this->assertSame(8_840, $rows['internal']['amount']);   // 3.840 + flat 5.000
 
         $this->assertSame(48_000, $rows['tier1']['base_amount']);
         $this->assertSame(38_400, $rows['internal']['base_amount']);
@@ -30,8 +30,8 @@ class AffiliateSplitTest extends TestCase
     {
         $total = collect(AffiliateCommissionService::split(48_000))->sum('amount');
 
-        $this->assertSame(14_440, $total);
-        $this->assertSame(33_560, 48_000 - $total);
+        $this->assertSame(18_440, $total);
+        $this->assertSame(29_560, 48_000 - $total);
     }
 
     public function test_odd_price_floors_every_position_and_never_overspends(): void
@@ -53,8 +53,8 @@ class AffiliateSplitTest extends TestCase
         $this->assertCount(1, $rows);
         $this->assertSame('internal', $rows[0]['role']);
         $this->assertSame(48_000, $rows[0]['base_amount']);   // tidak ada potongan tier1
-        $this->assertSame(5_800, $rows[0]['amount']);            // 4.800 + flat 1.000
-        $this->assertSame(42_200, 48_000 - $rows[0]['amount']);
+        $this->assertSame(9_800, $rows[0]['amount']);            // 4.800 + flat 5.000
+        $this->assertSame(38_200, 48_000 - $rows[0]['amount']);
     }
 
     public function test_rates_come_from_config(): void
@@ -93,7 +93,7 @@ class AffiliateSplitTest extends TestCase
     /**
      * Komponen tetap tidak boleh membuat kantor membayar lebih dari yang diterima.
      *
-     * Selama semua pos berupa persentase hal ini mustahil. Rp 1.000 yang datar
+     * Selama semua pos berupa persentase hal ini mustahil. Komponen tetap (AJP Rp 5.000)
      * merusak jaminan itu pada harga paket kecil, jadi yang dipangkas hanya komponen
      * tetapnya — persentase milik afiliator tidak pernah dikurangi.
      */
