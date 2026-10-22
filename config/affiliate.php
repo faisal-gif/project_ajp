@@ -11,16 +11,15 @@ return [
      * Tarif dalam basis poin (1% = 100 bps) supaya tidak ada pecahan.
      * tier1 dihitung dari harga pembayaran, tier2 & internal dari sisa setelah tier1.
      * Tarif 0 berarti posnya tidak diterbitkan, bukan baris bernilai nol.
-     * Default AJP (satu tingkat): 48.000 -> 9.600 (tier1) / 3.840 (internal) / 34.560 (kantor).
+     * Default: 48.000 -> 9.600 (tier1) / 1.920 (tier2) / 8.840 (internal) / 27.640 (kantor).
      */
     'tier1_bps'    => (int) env('AFFILIATE_TIER1_BPS', 2000),
     /*
-     * AJP SATU TINGKAT. Nol di sini berarti pos tier2 tidak diterbitkan sama sekali
-     * (bukan baris bernilai nol), jadi tidak ada upline yang berkomisi dan tidak ada
-     * baris `unassigned` yang menumpuk. Kopi TIMES tetap dua tingkat dengan 500.
-     * Isi AFFILIATE_TIER2_BPS di .env hanya bila AJP nanti ingin dua tingkat juga.
+     * AJP ikut dua tingkat sejak 22 Oktober 2026, mekanismenya sama persis dengan
+     * Kopi TIMES. Nol di sini mematikan pos tier2 sepenuhnya (bukan baris bernilai
+     * nol) — sakelar itu dibiarkan ada, tapi tidak dipakai situs mana pun sekarang.
      */
-    'tier2_bps'    => (int) env('AFFILIATE_TIER2_BPS', 0),
+    'tier2_bps'    => (int) env('AFFILIATE_TIER2_BPS', 500),
     'internal_bps' => (int) env('AFFILIATE_INTERNAL_BPS', 1000),
 
     /*

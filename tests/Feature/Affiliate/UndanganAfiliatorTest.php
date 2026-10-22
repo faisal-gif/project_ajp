@@ -154,13 +154,10 @@ class UndanganAfiliatorTest extends TestCase
     }
 
     /**
-     * AJP SATU TINGKAT: rantainya terbentuk, tapi uangnya tidak.
-     *
-     * Upline tetap diisi supaya data rantainya ada bila suatu saat AFFILIATE_TIER2_BPS
-     * dinyalakan. Selama tarifnya 0, pos tier2 tidak pernah terbit — jadi undangan di
-     * AJP belum menghasilkan apa pun bagi pengundangnya.
+     * Inti permintaannya, diuji sampai uangnya tercatat:
+     * A mengundang B jadi afiliator -> B membawa pendaftar C -> A dapat 5%.
      */
-    public function test_rantai_terbentuk_tapi_tidak_ada_lima_persen_selama_tarifnya_nol(): void
+    public function test_pengundang_menerima_lima_persen_dari_pendaftar_yang_dibawa_undangannya(): void
     {
         $a = Affiliate::factory()->create(['type' => 1, 'tier2_eligible' => true, 'code' => 'AKUNA123']);
 
@@ -177,12 +174,13 @@ class UndanganAfiliatorTest extends TestCase
         ]);
         $this->bayarLunas($c);
 
-        $this->assertSame($a->id, $afiliatorB->fresh()->upline_id, 'rantai undangan tetap tercatat');
+        $this->assertSame($a->id, $afiliatorB->fresh()->upline_id, 'rantai undangan tercatat');
 
         $komisi = AffiliateCommission::get()->keyBy('role');
         $this->assertSame($afiliatorB->id, $komisi['tier1']->affiliate_id, 'B dapat 20%');
         $this->assertSame(9600, (int) $komisi['tier1']->amount);
-        $this->assertFalse($komisi->has('tier2'), 'AJP satu tingkat: pos tier2 tidak boleh terbit.');
+        $this->assertSame($a->id, $komisi['tier2']->affiliate_id, 'A dapat 5% karena mengundang B');
+        $this->assertSame(1920, (int) $komisi['tier2']->amount);
     }
 
     private function bayarLunas(User $user): void

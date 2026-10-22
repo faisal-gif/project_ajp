@@ -5,24 +5,18 @@ namespace Tests\Unit;
 use App\Services\AffiliateCommissionService;
 use Tests\TestCase;
 
-/**
- * AJP berjalan SATU TINGKAT: config/affiliate.php menetapkan tier2_bps = 0, jadi pos
- * tier2 tidak pernah terbit. Yang diuji di sini adalah angka yang benar-benar berlaku
- * di AJP, bukan angka dua tingkat milik Kopi TIMES.
- */
 class AffiliateSplitTest extends TestCase
 {
     public function test_split_of_48000_matches_the_agreed_figures(): void
     {
         $rows = collect(AffiliateCommissionService::split(48_000))->keyBy('role');
 
-        $this->assertCount(2, $rows);
-        $this->assertFalse($rows->has('tier2'), 'AJP satu tingkat: pos tier2 tidak boleh terbit.');
-
         $this->assertSame(9_600, $rows['tier1']['amount']);
+        $this->assertSame(1_920, $rows['tier2']['amount']);
         $this->assertSame(8_840, $rows['internal']['amount']);   // 3.840 + flat 5.000
 
         $this->assertSame(48_000, $rows['tier1']['base_amount']);
+        $this->assertSame(38_400, $rows['tier2']['base_amount']);
         $this->assertSame(38_400, $rows['internal']['base_amount']);
     }
 
@@ -30,8 +24,8 @@ class AffiliateSplitTest extends TestCase
     {
         $total = collect(AffiliateCommissionService::split(48_000))->sum('amount');
 
-        $this->assertSame(18_440, $total);
-        $this->assertSame(29_560, 48_000 - $total);
+        $this->assertSame(20_360, $total);
+        $this->assertSame(27_640, 48_000 - $total);
     }
 
     public function test_odd_price_floors_every_position_and_never_overspends(): void
@@ -64,36 +58,13 @@ class AffiliateSplitTest extends TestCase
         $rows = collect(AffiliateCommissionService::split(48_000))->keyBy('role');
 
         $this->assertSame(4_800, $rows['tier1']['amount']);
-        $this->assertSame(43_200, $rows['internal']['base_amount']);
-    }
-
-    /**
-     * Tarif 0 membuang posnya, bukan mencatat baris bernilai nol. Baris nol akan muncul
-     * di laporan, menumpuk sebagai `unassigned`, dan minta disetujui admin tanpa isi.
-     */
-    public function test_zero_rate_drops_the_position_instead_of_writing_an_empty_row(): void
-    {
-        $peran = collect(AffiliateCommissionService::split(48_000))->pluck('role');
-
-        $this->assertEqualsCanonicalizing(['tier1', 'internal'], $peran->all());
-    }
-
-    /** Sakelarnya memang sakelar: mengisi tarifnya memunculkan tingkat kedua kembali. */
-    public function test_second_tier_returns_when_its_rate_is_set(): void
-    {
-        config(['affiliate.tier2_bps' => 500]);
-
-        $rows = collect(AffiliateCommissionService::split(48_000))->keyBy('role');
-
-        $this->assertCount(3, $rows);
-        $this->assertSame(1_920, $rows['tier2']['amount']);
-        $this->assertSame(38_400, $rows['tier2']['base_amount']);
+        $this->assertSame(43_200, $rows['tier2']['base_amount']);
     }
 
     /**
      * Komponen tetap tidak boleh membuat kantor membayar lebih dari yang diterima.
      *
-     * Selama semua pos berupa persentase hal ini mustahil. Komponen tetap (AJP Rp 5.000)
+     * Selama semua pos berupa persentase hal ini mustahil. Komponen tetap Rp 5.000
      * merusak jaminan itu pada harga paket kecil, jadi yang dipangkas hanya komponen
      * tetapnya — persentase milik afiliator tidak pernah dikurangi.
      */
@@ -123,5 +94,19 @@ class AffiliateSplitTest extends TestCase
                 );
             }
         }
+    }
+
+    /**
+     * Sakelar tarif 0 tetap ada walau tidak dipakai situs mana pun sejak AJP ikut dua
+     * tingkat. Tarif 0 MEMBUANG posnya, bukan mencatat baris bernilai nol — baris nol
+     * akan muncul di laporan dan minta disetujui admin padahal tidak ada uang di dalamnya.
+     */
+    public function test_zero_rate_drops_the_position_instead_of_writing_an_empty_row(): void
+    {
+        config(['affiliate.tier2_bps' => 0]);
+
+        $peran = collect(AffiliateCommissionService::split(48_000))->pluck('role');
+
+        $this->assertEqualsCanonicalizing(['tier1', 'internal'], $peran->all());
     }
 }

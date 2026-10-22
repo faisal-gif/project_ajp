@@ -60,13 +60,7 @@ class AffiliateApplicationTest extends TestCase
         $this->assertSame(1, (int) $affiliate->type);      // situs tempat ia mendaftar
     }
 
-    /**
-     * Dicentang admin = pengundangnya jadi upline.
-     *
-     * Catatan AJP: situs ini berjalan satu tingkat, jadi komisi tingkat 2 tidak terbit
-     * sama sekali dan upline tidak berpengaruh ke uang. Aturannya tetap diuji supaya
-     * ikut terjaga bila tier 2 dinyalakan lewat AFFILIATE_TIER2_BPS.
-     */
+    /** Dicentang admin = pengundangnya jadi upline. */
     public function test_eligible_inviter_becomes_the_upline(): void
     {
         $pengundang = Affiliate::factory()->create(['type' => 1, 'tier2_eligible' => true]);
@@ -209,9 +203,7 @@ class AffiliateApplicationTest extends TestCase
             ->assertInertia(fn ($page) => $page
                 ->component('Afiliasi/SyaratKetentuan')
                 ->where('tier1_bps', 2000)
-                // AJP satu tingkat: 0 membuat halaman menyembunyikan pasal komisi
-                // jaringan, bukan menjanjikannya sebesar "0%".
-                ->where('tier2_bps', 0)
+                ->where('tier2_bps', 500)
                 ->missing('internal_bps')      // pos internal tidak pernah dikirim ke publik
             );
     }

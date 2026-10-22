@@ -21,9 +21,9 @@ export default function SyaratKetentuan({ min_payout, hold_days, cookie_days, ti
     const TIER1_PERSEN = (tier1_bps / 100) + '%';
     const TIER2_PERSEN = (tier2_bps / 100) + '%';
 
-    // AJP berjalan satu tingkat: tier2_bps = 0. Pasal komisi jaringan tidak boleh
-    // muncul sama sekali, karena ini dokumen yang mengikat — menjanjikan komisi
-    // jaringan "0%" sama saja menjanjikan sesuatu yang tidak ada.
+    // Tarif 0 mengganti pasal komisi jaringan dengan pernyataan satu tingkat. Ini
+    // dokumen yang mengikat, jadi tidak boleh menjanjikan komisi jaringan "0%".
+    // AJP ikut dua tingkat sejak 22 Oktober 2026, jadi cabang itu kini yang berlaku.
     const adaTingkatKedua = tier2_bps > 0;
 
     // Contoh angka diturunkan dari tarif, bukan ditulis mati, supaya tidak pernah

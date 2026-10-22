@@ -8,6 +8,17 @@ const NAV = [
     { label: 'Beranda', href: '/' },
     { label: 'Tentang', href: '/tentang' },
     { label: 'Harga', href: '/harga' },
+    // Butir bersubmenu: hrefnya tetap ada supaya tautan footer dan penanda halaman
+    // aktif ikut bekerja tanpa perlakuan khusus.
+    {
+        label: 'Afiliasi',
+        href: '/panduan-afiliasi',
+        children: [
+            { label: 'Panduan Afiliasi', href: '/panduan-afiliasi' },
+            { label: 'Komisi Jaringan', href: '/panduan-jaringan' },
+            { label: 'Syarat Afiliasi', href: '/syarat-afiliasi' },
+        ],
+    },
 ];
 
 const SOCIAL = [
@@ -39,6 +50,17 @@ function LandingLayout({ children }) {
                                     <Link href={n.href} className={`block px-3 py-2 font-wood text-lg font-bold uppercase ${isActive(n.href) ? 'bg-dull text-stock' : 'hover:bg-buff'}`}>
                                         {n.label}
                                     </Link>
+                                    {n.children && (
+                                        <ul className="border-l-2 border-ink/30 pl-3">
+                                            {n.children.map((c) => (
+                                                <li key={c.href}>
+                                                    <Link href={c.href} className={`block px-3 py-1.5 font-type text-sm ${isActive(c.href) ? 'bg-dull text-stock' : 'hover:bg-buff'}`}>
+                                                        {c.label}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
                                 </li>
                             ))}
                         </ul>
@@ -50,13 +72,25 @@ function LandingLayout({ children }) {
 
                     <ul className="ml-6 hidden items-center gap-1 lg:flex">
                         {NAV.map((n) => (
-                            <li key={n.href}>
+                            <li key={n.href} className={n.children ? 'dropdown dropdown-hover' : undefined}>
                                 <Link
                                     href={n.href}
+                                    tabIndex={n.children ? 0 : undefined}
                                     className={`block px-3 py-1 font-wood text-lg font-bold uppercase tracking-wide ${isActive(n.href) ? 'bg-dull text-stock' : 'hover:bg-buff'}`}
                                 >
                                     {n.label}
                                 </Link>
+                                {n.children && (
+                                    <ul tabIndex={0} className="dropdown-content z-[1] mt-1 w-56 border-2 border-ink bg-stock p-2 scrap-shadow">
+                                        {n.children.map((c) => (
+                                            <li key={c.href}>
+                                                <Link href={c.href} className={`block px-3 py-2 font-type text-sm ${isActive(c.href) ? 'bg-dull text-stock' : 'hover:bg-buff'}`}>
+                                                    {c.label}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </li>
                         ))}
                     </ul>

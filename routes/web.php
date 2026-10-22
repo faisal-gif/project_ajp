@@ -83,6 +83,14 @@ Route::get('/panduan-afiliasi', fn () => Inertia::render('Afiliasi/Panduan', [
     'tier2_bps' => (int) config('affiliate.tier2_bps'),
 ]))->name('afiliasi.panduan');
 
+Route::get('/panduan-jaringan', fn () => Inertia::render('Afiliasi/PanduanJaringan', [
+    'min_payout' => (int) config('affiliate.min_payout'),
+    'hold_days' => (int) config('affiliate.hold_days'),
+    // Tarif yang boleh dilihat publik. Pos internal sengaja tidak ikut dikirim.
+    'tier1_bps' => (int) config('affiliate.tier1_bps'),
+    'tier2_bps' => (int) config('affiliate.tier2_bps'),
+]))->name('afiliasi.panduan-jaringan');
+
 // Undangan jadi afiliator. Publik karena penerimanya belum tentu sudah login —
 // rutenya hanya menitipkan kode ke cookie lalu melempar ke formulir pengajuan.
 Route::get('/undang-afiliator/{code}', [AffiliateApplicationController::class, 'undangan'])

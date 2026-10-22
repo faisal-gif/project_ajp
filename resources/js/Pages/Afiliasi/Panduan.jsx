@@ -38,8 +38,8 @@ export default function Panduan({ min_payout, hold_days, cookie_days, tier1_bps,
     const TIER1_PERSEN = tier1_bps / 100 + '%';
     const TIER2_PERSEN = tier2_bps / 100 + '%';
 
-    // AJP berjalan satu tingkat: tier2_bps = 0. Bagian komisi jaringan tidak boleh
-    // muncul sama sekali — menyebutnya "0%" sama saja menjanjikan sesuatu yang tidak ada.
+    // Tarif 0 menyembunyikan bagian komisi jaringan sama sekali — menyebutnya "0%"
+    // sama saja menjanjikan sesuatu yang tidak ada. AJP ikut dua tingkat sejak 22 Okt 2026.
     const adaTingkatKedua = tier2_bps > 0;
 
     const contohTier1 = Math.floor((CONTOH_HARGA * tier1_bps) / 10000);
@@ -139,7 +139,11 @@ export default function Panduan({ min_payout, hold_days, cookie_days, tier1_bps,
                                     <p>
                                         Afiliator yang ditunjuk itu juga mendapat tautan undangan di halaman
                                         afiliasinya untuk mengajak member lain jadi afiliator — merekalah yang
-                                        nantinya menjadi jaringannya.
+                                        nantinya menjadi jaringannya. Rinciannya ada di{' '}
+                                        <Link href="/panduan-jaringan" className="link link-primary">
+                                            Panduan Komisi Jaringan
+                                        </Link>
+                                        .
                                     </p>
                                     </>
                                 )}
